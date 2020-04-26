@@ -1,0 +1,40 @@
+{
+    "name": "nova-typescript",
+    "version": "0.0.1",
+    "description": "Typescript language server support for Nova.",
+    "main": "index.js",
+    "scripts": {
+        "build:main": "rollup -c rollup.config.main.js",
+        "build:process": "rollup -c rollup.config.process.js",
+        "build:dependencies": "yarn install --production --frozen-lockfile --modules-folder typescript.novaextension/node_modules",
+        "build": "concurrently 'yarn:build:*'",
+        "lint:eslint": "eslint \"Source/**/*.js\"",
+        "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json}\"",
+        "lint": "concurrently 'yarn:lint:*'",
+        "watch": "onchange -i \"Source/**/*.js\" \"rollup.*.js\" -- npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/apexskier/nova-typescript.git"
+    },
+    "author": "Cameron Little",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/apexskier/nova-typescript/issues"
+    },
+    "homepage": "https://github.com/apexskier/nova-typescript",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^11.0.2",
+        "@rollup/plugin-node-resolve": "^7.1.0",
+        "concurrently": "^5.2.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-nova": "^1.0.0-beta.3",
+        "onchange": "^6.1.0",
+        "rollup": "^1.32.1",
+        "typescript": "^3.8.3"
+    },
+    "private": true,
+    "dependencies": {
+        "javascript-typescript-langserver": "^2.11.3"
+    }
+}
