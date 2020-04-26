@@ -1,24 +1,20 @@
 {
-    "identifier": "apexskier.typescript",
-    "name": "Typescript",
-    "vendor": "Cameron Little",
-    "description": "Typescript language server support for Nova",
-    "version": "0.0.1",
-    "categories": ["languages", "issues"],
-    "license": "MIT",
-    "homepage": "https://github.com/apexskier/nova-typescript",
-    "repository": "https://github.com/apexskier/nova-typescript",
-    "bugs": "https://github.com/apexskier/nova-typescript/issues",
-    
-    "main": "main.dist.js",
-    
-    "activationEvents": [
-        "onLanguage:ts",
-        "onLanguage:tsx",
-        "*"
-    ],
-    
-    "entitlements": {
-        "process": true
-    }
+  "identifier": "apexskier.typescript",
+  "name": "Typescript",
+  "vendor": "Cameron Little",
+  "description": "Typescript language server support for Nova",
+  "version": "0.0.1",
+  "categories": ["languages", "issues"],
+  "license": "MIT",
+  "homepage": "https://github.com/apexskier/nova-typescript",
+  "repository": "https://github.com/apexskier/nova-typescript",
+  "bugs": "https://github.com/apexskier/nova-typescript/issues",
+
+  "main": "main.dist.js",
+
+  "activationEvents": ["onLanguage:ts", "onLanguage:tsx", "*"],
+
+  "entitlements": {
+    "process": true
+  }
 }

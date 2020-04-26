@@ -1,8 +1,7 @@
 const testing = "1234";
 
 function foo(a: number) {
-	return b;
+  return b;
 }
 
-foo(testing)
-
+foo(testing);
