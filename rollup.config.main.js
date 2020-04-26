@@ -6,7 +6,7 @@ export default {
   plugins: [commonjs(), resolve()],
   output: {
     file: "typescript.novaextension/Scripts/main.dist.js",
-    sourcemaps: true,
+    sourcemap: true,
     format: "cjs",
   },
 };

@@ -6,7 +6,7 @@ export default {
   plugins: [commonjs(), resolve()],
   output: {
     file: "typescript.novaextension/Scripts/process.dist.js",
-    sourcemaps: true,
+    sourcemap: true,
     format: "cjs",
   },
   external: ["webpack"],

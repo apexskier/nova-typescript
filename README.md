@@ -16,3 +16,5 @@ In the meantime, just to start playing around, I've used a [separate language se
 
 - [ ] Make sure the language server's typescript version can match what's installed locally. Using the builtin `tsserver` from the workspace's `node_modules` would be my preferred way of doing this.
 - [ ] `activationEvents` shouldn't include `"*"`, but otherwise I can't get it to activate
+- [ ] Module resolution doesn't seem to be working at all outside of this project.
+- [ ] Very slow right now...
