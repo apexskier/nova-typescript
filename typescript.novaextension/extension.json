@@ -11,7 +11,7 @@
 
   "main": "main.dist.js",
 
-  "activationEvents": ["onLanguage:ts", "onLanguage:tsx", "*"],
+  "activationEvents": ["onLanguage:typescript", "onLanguage:tsx"],
 
   "entitlements": {
     "process": true

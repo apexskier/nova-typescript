@@ -5,7 +5,7 @@ const client = new LanguageClient(
     type: "stdio",
     path: `${nova.extension.path}/run.sh`,
     env: {
-      WORKSPACE_DIR: nova.workspace.path,
+      WORKSPACE_DIR: nova.workspace.path ?? "",
     },
   },
   {
