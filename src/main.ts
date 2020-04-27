@@ -1,9 +1,12 @@
+// TODO: I think this language client might need to be explicitly separate per workspace
+
 const client = new LanguageClient(
   "apexskier.typescript",
   "Typescript Language Server",
   {
     type: "stdio",
-    path: `${nova.extension.path}/run.sh`,
+    path: `/usr/bin/env`,
+    args: ["bash", "-c", `${nova.extension.path}/run.sh | tee /tmp/nova-typescript.sh.log`],
     env: {
       WORKSPACE_DIR: nova.workspace.path ?? "",
     },
@@ -19,5 +22,6 @@ export function activate() {
 }
 
 export function deactivate() {
+  console.log("deactivating...");
   client.stop();
 }

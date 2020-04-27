@@ -6,7 +6,6 @@
   "types": "types/nova/index.d.ts",
   "scripts": {
     "build:main": "rollup -c rollup.config.main.js",
-    "build:process": "rollup -c rollup.config.process.js",
     "build:dependencies": "yarn install --production --frozen-lockfile --modules-folder typescript.novaextension/node_modules",
     "build": "concurrently 'yarn:build:*'",
     "lint:eslint": "eslint \"Source/**/*.js\"",
@@ -36,11 +35,10 @@
     "eslint-plugin-nova": "^1.0.0-beta.3",
     "onchange": "^7.0.0",
     "rollup": "^2.7.2",
-    "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   },
   "private": true,
   "dependencies": {
-    "javascript-typescript-langserver": "^2.11.3"
+    "typescript-language-server": "^0.4.0"
   }
 }
