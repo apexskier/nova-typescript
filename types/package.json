@@ -1,0 +1,21 @@
+{
+  "name": "nova-types",
+  "version": "0.0.1",
+  "description": "Typescript typings for extensions for the Nova editor from Panic",
+  "main": "index.js",
+  "types": "nova/index.d.ts",
+  "author": "Cameron Little",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apexskier/nova-typescript.git",
+    "directory": "types"
+  },
+  "bugs": {
+    "url": "https://github.com/apexskier/nova-typescript/issues"
+  },
+  "homepage": "https://github.com/apexskier/nova-typescript/blob/master/types/README.md",
+  "files": [
+    "index.d.ts"
+  ]
+}

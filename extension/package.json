@@ -1,0 +1,17 @@
+{
+  "name": "nova-typescript",
+  "version": "0.0.1",
+  "description": "Typescript language support extension for Nova",
+  "author": "Cameron Little",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:main": "cd ../ && rollup -c extension/rollup.config.main.js",
+    "build:dependencies": "yarn install --production --frozen-lockfile --modules-folder ../typescript.novaextension/node_modules",
+    "build": "concurrently 'yarn:build:*'",
+    "watch": "onchange -i \"src/**\" \"rollup.*.js\" -- yarn run build"
+  },
+  "dependencies": {
+    "typescript-language-server": "^0.4.0"
+  }
+}

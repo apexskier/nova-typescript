@@ -163,19 +163,19 @@ declare module "nova" {
         context: CompletionContext
       ): Array<CompletionItem>;
     }
-    
+
     class IssueCollection {
       constructor(name?: string);
-      
+
       name: string;
-      
+
       append(uri: string, issues: Array<Issue>): void;
       dispose(): void;
       clear(): void;
       has(uri: string): void;
       get(uri: string): void;
       set(uri: string, issues: Array<Issue>): void;
-      remove(uri: string);
+      remove(uri: string): void;
     }
 
     enum IssueSeverity {

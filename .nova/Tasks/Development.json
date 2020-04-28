@@ -2,11 +2,11 @@
   "actions": {
     "build": {
       "enabled": true,
-      "script": "npm run build"
+      "script": "cd extension\n\nyarn run build"
     },
     "run": {
       "enabled": true,
-      "script": "npm run watch"
+      "script": "cd extension\n\nyarn run watch"
     }
   },
   "identifier": "6FA1209E-7DBA-4707-8FE3-FDACFA6DEFB9",

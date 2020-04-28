@@ -1,5 +1,3 @@
-// TODO: I think this language client might need to be explicitly separate per workspace
-
 const client = new LanguageClient(
   "apexskier.typescript",
   "Typescript Language Server",
