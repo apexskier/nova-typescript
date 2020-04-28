@@ -2,10 +2,9 @@
 
 This is a plugin providing typescript language support for the new [Nova editor from Panic](https://panic.com/nova/).
 
-It is a **work in progress**, but does work. There's currently a [Nova bug](https://dev.panic.com/panic/nova-issues/-/issues/888) preventing me from publishing.
+It is a **work in progress**, but does work. There's currently a [bug in the editor](https://dev.panic.com/panic/nova-issues/-/issues/888) preventing me from publishing.
 
-It's written in typescript, in the Nova editor. See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44290 for nova extension types.
-
+See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44290 for nova extension types.
 
 ![Example errors](https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-error.png)
 
