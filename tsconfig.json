@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
     "sourceMap": true,
     "rootDir": ".",
     "noEmit": true,
@@ -10,7 +9,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["../DefinitelyTyped/types/nova-editor"],
+    "types": ["../DefinitelyTyped/types/nova-editor"], // FIXME
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true
   }

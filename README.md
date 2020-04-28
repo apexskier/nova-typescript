@@ -1,8 +1,10 @@
 # Typescript support for Nova
 
-This is a playground for typescript language support for the new [Nova editor from Panic](https://panic.com/nova/).
+This is a plugin providing typescript language support for the new [Nova editor from Panic](https://panic.com/nova/).
 
-This is a **work in progress**.
+It is a **work in progress**, but does work.
+
+It's written in typescript, in the Nova editor. See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44290 for nova extension types.
 
 ## Notes
 
@@ -14,5 +16,5 @@ I've used a ~[separate language server from Sourcegraph](https://github.com/sour
 
 - [x] Make sure the language server's typescript version can match what's installed locally. Using the builtin `tsserver` from the workspace's `node_modules` would be my preferred way of doing this.
 - [x] `activationEvents` shouldn't include `"*"`, but otherwise I can't get it to activate
-- [ ] Module resolution doesn't seem to be working at all outside of this project.
+- [x] Module resolution doesn't seem to be working at all outside of this project.
 - [ ] Very slow right now...

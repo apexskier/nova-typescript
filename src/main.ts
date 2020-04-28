@@ -1,7 +1,7 @@
-// TODO: I think this language client might need to be explicitly separate per workspace
+import { id } from "./test";
 
 const client = new LanguageClient(
-  "apexskier.typescript",
+  id,
   "Typescript Language Server",
   {
     type: "stdio",
