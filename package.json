@@ -11,7 +11,7 @@
     "lint:eslint": "eslint \"Source/**/*.js\"",
     "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json}\"",
     "lint": "concurrently 'yarn:lint:*'",
-    "watch": "onchange -i \"Source/**/*.js\" \"rollup.*.js\" -- npm run build"
+    "watch": "onchange -i \"src/**\" \"rollup.*.js\" -- npm run build"
   },
   "repository": {
     "type": "git",
