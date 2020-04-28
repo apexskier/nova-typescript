@@ -5,7 +5,7 @@ const client = new LanguageClient(
   "Typescript Language Server",
   {
     type: "stdio",
-    path: `/usr/bin/env`,
+    path: "/usr/bin/env",
     args: [
       "bash",
       "-c",
