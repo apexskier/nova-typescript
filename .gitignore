@@ -1,4 +1,5 @@
 .DS_Store
-node_modules
-*.dist.js
-*.map
+node_modules/
+/typescript.novaextension/Scripts
+logs/
+
