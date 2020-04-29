@@ -19,5 +19,18 @@
 
   "entitlements": {
     "process": true
+  },
+
+  "commands": {
+    "editor": [
+      {
+        "title": "Go to Definition",
+        "command": "apexskier.typescript.goToDefinition",
+        "when": "editorHasFocus",
+        "filters": {
+          "syntaxes": ["typescript", "tsx"]
+        }
+      }
+    ]
   }
 }

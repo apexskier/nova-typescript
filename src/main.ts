@@ -1,4 +1,5 @@
 import { id } from "./test";
+import { registerGoToDefinition } from "./goToDefinition";
 
 const client = new LanguageClient(
   id,
@@ -19,6 +20,8 @@ const client = new LanguageClient(
     syntaxes: ["typescript", "javascript"],
   }
 );
+
+registerGoToDefinition(client);
 
 export function activate() {
   console.log("activating...");
