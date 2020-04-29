@@ -13,7 +13,8 @@ export function registerRename(client: LanguageClient) {
 
   async function rename(editor: TextEditor) {
     console.log("apexskier.typescript.rename");
-    
+
+    // Select full word. It will be showed in a palette so the user can review it
     editor.selectWordsContainingCursors();
 
     const selectedRange = editor.selectedRange;
@@ -23,9 +24,9 @@ export function registerRename(client: LanguageClient) {
       return;
     }
 
-    const newName = await new Promise<string | null>((resolve, reject) => {
+    const newName = await new Promise<string | null>((resolve) => {
       nova.workspace.showInputPalette(
-        "New name",
+        "New name for symbol",
         { placeholder: editor.selectedText },
         resolve
       );
@@ -49,6 +50,10 @@ export function registerRename(client: LanguageClient) {
     }
     console.log(JSON.stringify(response));
     await applyWorkspaceEdit(response);
+
+    // go back to original document
+    nova.workspace.openFile(editor.document.uri);
+    editor.scrollToCursorPosition();
   }
 }
 
