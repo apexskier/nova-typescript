@@ -28,7 +28,7 @@
         "command": "apexskier.typescript.goToDefinition",
         "when": "editorHasFocus",
         "filters": {
-          "syntaxes": ["typescript", "tsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
       },
       {
@@ -36,7 +36,7 @@
         "command": "apexskier.typescript.rename",
         "when": "editorHasFocus",
         "filters": {
-          "syntaxes": ["typescript", "tsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
       }
     ]
