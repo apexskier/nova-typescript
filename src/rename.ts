@@ -1,6 +1,6 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import {
-  rangeToPosition,
+  rangeToLspRange,
   wrapCommand,
   openFile,
   lspRangeToRange,
@@ -18,7 +18,8 @@ export function registerRename(client: LanguageClient) {
     editor.selectWordsContainingCursors();
 
     const selectedRange = editor.selectedRange;
-    const selectedPosition = rangeToPosition(editor.document, selectedRange);
+    const selectedPosition = rangeToLspRange(editor.document, selectedRange)
+      ?.start;
     if (!selectedPosition) {
       nova.workspace.showErrorMessage("Couldn't figure out what to show.");
       return;

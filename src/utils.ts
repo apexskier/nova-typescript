@@ -3,20 +3,25 @@ import * as lsp from "vscode-languageserver-types";
 
 // TODO: split up into less generically named files
 
-export function rangeToPosition(
+export function rangeToLspRange(
   document: TextDocument,
   range: Range
-): lspTypes.Position | null {
+): lspTypes.Range | null {
   const fullContents = document.getTextInRange(new Range(0, document.length));
   let chars = 0;
+  let startLspRange: lspTypes.Position | undefined;
   const lines = fullContents.split(document.eol);
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
     const lineLength = lines[lineIndex].length + document.eol.length;
-    if (chars + lineLength >= range.start) {
+    if (!startLspRange && chars + lineLength >= range.start) {
       // console.log(lines[lineIndex]);
       const character = range.start - chars;
       // console.log(new Array(character).fill(" ").join("") + "↑")
-      return { line: lineIndex, character };
+      startLspRange = { line: lineIndex, character };
+    }
+    if (startLspRange && chars + lineLength >= range.end) {
+      const character = range.end - chars;
+      return { start: startLspRange, end: { line: lineIndex, character } };
     }
     chars += lineLength;
   }

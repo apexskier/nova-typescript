@@ -1,7 +1,7 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as lsp from "vscode-languageserver-types";
 import {
-  rangeToPosition,
+  rangeToLspRange,
   lspRangeToRange,
   isArray,
   isLspLocationArray,
@@ -21,7 +21,8 @@ export function registerGoToDefinition(client: LanguageClient) {
     console.log("apexskier.typescript.goToDefinition");
 
     const selectedRange = editor.selectedRange;
-    const selectedPosition = rangeToPosition(editor.document, selectedRange);
+    const selectedPosition = rangeToLspRange(editor.document, selectedRange)
+      ?.start;
     if (!selectedPosition) {
       nova.workspace.showWarningMessage("Couldn't figure out what to show.");
       return;
