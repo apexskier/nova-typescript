@@ -1,6 +1,7 @@
 import { id } from "./test";
 import { registerGoToDefinition } from "./goToDefinition";
 import { registerRename } from "./rename";
+import { registerCodeAction } from "./codeAction";
 
 const client = new LanguageClient(
   id,
@@ -24,6 +25,7 @@ const client = new LanguageClient(
 
 registerGoToDefinition(client);
 registerRename(client);
+registerCodeAction(client);
 
 export function activate() {
   console.log("activating...");
