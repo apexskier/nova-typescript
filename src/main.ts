@@ -16,7 +16,7 @@ const client = new LanguageClient(
     },
   },
   {
-    syntaxes: ["typescript"],
+    syntaxes: ["typescript", "javascript"],
   }
 );
 

@@ -11,7 +11,11 @@
 
   "main": "main.dist.js",
 
-  "activationEvents": ["onLanguage:typescript", "onLanguage:tsx"],
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:tsx",
+    "onWorkspaceContains:tsconfig.json"
+  ],
 
   "entitlements": {
     "process": true
