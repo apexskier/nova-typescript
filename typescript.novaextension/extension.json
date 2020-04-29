@@ -30,6 +30,14 @@
         "filters": {
           "syntaxes": ["typescript", "tsx"]
         }
+      },
+      {
+        "title": "Rename Symbol",
+        "command": "apexskier.typescript.rename",
+        "when": "editorHasFocus",
+        "filters": {
+          "syntaxes": ["typescript", "tsx"]
+        }
       }
     ]
   }

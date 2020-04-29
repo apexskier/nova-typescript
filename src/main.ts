@@ -1,5 +1,6 @@
 import { id } from "./test";
 import { registerGoToDefinition } from "./goToDefinition";
+import { registerRename } from "./rename";
 
 const client = new LanguageClient(
   id,
@@ -22,6 +23,7 @@ const client = new LanguageClient(
 );
 
 registerGoToDefinition(client);
+registerRename(client);
 
 export function activate() {
   console.log("activating...");
