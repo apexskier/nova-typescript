@@ -4,7 +4,7 @@ import { rangeToLspRange, wrapCommand } from "./utils";
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
 export function registerCodeAction(client: LanguageClient) {
-  nova.commands.register(
+  return nova.commands.register(
     "apexskier.typescript.codeAction",
     wrapCommand(codeAction)
   );

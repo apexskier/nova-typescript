@@ -18,10 +18,26 @@
   ],
 
   "entitlements": {
-    "process": true
+    "process": true,
+    "filesystem": "readonly"
   },
 
+  "config-workspace": [
+    {
+      "key": "apexskier.typescript.config.tsserverPath",
+      "title": "Path to tsserver",
+      "description": "Path to your locally installed tsserver executable, generally in node_modules/.bin/tsserver.",
+      "type": "path"
+    }
+  ],
+
   "commands": {
+    "extensions": [
+      {
+        "title": "Open Typescript workspace configuration",
+        "command": "apexskier.typescript.openWorkspaceConfig"
+      }
+    ],
     "editor": [
       {
         "title": "Go to Definition",

@@ -9,7 +9,10 @@ import {
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
 export function registerRename(client: LanguageClient) {
-  nova.commands.register("apexskier.typescript.rename", wrapCommand(rename));
+  return nova.commands.register(
+    "apexskier.typescript.rename",
+    wrapCommand(rename)
+  );
 
   async function rename(editor: TextEditor) {
     console.log("apexskier.typescript.rename");
