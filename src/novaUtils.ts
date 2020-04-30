@@ -1,6 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import type * as lspTypes from "vscode-languageserver-protocol";
-
 export function wrapCommand(
   command: (...args: any[]) => void
 ): (...args: any[]) => void {
