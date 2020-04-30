@@ -7,7 +7,7 @@
   "scripts": {
     "build": "concurrently 'yarn:build:*'",
     "build:main": "rollup -c rollup.config.main.js",
-    "build:dependencies": "yarn install --production --frozen-lockfile --modules-folder typescript.novaextension/node_modules",
+    "build:dependencies": "yarn install --no-bin-links --production --frozen-lockfile --modules-folder typescript.novaextension/node_modules",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:eslint": "eslint --ignore-path .gitignore \"**/*.{ts,js}\"",
     "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json}\"",

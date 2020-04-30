@@ -1,6 +1,6 @@
 # Typescript Language Server
 
-This extension provides rich typescript integration through a dedicated language server, that works for both typescript and javascript files.
+This extension provides rich typescript integration through a dedicated language server for both typescript and javascript files. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline.
 
 ### Editor commands:
 

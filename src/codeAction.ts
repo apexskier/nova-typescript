@@ -3,6 +3,18 @@ import { rangeToLspRange, wrapCommand } from "./utils";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
+/*
+// add to extension.json when this is ready
+      {
+        "title": "Code Action",
+        "command": "apexskier.typescript.codeAction",
+        "when": "editorHasFocus",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
+      }
+*/
+
 export function registerCodeAction(client: LanguageClient) {
   return nova.commands.register(
     "apexskier.typescript.codeAction",

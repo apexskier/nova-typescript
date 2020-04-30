@@ -14,7 +14,8 @@ cd "$WORKSPACE_DIR"
 # note: --tsserver-path=".../tsserver.js" doesn't support debugging since it tries to fork and bind two processes to the same port
 
 # path is stripped in the extension execution environment somehow
+# symlinks have issues when the extension is submitted to the library, so we don't use node_modules/.bin
 PATH=$(dirname $(command -v node)) node \
-	"$DIR/node_modules/.bin/typescript-language-server" \
+	"$DIR/node_modules/typescript-language-server/lib/cli.js" \
 	--stdio \
 	--tsserver-path="$TSSERVER_PATH"

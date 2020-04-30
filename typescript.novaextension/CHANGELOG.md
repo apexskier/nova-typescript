@@ -1,5 +1,10 @@
 # Changelog
 
-## v0.0.1
+## v1.0.0
 
-* Initial release using sourcegraph's language server
+Initial release
+
+* Language Server support
+* Custom typescript installation support
+* "Go to Definition" editor command
+* "Rename" editor command
