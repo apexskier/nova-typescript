@@ -23,7 +23,11 @@ export function registerFindSymbol(client: LanguageClient) {
 
     query = await new Promise<string | null>((resolve) => {
       if (query != null) {
-        workspace.showInputPalette("Search for a symbol name", { placeholder: query }, resolve);
+        workspace.showInputPalette(
+          "Search for a symbol name",
+          { placeholder: query },
+          resolve
+        );
       } else {
         workspace.showInputPalette("Search for a symbol name", {}, resolve);
       }

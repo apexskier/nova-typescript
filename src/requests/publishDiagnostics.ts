@@ -3,6 +3,8 @@ import type * as lspTypes from "vscode-languageserver-protocol";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
+// NOTE: this doesn't work. The Nova language editor intercepts these
+
 export function registerPublishDiagnostics(client: LanguageClient) {
   client.onRequest(
     "textDocument/publishDiagnostics",

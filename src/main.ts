@@ -2,7 +2,6 @@ import { registerGoToDefinition } from "./commands/goToDefinition";
 import { registerRename } from "./commands/rename";
 import { registerCodeAction } from "./commands/codeAction";
 import { registerApplyEdit } from "./requests/applyEdit";
-import { registerPublishDiagnostics } from "./requests/publishDiagnostics";
 import { registerFindSymbol } from "./commands/findSymbol";
 import { wrapCommand } from "./novaUtils";
 
@@ -101,7 +100,6 @@ export async function activate() {
   ];
 
   registerApplyEdit(client);
-  registerPublishDiagnostics(client);
 
   client.start();
 }
