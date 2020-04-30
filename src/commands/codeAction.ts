@@ -31,7 +31,7 @@ export function registerCodeAction(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       range: selectedLspRange,
       context: {
-        diagnostics: [], // TODO: Diagnostics are sent to the client from the service, but aren't exposed from nova
+        diagnostics: [], // Diagnostics are sent to the client from the service, but aren't exposed from nova
       },
     };
     const response = (await client.sendRequest(
@@ -57,7 +57,6 @@ export function registerCodeAction(client: LanguageClient) {
       if (choice.edit) {
         await applyWorkspaceEdit(choice.edit);
       }
-      // TODO: CodeAction should likely save files before executing commands
       if (choice.command) {
         const response = await executeCommand(client, choice.command);
         console.log(JSON.stringify(response));
