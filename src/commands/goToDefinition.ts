@@ -1,15 +1,18 @@
+// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as lsp from "vscode-languageserver-types";
+import { wrapCommand, openFile } from "../novaUtils";
 import {
   rangeToLspRange,
-  lspRangeToRange,
-  isArray,
   isLspLocationArray,
-  wrapCommand,
-  openFile,
-} from "./utils";
+  lspRangeToRange,
+} from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
+
+function isArray<T>(x: Array<T> | T): x is Array<T> {
+  return Array.isArray(x);
+}
 
 export function registerGoToDefinition(client: LanguageClient) {
   return nova.commands.register(

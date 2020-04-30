@@ -1,7 +1,9 @@
-import { registerGoToDefinition } from "./goToDefinition";
-import { registerRename } from "./rename";
-import { registerCodeAction } from "./codeAction";
-import { wrapCommand } from "./utils";
+import { registerGoToDefinition } from "./commands/goToDefinition";
+import { registerRename } from "./commands/rename";
+import { registerCodeAction } from "./commands/codeAction";
+import { registerApplyEdit } from "./requests/applyEdit";
+import { registerPublishDiagnostics } from "./requests/publishDiagnostics";
+import { wrapCommand } from "./novaUtils";
 
 // NOTE: this doesn't work - it's called repeatedly, not just when config changes
 // nova.config.observe("apexskier.typescript.config.tsserverPath");
@@ -52,22 +54,27 @@ export async function activate() {
     process.start();
   });
 
-  const serviceArgs = nova.inDevMode() && nova.workspace.path
-    ? {
-        path: "/usr/bin/env",
-        // bash -c needs us to wrap in quotes when there are spaces in the path
-        args: [
-          "bash",
-          "-c",
-          `'${runFile}'`,
-          "tee",
-          "|",
-          `${nova.path.join(nova.workspace.path, ".log", "languageClient.log")}`,
-        ],
-      }
-    : {
-        path: runFile,
-      };
+  const serviceArgs =
+    nova.inDevMode() && nova.workspace.path
+      ? {
+          path: "/usr/bin/env",
+          // bash -c needs us to wrap in quotes when there are spaces in the path
+          args: [
+            "bash",
+            "-c",
+            `'${runFile}'`,
+            "tee",
+            "|",
+            `${nova.path.join(
+              nova.workspace.path,
+              ".log",
+              "languageClient.log"
+            )}`,
+          ],
+        }
+      : {
+          path: runFile,
+        };
 
   client = new LanguageClient(
     "apexskier.typescript",
@@ -90,6 +97,9 @@ export async function activate() {
     registerRename(client),
     registerCodeAction(client),
   ];
+
+  registerApplyEdit(client);
+  registerPublishDiagnostics(client);
 
   client.start();
 }

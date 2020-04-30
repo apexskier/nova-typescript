@@ -1,7 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as lsp from "vscode-languageserver-types";
-
-// TODO: split up into less generically named files
 
 // this could really use some tests
 export function rangeToLspRange(
@@ -25,10 +24,6 @@ export function rangeToLspRange(
     chars += lineLength;
   }
   return null;
-}
-
-export function isArray<T>(x: Array<T> | T): x is Array<T> {
-  return Array.isArray(x);
 }
 
 // this could really use some tests
@@ -59,30 +54,4 @@ export function isLspLocationArray(
   x: Array<lspTypes.Location> | Array<lspTypes.LocationLink>
 ): x is Array<lspTypes.Location> {
   return lsp.Location.is(x[0]);
-}
-
-export function wrapCommand(
-  command: (...args: any[]) => void
-): (...args: any[]) => void {
-  return function wrapped(...args: any[]) {
-    try {
-      command(...args);
-    } catch (err) {
-      nova.workspace.showErrorMessage(err);
-    }
-  };
-}
-
-export async function openFile(uri: string) {
-  let newEditor = await nova.workspace.openFile(uri);
-  if (newEditor) {
-    return newEditor;
-  }
-  console.warn("failed first open attempt, retrying once", uri);
-  // try one more time, this doesn't resolve if the file isn't already open. Need to file a bug
-  newEditor = await nova.workspace.openFile(uri);
-  if (newEditor) {
-    return newEditor;
-  }
-  return null;
 }

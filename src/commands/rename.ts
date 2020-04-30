@@ -1,10 +1,8 @@
+// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import {
-  rangeToLspRange,
-  wrapCommand,
-  openFile,
-  lspRangeToRange,
-} from "./utils";
+import { applyWorkspaceEdit } from "../applyWorkspaceEdit";
+import { wrapCommand } from "../novaUtils";
+import { rangeToLspRange } from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
@@ -57,27 +55,5 @@ export function registerRename(client: LanguageClient) {
     // go back to original document
     nova.workspace.openFile(editor.document.uri);
     editor.scrollToCursorPosition();
-  }
-}
-
-async function applyWorkspaceEdit(workspaceEdit: lspTypes.WorkspaceEdit) {
-  if (!workspaceEdit.changes) {
-    return;
-  }
-  // this could be parallelized
-  for (const uri in workspaceEdit.changes) {
-    const changes = workspaceEdit.changes[uri];
-
-    const editor = await openFile(uri);
-    if (!editor) {
-      nova.workspace.showWarningMessage(`Failed to open ${uri}`);
-      continue;
-    }
-    editor.edit((textEditorEdit) => {
-      for (const change of changes.reverse()) {
-        const range = lspRangeToRange(editor.document, change.range);
-        textEditorEdit.replace(range, change.newText);
-      }
-    });
   }
 }

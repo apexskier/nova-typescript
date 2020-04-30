@@ -54,6 +54,14 @@
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
+      },
+      {
+        "title": "Code Action",
+        "command": "apexskier.typescript.codeAction",
+        "when": "editorHasFocus",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
       }
     ]
   }

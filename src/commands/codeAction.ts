@@ -1,19 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { rangeToLspRange, wrapCommand } from "./utils";
+import * as lsp from "vscode-languageserver-types";
+import { applyWorkspaceEdit } from "../applyWorkspaceEdit";
+import { wrapCommand } from "../novaUtils";
+import { rangeToLspRange } from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
-
-/*
-// add to extension.json when this is ready
-      {
-        "title": "Code Action",
-        "command": "apexskier.typescript.codeAction",
-        "when": "editorHasFocus",
-        "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
-        }
-      }
-*/
 
 export function registerCodeAction(client: LanguageClient) {
   return nova.commands.register(
@@ -37,7 +29,7 @@ export function registerCodeAction(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       range: selectedLspRange,
       context: {
-        diagnostics: [],
+        diagnostics: [], // TODO: Diagnostics are sent to the client from the service, but aren't exposed from nova
       },
     };
     const response = (await client.sendRequest(
@@ -61,5 +53,32 @@ export function registerCodeAction(client: LanguageClient) {
     }
     const choice = response[choiceIndex];
     console.log(JSON.stringify(choice));
+    if (lsp.Command.is(choice)) {
+      const response = await executeCommand(client, choice);
+      console.log(JSON.stringify(response));
+    } else {
+      if (choice.edit) {
+        await applyWorkspaceEdit(choice.edit);
+      }
+      // TODO: CodeAction should likely save files before executing commands
+      if (choice.command) {
+        const response = await executeCommand(client, choice.command);
+        console.log(JSON.stringify(response));
+      }
+    }
   }
+}
+
+// https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_executeCommand
+// NOTE: this actually handled "externally" in the applyEdit command handler
+async function executeCommand(
+  client: LanguageClient,
+  command: lspTypes.Command
+) {
+  console.info("executing command", command.command);
+  const params: lspTypes.ExecuteCommandParams = {
+    command: command.command,
+    arguments: command.arguments,
+  };
+  return client.sendRequest("workspace/executeCommand", params) as any | null;
 }
