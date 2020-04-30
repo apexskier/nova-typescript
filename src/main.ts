@@ -16,30 +16,65 @@ nova.commands.register(
 let client: LanguageClient | null = null;
 let commands: Array<Disposable> = [];
 
-export function activate() {
+export async function activate() {
   console.log("activating...");
 
   // I'd love it if workspace config path items were saved relative to the workspace, so they could be checked into source control
   const tsserverPath =
     nova.config.get("apexskier.typescript.config.tsserverPath", "string") ??
-    nova.workspace.path ? `${nova.workspace.path}/node_modules/.bin/tsserver` : "";
-  console.log(tsserverPath);
+    nova.workspace.path
+      ? `${nova.workspace.path}/node_modules/.bin/tsserver`
+      : "";
+  console.info("using tsserver", tsserverPath);
   if (!nova.fs.access(tsserverPath, nova.fs.F_OK)) {
     // This could be improved
     nova.workspace.showErrorMessage(
       "Your tsserver couldn't be found, please configure it manually in yoru workspace extension settings."
     );
-    
+
     return;
   }
+
+  const runFile = nova.path.join(nova.extension.path, "run.sh");
+
+  // Uploading to the extension library makes this file not executable, so fix that
+  await new Promise((resolve, reject) => {
+    const process = new Process("/usr/bin/env", {
+      args: ["chmod", "u+x", runFile],
+    });
+    process.onDidExit((status) => {
+      if (status === 0) {
+        resolve();
+      } else {
+        reject(status);
+      }
+    });
+    process.start();
+  });
+
+  const serviceArgs = nova.inDevMode() && nova.workspace.path
+    ? {
+        path: "/usr/bin/env",
+        // bash -c needs us to wrap in quotes when there are spaces in the path
+        args: [
+          "bash",
+          "-c",
+          `'${runFile}'`,
+          "tee",
+          "|",
+          `${nova.path.join(nova.workspace.path, ".log", "languageClient.log")}`,
+        ],
+      }
+    : {
+        path: runFile,
+      };
 
   client = new LanguageClient(
     "apexskier.typescript",
     "Typescript Language Server",
     {
       type: "stdio",
-      path: "/usr/bin/env",
-      args: ["bash", "-c", `${nova.extension.path}/run.sh`],
+      ...serviceArgs,
       env: {
         TSSERVER_PATH: tsserverPath,
         WORKSPACE_DIR: nova.workspace.path ?? "",
@@ -55,12 +90,11 @@ export function activate() {
     registerRename(client),
     registerCodeAction(client),
   ];
-  
+
   client.start();
 }
 
 export function deactivate() {
-  console.log("deactivating...");
   client?.stop();
   commands.forEach((command) => command.dispose());
 }

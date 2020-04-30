@@ -3,6 +3,7 @@ import * as lsp from "vscode-languageserver-types";
 
 // TODO: split up into less generically named files
 
+// this could really use some tests
 export function rangeToLspRange(
   document: TextDocument,
   range: Range
@@ -14,9 +15,7 @@ export function rangeToLspRange(
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
     const lineLength = lines[lineIndex].length + document.eol.length;
     if (!startLspRange && chars + lineLength >= range.start) {
-      // console.log(lines[lineIndex]);
       const character = range.start - chars;
-      // console.log(new Array(character).fill(" ").join("") + "↑")
       startLspRange = { line: lineIndex, character };
     }
     if (startLspRange && chars + lineLength >= range.end) {
@@ -76,11 +75,10 @@ export function wrapCommand(
 
 export async function openFile(uri: string) {
   let newEditor = await nova.workspace.openFile(uri);
-  console.log(newEditor);
   if (newEditor) {
     return newEditor;
   }
-  console.log("trying to reopen");
+  console.warn("failed first open attempt, retrying once", uri);
   // try one more time, this doesn't resolve if the file isn't already open. Need to file a bug
   newEditor = await nova.workspace.openFile(uri);
   if (newEditor) {

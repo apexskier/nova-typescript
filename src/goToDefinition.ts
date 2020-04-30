@@ -56,7 +56,6 @@ export function registerGoToDefinition(client: LanguageClient) {
     // TODO: If there's more than one result, show that somehow
 
     async function handleLocation(location: lspTypes.Location) {
-      console.log("Location");
       if (location.uri === editor.document.uri) {
         handleRangeInEditor(editor, location.range);
       } else {
@@ -70,7 +69,6 @@ export function registerGoToDefinition(client: LanguageClient) {
     }
 
     async function handleLocationLink(location: lspTypes.LocationLink) {
-      console.log("LocationLink");
       if (location.targetUri === editor.document.uri) {
         handleRangeInEditor(editor, location.targetSelectionRange);
       } else {

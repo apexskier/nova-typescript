@@ -52,7 +52,6 @@ export function registerRename(client: LanguageClient) {
       nova.workspace.showWarningMessage("Couldn't rename symbol.");
       return;
     }
-    console.log(JSON.stringify(response));
     await applyWorkspaceEdit(response);
 
     // go back to original document
