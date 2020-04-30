@@ -7,11 +7,16 @@ import { lspRangeToRange } from "../lspNovaConversions";
 
 export function registerFindSymbol(client: LanguageClient) {
   let query: string | null = null;
+  let lastTreeView: TreeView<unknown> | null = null;
 
-  return nova.commands.register(
-    "apexskier.typescript.findSymbol",
-    wrapCommand(findSymbol)
+  const compositeDisposable = new CompositeDisposable();
+  compositeDisposable.add(
+    nova.commands.register(
+      "apexskier.typescript.findSymbol",
+      wrapCommand(findSymbol)
+    )
   );
+  return compositeDisposable;
 
   async function findSymbol(workspace: Workspace) {
     console.log("apexskier.typescript.findSymbol");
@@ -66,8 +71,13 @@ export function registerFindSymbol(client: LanguageClient) {
         dataProvider,
       }
     );
-    nova.subscriptions.add(treeView);
-    
+    if (lastTreeView) {
+      compositeDisposable.remove(lastTreeView);
+      lastTreeView.dispose();
+    }
+    lastTreeView = treeView;
+    compositeDisposable.add(treeView);
+
     treeView.onDidChangeSelection((elements) => {
       elements.forEach((element) => {
         handleLocation(element.location);
@@ -82,7 +92,7 @@ export function registerFindSymbol(client: LanguageClient) {
     //   focus: true,
     // });
     // await treeView.reload();
-    
+
     if (!treeView.visible) {
       nova.workspace.showInformativeMessage(
         "Done! View the TS/JS sidebar to see results."
