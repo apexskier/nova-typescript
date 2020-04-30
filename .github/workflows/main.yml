@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: 
+    - master
+  pull_request:
+    branches: 
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: todo-actions
+      if: github.event == 'push'
+      uses: dtinth/todo-actions@v0.2.0
