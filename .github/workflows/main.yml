@@ -27,5 +27,5 @@ jobs:
       run: yarn lint:prettier
 
     - name: todo-actions
-      if: github.event == 'push'
+      if: github.event_name == 'push'
       uses: dtinth/todo-actions@v0.2.0
