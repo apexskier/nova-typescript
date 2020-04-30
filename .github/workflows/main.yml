@@ -28,9 +28,13 @@ jobs:
     
     - name: Prettier
       run: yarn lint:prettier
-
-    - name: todo-actions
-      if: github.event_name == 'push'
-      uses: dtinth/todo-actions@v0.2.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: "Create issues from TODOs"
+      uses: "alstr/todo-to-issue-action@v1.1-beta"
+      with:
+        REPO: ${{ github.repository }}
+        BEFORE: ${{ github.event.before }}
+        SHA: ${{ github.sha }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LABEL: "// TODO"
+        COMMENT_MARKER: "//"
