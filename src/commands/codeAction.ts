@@ -2,7 +2,7 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as lsp from "vscode-languageserver-types";
 import { applyWorkspaceEdit } from "../applyWorkspaceEdit";
-import { wrapCommand } from "../novaUtils";
+import { wrapCommand, showChoicePalette } from "../novaUtils";
 import { rangeToLspRange } from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
@@ -43,17 +43,12 @@ export function registerCodeAction(client: LanguageClient) {
       return;
     }
 
-    const choiceIndex = await new Promise<number | null>((resolve) =>
-      nova.workspace.showChoicePalette(
-        response.map((c) => c.title),
-        { placeholder: "Choose an action" },
-        (_, index) => resolve(index)
-      )
-    );
-    if (choiceIndex == null) {
+    const choice = await showChoicePalette(response, (c) => c.title, {
+      placeholder: "Choose an action",
+    });
+    if (choice == null) {
       return;
     }
-    const choice = response[choiceIndex];
     console.log(JSON.stringify(choice));
     if (lsp.Command.is(choice)) {
       const response = await executeCommand(client, choice);

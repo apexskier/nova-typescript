@@ -4,7 +4,7 @@
   "vendor": "Cameron Little",
   "description": "Advanced typescript language support for Nova",
   "version": "1.0.1",
-  "categories": ["languages", "issues"],
+  "categories": ["languages", "issues", "sidebars"],
   "license": "MIT",
   "repository": "https://github.com/apexskier/nova-typescript",
   "bugs": "https://github.com/apexskier/nova-typescript/issues",
@@ -31,11 +31,37 @@
     }
   ],
 
+  "sidebars": [
+    {
+      "id": "apexskier.typescript.sidebars.findSymbol",
+      "name": "TS/JS",
+      "sections": [
+        {
+          "id": "apexskier.typescript.sidebars.findSymbol.symbols",
+          "name": "Symbols",
+          "placeholderText": "Search for a symbol.",
+          "headerCommands": [
+            {
+              "title": "Search",
+              "image": "__builtin.refresh",
+              "tooltip": "Open the Find Symbol palette",
+              "command": "apexskier.typescript.findSymbol"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
   "commands": {
     "extensions": [
       {
         "title": "Open Typescript workspace configuration",
         "command": "apexskier.typescript.openWorkspaceConfig"
+      },
+      {
+        "title": "Find Symbol",
+        "command": "apexskier.typescript.findSymbol"
       }
     ],
     "editor": [

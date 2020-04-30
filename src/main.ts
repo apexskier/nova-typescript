@@ -3,6 +3,7 @@ import { registerRename } from "./commands/rename";
 import { registerCodeAction } from "./commands/codeAction";
 import { registerApplyEdit } from "./requests/applyEdit";
 import { registerPublishDiagnostics } from "./requests/publishDiagnostics";
+import { registerFindSymbol } from "./commands/findSymbol";
 import { wrapCommand } from "./novaUtils";
 
 // NOTE: this doesn't work - it's called repeatedly, not just when config changes
@@ -96,6 +97,7 @@ export async function activate() {
     registerGoToDefinition(client),
     registerRename(client),
     registerCodeAction(client),
+    registerFindSymbol(client),
   ];
 
   registerApplyEdit(client);

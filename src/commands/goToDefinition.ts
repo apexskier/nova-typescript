@@ -49,7 +49,7 @@ export function registerGoToDefinition(client: LanguageClient) {
       return;
     }
 
-    async function handleRangeInEditor(
+    async function showRangeInEditor(
       _editor: TextEditor,
       range: lspTypes.Range
     ) {
@@ -62,20 +62,20 @@ export function registerGoToDefinition(client: LanguageClient) {
 
     async function handleLocation(location: lspTypes.Location) {
       if (location.uri === editor.document.uri) {
-        handleRangeInEditor(editor, location.range);
+        showRangeInEditor(editor, location.range);
       } else {
         const newEditor = await openFile(location.uri);
         if (!newEditor) {
           nova.workspace.showWarningMessage(`Failed to open ${location.uri}`);
           return;
         }
-        handleRangeInEditor(newEditor, location.range);
+        showRangeInEditor(newEditor, location.range);
       }
     }
 
     async function handleLocationLink(location: lspTypes.LocationLink) {
       if (location.targetUri === editor.document.uri) {
-        handleRangeInEditor(editor, location.targetSelectionRange);
+        showRangeInEditor(editor, location.targetSelectionRange);
       } else {
         const newEditor = await openFile(location.targetUri);
         if (!newEditor) {
@@ -84,7 +84,7 @@ export function registerGoToDefinition(client: LanguageClient) {
           );
           return;
         }
-        handleRangeInEditor(newEditor, location.targetSelectionRange);
+        showRangeInEditor(newEditor, location.targetSelectionRange);
       }
     }
 
