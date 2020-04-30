@@ -32,3 +32,5 @@ jobs:
     - name: todo-actions
       if: github.event_name == 'push'
       uses: dtinth/todo-actions@v0.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
