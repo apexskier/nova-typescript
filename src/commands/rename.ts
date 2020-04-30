@@ -22,7 +22,9 @@ export function registerRename(client: LanguageClient) {
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;
     if (!selectedPosition) {
-      nova.workspace.showErrorMessage("Couldn't figure out what to show.");
+      nova.workspace.showErrorMessage(
+        "Couldn't figure out what you've selected."
+      );
       return;
     }
 

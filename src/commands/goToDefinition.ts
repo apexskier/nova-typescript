@@ -27,7 +27,9 @@ export function registerGoToDefinition(client: LanguageClient) {
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;
     if (!selectedPosition) {
-      nova.workspace.showWarningMessage("Couldn't figure out what to show.");
+      nova.workspace.showWarningMessage(
+        "Couldn't figure out what you've selected."
+      );
       return;
     }
     const definitionParams: lspTypes.TypeDefinitionParams = {

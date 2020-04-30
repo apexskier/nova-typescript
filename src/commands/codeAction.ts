@@ -19,7 +19,9 @@ export function registerCodeAction(client: LanguageClient) {
     const selectedRange = editor.selectedRange;
     const selectedLspRange = rangeToLspRange(editor.document, selectedRange);
     if (!selectedLspRange) {
-      nova.workspace.showErrorMessage("Couldn't figure out what to show.");
+      nova.workspace.showErrorMessage(
+        "Couldn't figure out what you've selected."
+      );
       return;
     }
 
