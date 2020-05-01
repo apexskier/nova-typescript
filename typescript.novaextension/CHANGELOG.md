@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.2.0
+
+### Added
+
+* Bundled typescript server (so this'll work on non-typescript or new projects)
+* Add current typescript version to sidebar
+* Improved "Find Symbol" sidebar
+
+### Fixed
+
+* Fewer warnings about misconfigured typescript
+
+### Changed
+
+* Configuration for custom typescript installation has changed
+
 ## v1.1.0
 
 ### Added

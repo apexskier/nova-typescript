@@ -28,7 +28,7 @@ From the menu, select Extensions > Typescript.
 
 **Find Symbol**
 
-![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/c31a084b08803f531b37d3aefdce76cfcf6e7b86/typescript.novaextension/Images/README/example-findsymbol.png)
+![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png)
 
 <!--
 Logo credit: https://github.com/remojansen/logo.ts/blob/master/ts.svg
