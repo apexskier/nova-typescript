@@ -2,8 +2,6 @@
 
 This is a plugin providing typescript language support for the new [Nova editor from Panic](https://panic.com/nova/).
 
-It is a **work in progress**, but does work. There's currently a [bug in the editor](https://dev.panic.com/panic/nova-issues/-/issues/888) preventing me from publishing.
-
 See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44290 for nova extension types.
 
 [Extension README](./typescript.novaextension/README.md)
