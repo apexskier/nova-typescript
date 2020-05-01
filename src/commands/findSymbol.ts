@@ -5,6 +5,18 @@ import { lspRangeToRange } from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
+let hr = new RegExp("^" + escapeRegExp(`file://${nova.environment["HOME"]}`));
+function cleanPath(path: string) {
+  const decodedPath = decodeURIComponent(path);
+  let wr = new RegExp("^" + escapeRegExp(`file://${nova.workspace.path}`));
+  return decodedPath.replace(wr, ".").replace(hr, "~");
+}
+
+// https://stackoverflow.com/a/6969486
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+}
+
 export function registerFindSymbol(client: LanguageClient) {
   let query: string | null = null;
   let lastTreeView: TreeView<unknown> | null = null;
@@ -48,21 +60,41 @@ export function registerFindSymbol(client: LanguageClient) {
       return;
     }
 
-    const dataProvider: TreeDataProvider<lspTypes.SymbolInformation> = {
+    // group results by file
+    const files = new Map<string, Array<lspTypes.SymbolInformation>>();
+    response.forEach((r) => {
+      if (!files.has(r.location.uri)) {
+        files.set(r.location.uri, []);
+      }
+      files.get(r.location.uri)?.push(r);
+    });
+
+    const dataProvider: TreeDataProvider<
+      string | lspTypes.SymbolInformation
+    > = {
       getChildren(element) {
         if (element == null) {
-          return response;
+          return Array.from(files.keys());
+        } else if (typeof element === "string") {
+          return files.get(element) ?? [];
         }
         return [];
       },
       getTreeItem(element) {
+        if (typeof element === "string") {
+          const item = new TreeItem(
+            cleanPath(element),
+            TreeItemCollapsibleState.Expanded
+          );
+          item.path = element;
+          return item;
+        }
         const item = new TreeItem(element.name, TreeItemCollapsibleState.None);
         item.descriptiveText = `${
           element.containerName ? `${element.containerName} > ` : ""
         }${symbolKindToText[element.kind]}${
           element.deprecated ? " (deprecated)" : ""
         }`;
-        item.path = element.location.uri;
         let position = element.location.range.start;
         item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
         return item;
@@ -81,7 +113,9 @@ export function registerFindSymbol(client: LanguageClient) {
 
     treeView.onDidChangeSelection((elements) => {
       elements.forEach((element) => {
-        handleLocation(element.location);
+        if (typeof element !== "string") {
+          handleLocation(element.location);
+        }
       });
     });
 
@@ -117,6 +151,8 @@ async function handleLocation(location: lspTypes.Location) {
   showRangeInEditor(newEditor, location.range);
 }
 
+// pulled from types
+// TODO: it would be nice to map each of these to a custom icon
 const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   1: "File",
   2: "Module",
