@@ -14,7 +14,7 @@
     "fix": "concurrently 'yarn:fix:*'",
     "fix:eslint": "eslint --fix --ignore-path .gitignore \"**/*.{ts,js}\"",
     "fix:prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js,json}\"",
-    "watch": "onchange -i \"src/**\" \"rollup.*.js\" -- npm run build"
+    "watch": "npm run build:dependencies && onchange -i \"src/**\" \"rollup.*.js\" -- npm run build:main"
   },
   "repository": {
     "type": "git",
