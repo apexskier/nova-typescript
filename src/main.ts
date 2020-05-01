@@ -31,7 +31,7 @@ export async function activate() {
   if (!nova.fs.access(tsserverPath, nova.fs.F_OK)) {
     // This could be improved
     nova.workspace.showErrorMessage(
-      "Your tsserver couldn't be found, please configure it manually in yoru workspace extension settings."
+      "Your tsserver couldn't be found, please configure it manually in your workspace extension settings."
     );
 
     return;
