@@ -69,12 +69,9 @@ export function registerFindSymbol(client: LanguageClient) {
       },
     };
 
-    const treeView = new TreeView(
-      "apexskier.typescript.sidebars.findSymbol.symbols",
-      {
-        dataProvider,
-      }
-    );
+    const treeView = new TreeView("apexskier.typescript.sidebar.symbols", {
+      dataProvider,
+    });
     if (lastTreeView) {
       compositeDisposable.remove(lastTreeView);
       lastTreeView.dispose();

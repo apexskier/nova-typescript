@@ -16,4 +16,11 @@ cd "$WORKSPACE_DIR"
 PATH=$(dirname $(command -v node)) node \
 	"$DIR/node_modules/typescript-language-server/lib/cli.js" \
 	--stdio \
-	--tsserver-path="$TSSERVER_PATH"
+	--tsserver-path="$TSLIB_PATH/tsserver.js"
+
+# use this for debugging
+# PATH=$(dirname $(command -v node)) node \
+# 	--inspect \
+# 	"$DIR/node_modules/typescript-language-server/lib/cli.js" \
+# 	--stdio \
+# 	--tsserver-path="$TSLIB_PATH/../bin/tsserver"

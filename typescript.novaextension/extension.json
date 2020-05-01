@@ -24,26 +24,38 @@
 
   "config-workspace": [
     {
-      "key": "apexskier.typescript.config.tsserverPath",
-      "title": "Path to tsserver",
-      "description": "Path to your locally installed tsserver executable, generally in node_modules/.bin/tsserver.",
+      "key": "apexskier.typescript.config.tslibPath",
+      "title": "Typescript Library",
+      "description": "Path to your locally installed typescript library, generally in node_modules/typescript/lib.",
       "type": "path"
     }
   ],
 
   "sidebars": [
     {
-      "id": "apexskier.typescript.sidebars.findSymbol",
+      "id": "apexskier.typescript.sidebar",
       "name": "TS/JS",
       "sections": [
         {
-          "id": "apexskier.typescript.sidebars.findSymbol.symbols",
+          "id": "apexskier.typescript.sidebar.info",
+          "name": "Information",
+          "placeholderText": "Typescript Extension Information",
+          "headerCommands": [
+            {
+              "title": "Refresh",
+              "image": "__builtin.refresh",
+              "command": "apexskier.typescript.refreshInformation"
+            }
+          ]
+        },
+        {
+          "id": "apexskier.typescript.sidebar.symbols",
           "name": "Symbols",
-          "placeholderText": "Search for a symbol.",
+          "placeholderText": "Find Symbol",
           "headerCommands": [
             {
               "title": "Search",
-              "image": "__builtin.refresh",
+              "image": "__builtin.add",
               "tooltip": "Open the Find Symbol palette",
               "command": "apexskier.typescript.findSymbol"
             }
@@ -56,7 +68,7 @@
   "commands": {
     "extensions": [
       {
-        "title": "Open Typescript workspace configuration",
+        "title": "Preferences",
         "command": "apexskier.typescript.openWorkspaceConfig"
       },
       {
