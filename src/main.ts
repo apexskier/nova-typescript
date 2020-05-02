@@ -19,20 +19,19 @@ nova.commands.register(
 let client: LanguageClient | null = null;
 let commands: Array<Disposable> = [];
 
+// I hope this is safe to run concurrently
 async function installWrappedDependencies() {
-  console.log("installing wrapped dependencies");
-  console.log(nova.extension.path)
   return new Promise((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
       args: ["npm", "install"],
       cwd: nova.extension.path,
-      stdio: "ignore"
+      stdio: "ignore",
     });
     process.onDidExit((status) => {
       if (status === 0) {
         resolve();
       } else {
-        reject();
+        reject(new Error("failed to install"));
       }
     });
     process.start();
@@ -44,7 +43,13 @@ export async function activate() {
 
   informationView.status = "Activating...";
 
-  await installWrappedDependencies();
+  try {
+    await installWrappedDependencies();
+  } catch (err) {
+    console.error(err);
+    informationView.status = "Failed to install";
+    return;
+  }
 
   // this determines which version of typescript is being run
   // it should be project specific, so find the best option in this order:

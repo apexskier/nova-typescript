@@ -4,9 +4,9 @@
 
 ### Added
 
-* Bundled typescript server (so this'll work on non-typescript or new projects)
-* Add current typescript version to sidebar
-* Improved "Find Symbol" sidebar
+* Display active typescript version to sidebar
+* Improved "Find Symbol" sidebar UI
+* Extension falls back to it's own installation of typescript
 
 ### Fixed
 
@@ -15,6 +15,7 @@
 ### Changed
 
 * Configuration for custom typescript installation has changed
+* Language server isn't bundled with published extension
 
 ## v1.1.0
 
