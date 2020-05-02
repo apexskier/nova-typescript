@@ -3,12 +3,14 @@
     "target": "es5",
     "sourceMap": true,
     "rootDir": ".",
+    "baseUrl": ".",
     "noEmit": true,
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["../DefinitelyTyped/types/nova-editor"], // FIXME
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["../DefinitelyTyped/types"],
+    "types": ["nova-editor"]
   }
 }

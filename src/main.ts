@@ -19,16 +19,38 @@ nova.commands.register(
 let client: LanguageClient | null = null;
 let commands: Array<Disposable> = [];
 
+async function installWrappedDependencies() {
+  console.log("installing wrapped dependencies");
+  console.log(nova.extension.path)
+  return new Promise((resolve, reject) => {
+    const process = new Process("/usr/bin/env", {
+      args: ["npm", "install"],
+      cwd: nova.extension.path,
+      stdio: "ignore"
+    });
+    process.onDidExit((status) => {
+      if (status === 0) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+    process.start();
+  });
+}
+
 export async function activate() {
   console.log("activating...");
 
   informationView.status = "Activating...";
 
+  await installWrappedDependencies();
+
   // this determines which version of typescript is being run
   // it should be project specific, so find the best option in this order:
   // - explicitly configured
   // - best guess (installed in the main node_modules)
-  // - bundled with plugin (no choice of version)
+  // - within plugin (no choice of version)
   let tslibPath: string;
   // I'd love it if workspace config path items were saved relative to the workspace, so they could be checked into source control
   // TODO: Configured tslib path isn't working
