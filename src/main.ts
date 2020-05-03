@@ -144,7 +144,7 @@ export async function activate() {
       },
     },
     {
-      syntaxes: ["typescript", "javascript"],
+      syntaxes: ["typescript", "tsx", "javascript", "jsx"],
     }
   );
 
