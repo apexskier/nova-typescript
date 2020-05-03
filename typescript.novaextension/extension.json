@@ -50,8 +50,7 @@
         },
         {
           "id": "apexskier.typescript.sidebar.symbols",
-          "name": "Symbols",
-          "placeholderText": "Find Symbol",
+          "name": "Search Results",
           "headerCommands": [
             {
               "title": "Search",

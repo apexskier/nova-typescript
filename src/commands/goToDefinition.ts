@@ -7,6 +7,7 @@ import {
   isLspLocationArray,
   lspRangeToRange,
 } from "../lspNovaConversions";
+import { createLocationSearchResultsTree } from "../searchResults";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
@@ -100,8 +101,19 @@ export function registerGoToDefinition(client: LanguageClient) {
       }
     } else {
       if (isLspLocationArray(response)) {
+        createLocationSearchResultsTree(editor.selectedText, response);
         response.forEach(handleLocation);
       } else {
+        createLocationSearchResultsTree(
+          editor.selectedText,
+          response.map(
+            (r) =>
+              ({
+                uri: r.targetUri,
+                range: r.targetSelectionRange,
+              } as lspTypes.Location)
+          )
+        );
         response.forEach(handleLocationLink);
       }
     }
