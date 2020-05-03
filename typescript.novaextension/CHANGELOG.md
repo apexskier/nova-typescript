@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.3.0
+
+### Added
+
+* Show "Go to Definition" results in sidebar for multiple results
+
+### Fixed
+
+* Allow "Code Actions" and "Go to Definition" when editor doesn't have focus.
+
 ## v1.2.1
 
 ### Fixed
