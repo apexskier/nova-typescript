@@ -79,7 +79,6 @@
       {
         "title": "Go to Definition",
         "command": "apexskier.typescript.goToDefinition",
-        "when": "editorHasFocus",
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
@@ -87,7 +86,6 @@
       {
         "title": "Rename Symbol",
         "command": "apexskier.typescript.rename",
-        "when": "editorHasFocus",
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
