@@ -1,6 +1,6 @@
-# Typescript Language Server
+# Typescript Extension
 
-This extension provides rich typescript integration through a dedicated language server for both typescript and javascript files. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors with code actions.
+This extension provides rich typescript integration through a dedicated language server for both typescript and javascript code. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors with code actions.
 
 ### Editor commands:
 
