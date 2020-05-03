@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2.1
+
+### Fixed
+
+* Fix tsx/jsx language support
+
 ## v1.2.0
 
 ### Added
