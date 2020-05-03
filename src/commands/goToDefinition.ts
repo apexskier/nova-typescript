@@ -89,10 +89,13 @@ export function registerGoToDefinition(client: LanguageClient) {
       }
     }
 
-    console.log(JSON.stringify(response));
-
     if (!isArray<lspTypes.Location | lspTypes.LocationLink>(response)) {
       handleLocation(response);
+    } else if (response.length === 0) {
+      nova.workspace.showWarningMessage(
+        "Couldn't figure out what you've selected."
+      );
+      return;
     } else if (response.length === 1) {
       if (lsp.Location.is(response[0])) {
         handleLocation(response[0]);
