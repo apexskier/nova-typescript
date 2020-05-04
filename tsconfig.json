@@ -2,8 +2,6 @@
   "compilerOptions": {
     "target": "es5",
     "sourceMap": true,
-    "rootDir": ".",
-    "baseUrl": ".",
     "noEmit": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -11,6 +9,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["../DefinitelyTyped/types"],
-    "types": ["nova-editor"]
+    "types": ["nova-editor-node"] // vscode-jsonrpc implicitly uses @types/node
   }
 }
