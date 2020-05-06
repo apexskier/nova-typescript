@@ -35,6 +35,8 @@
     {
       "id": "apexskier.typescript.sidebar",
       "name": "TS/JS",
+      "smallImage": "SidebarSmall",
+      "largeImage": "SidebarLarge",
       "sections": [
         {
           "id": "apexskier.typescript.sidebar.info",
@@ -54,7 +56,7 @@
           "headerCommands": [
             {
               "title": "Search",
-              "image": "__builtin.add",
+              "image": "Search",
               "tooltip": "Open the Find Symbol palette",
               "command": "apexskier.typescript.findSymbol"
             }

@@ -69,6 +69,7 @@ function symbolInformationSearchResultsTreeProvider(
         element.deprecated ? " (deprecated)" : ""
       }`;
       let position = element.location.range.start;
+      item.image = `Symbol_${symbolKindToText[element.kind]}`;
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
       return item;
     },
