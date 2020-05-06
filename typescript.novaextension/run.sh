@@ -21,6 +21,6 @@ PATH=$(dirname $(command -v node)) node \
 # use this for debugging
 # PATH=$(dirname $(command -v node)) node \
 # 	--inspect \
-# 	"$DIR/node_modules/typescript-language-server/lib/cli.js" \
+# 	"$DIR/../node_modules/typescript-language-server/lib/cli.js" \
 # 	--stdio \
 # 	--tsserver-path="$TSLIB_PATH/../bin/tsserver"
