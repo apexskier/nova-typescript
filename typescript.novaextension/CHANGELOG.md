@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4.0
+
+### Added
+
+* Add images to sidebar
+
+### Changed
+
+* Dev functionality and error handling
+
 ## v1.3.0
 
 ### Added
