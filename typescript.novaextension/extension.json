@@ -19,7 +19,7 @@
 
   "entitlements": {
     "process": true,
-    "filesystem": "readonly"
+    "filesystem": "readwrite"
   },
 
   "config-workspace": [
