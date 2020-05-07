@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.1
+
+### Changed
+
+* New sidebar icons from [Sam Gwilym](http://gwil.co)
+
 ## v1.4.0
 
 ### Added
