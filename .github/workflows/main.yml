@@ -21,13 +21,8 @@ jobs:
     - name: Install dependencies
       run: yarn
     
-    - name: ESLint
-      uses: hallee/eslint-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-    - name: Prettier
-      run: yarn lint:prettier
+    - name: Lint
+      run: yarn lint
       
     - name: "Create issues from TODOs"
       uses: "alstr/todo-to-issue-action@v1.1-beta"
