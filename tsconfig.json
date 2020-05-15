@@ -7,8 +7,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["../DefinitelyTyped/types"],
-    "types": ["nova-editor-node"] // vscode-jsonrpc implicitly uses @types/node
+    "forceConsistentCasingInFileNames": true
   }
 }
