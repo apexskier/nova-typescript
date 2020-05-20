@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.4.2
+
+### Changed
+
+* Upgrade bundled version of typescript to 3.9
+
 ## v1.4.1
 
 ### Changed

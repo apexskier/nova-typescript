@@ -3,7 +3,7 @@
   "name": "Typescript",
   "vendor": "Cameron Little",
   "description": "Advanced typescript language support for Nova",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "categories": ["languages", "issues", "sidebars"],
   "license": "MIT",
   "repository": "https://github.com/apexskier/nova-typescript",

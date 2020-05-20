@@ -1,6 +1,6 @@
 {
   "name": "nova-typescript",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Typescript language support for Nova.",
   "main": "",
   "private": true,
