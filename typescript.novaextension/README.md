@@ -16,7 +16,9 @@ From the menu, select Extensions > TypeScript.
 
 * Find Symbol
 
-### Screenshots
+### Usage
+
+#### Screenshots
 
 **Inline errors**
 
@@ -26,6 +28,20 @@ From the menu, select Extensions > TypeScript.
 
 ![Example type info](https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-typeinfo.png)
 
-**Find Symbol**
+#### Sidebar
+
+The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully.
+
+![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-findsymbol.png)
+
+#### Find Symbol
+
+Find symbol performs a project search for a symbol. Results are shown in the sidebar.
 
 ![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png)
+
+#### Using the workspace version of TypeScript
+
+This extension will automatically find the workspace version of TypeScript installed under `node_modules` in your workspace root. If one isn't installed it will use a recent, bundled version of typescript.
+
+To customize this you can specify the TypeScript library location in workspace preferences (Extensions > TypeScript > Preferences > TypeScript Library) as an absolute or workspace-relative path. This should point to a directory containing the TypeScript `tsserver.js` file, generally ending with `node_modules/typescript/lib`. If installed globally, you can find the installation location using `npm list -g typescript` (e.g. "/usr/local/lib/node_modules/typescript/lib"). (You should only need this if your workspace doesn't install typescript under the workspace's root `node_modules` directory or you use a global installation of TypeScript)

@@ -4,16 +4,19 @@ import { registerCodeAction } from "./commands/codeAction";
 import { registerApplyEdit } from "./requests/applyEdit";
 import { registerFindSymbol } from "./commands/findSymbol";
 import { wrapCommand } from "./novaUtils";
-import { informationView } from "./informationView";
-
-// NOTE: this doesn't work - it's called repeatedly, not just when config changes
-// nova.config.observe("apexskier.typescript.config.tslibPath");
+import { InformationView } from "./informationView";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
   wrapCommand(function openWorkspaceConfig(workspace: Workspace) {
     workspace.openConfig("apexskier.typescript");
   })
+);
+
+nova.config.onDidChange("apexskier.typescript.config.tslibPath", reload);
+nova.workspace.config.onDidChange(
+  "apexskier.typescript.config.tslibPath",
+  reload
 );
 
 let client: LanguageClient | null = null;
@@ -38,6 +41,13 @@ async function installWrappedDependencies() {
   });
 }
 
+async function reload() {
+  deactivate();
+  await activate();
+}
+
+const informationView = new InformationView(reload);
+
 export async function activate() {
   try {
     console.log("activating...");
@@ -58,14 +68,22 @@ export async function activate() {
     // - best guess (installed in the main node_modules)
     // - within plugin (no choice of version)
     let tslibPath: string;
-    // I'd love it if workspace config path items were saved relative to the workspace, so they could be checked into source control
-    // TODO: Configured tslib path isn't working
-    const configTslib = nova.config.get(
-      "apexskier.typescript.config.tslibPath",
-      "string"
-    );
+    const configTslib =
+      nova.workspace.config.get(
+        "apexskier.typescript.config.tslibPath",
+        "string"
+      ) ?? nova.config.get("apexskier.typescript.config.tslibPath", "string");
     if (configTslib) {
-      tslibPath = configTslib;
+      if (nova.path.isAbsolute(configTslib)) {
+        tslibPath = configTslib;
+      } else if (nova.workspace.path) {
+        tslibPath = nova.path.join(nova.workspace.path, configTslib);
+      } else {
+        nova.workspace.showErrorMessage(
+          "Save your workspace before using a relative TypeScript library path."
+        );
+        return;
+      }
     } else if (
       nova.workspace.path &&
       nova.fs.access(
@@ -86,7 +104,7 @@ export async function activate() {
     if (!nova.fs.access(tslibPath, nova.fs.F_OK)) {
       if (configTslib) {
         nova.workspace.showErrorMessage(
-          "Your typescript library couldn't be found, please check your settings."
+          "Your TypeScript library couldn't be found, please check your settings."
         );
       } else {
         console.error("typescript lib not found at", tslibPath);

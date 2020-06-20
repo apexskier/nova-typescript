@@ -4,15 +4,19 @@ type Element = {
   readonly identifier: string;
 };
 
-class InformationView {
-  constructor() {
+export class InformationView {
+  constructor(reload: () => Promise<void>) {
     this._treeView = new TreeView("apexskier.typescript.sidebar.info", {
       dataProvider: this,
     });
 
-    nova.commands.register("apexskier.typescript.refreshInformation", () => {
-      this.reload();
-    });
+    nova.commands.register(
+      "apexskier.typescript.refreshInformation",
+      async () => {
+        await reload();
+        this.reload();
+      }
+    );
 
     this.getChildren = this.getChildren.bind(this);
     this.getTreeItem = this.getTreeItem.bind(this);
@@ -58,5 +62,3 @@ class InformationView {
     return item;
   }
 }
-
-export const informationView = new InformationView();
