@@ -22,23 +22,23 @@ From the menu, select Extensions > TypeScript.
 
 **Inline errors**
 
-![Example errors](https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-error.png)
+<img src="https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-error.png" width="400" alt="Example errors">
 
 **Type info on hover**
 
-![Example type info](https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-typeinfo.png)
+<img src="https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-typeinfo.png" width="400" alt="Example type info">
 
 #### Sidebar
 
 The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully.
 
-![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-sidebar.png)
+<img src="https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-sidebar.png" width="400" alt="Sidebar information">
 
 #### Find Symbol
 
 Find symbol performs a project search for a symbol. Results are shown in the sidebar.
 
-![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png)
+<img src="https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png" width="400" alt="Find symbol sidebar">
 
 #### Using the workspace version of TypeScript
 
