@@ -133,7 +133,7 @@ export async function activate() {
 
     client = new LanguageClient(
       "apexskier.typescript",
-      "Typescript Language Server",
+      "TypeScript Language Server",
       {
         type: "stdio",
         ...serviceArgs,

@@ -1,8 +1,8 @@
 {
   "identifier": "apexskier.typescript",
-  "name": "Typescript",
+  "name": "TypeScript",
   "vendor": "Cameron Little",
-  "description": "Advanced typescript language support for Nova",
+  "description": "Advanced TypeScript language support for Nova",
   "version": "1.4.2",
   "categories": ["languages", "issues", "sidebars"],
   "license": "MIT",
@@ -25,8 +25,8 @@
   "config-workspace": [
     {
       "key": "apexskier.typescript.config.tslibPath",
-      "title": "Typescript Library",
-      "description": "Path to your locally installed typescript library, generally in node_modules/typescript/lib.",
+      "title": "TypeScript Library",
+      "description": "Path to your locally installed TypeScript library, generally in node_modules/typescript/lib.",
       "type": "path"
     }
   ],
@@ -41,7 +41,7 @@
         {
           "id": "apexskier.typescript.sidebar.info",
           "name": "Information",
-          "placeholderText": "Typescript Extension Information",
+          "placeholderText": "TypeScript Extension Information",
           "headerCommands": [
             {
               "title": "Refresh",

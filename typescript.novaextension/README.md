@@ -1,10 +1,10 @@
-# Typescript Extension
+# TypeScript Extension
 
-This extension provides rich typescript integration through a dedicated language server for both typescript and javascript code. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors with code actions.
+This extension provides rich TypeScript integration through a dedicated language server for both TypeScript and javascript code. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors with code actions.
 
 ### Editor commands:
 
-Right click source code and choose the following from the Typescript menu.
+Right click source code and choose the following from the TypeScript menu.
 
 * Go to Definition
 * Rename
@@ -12,7 +12,7 @@ Right click source code and choose the following from the Typescript menu.
 
 ### Workspace commands:
 
-From the menu, select Extensions > Typescript.
+From the menu, select Extensions > TypeScript.
 
 * Find Symbol
 

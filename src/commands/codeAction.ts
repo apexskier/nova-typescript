@@ -14,8 +14,6 @@ export function registerCodeAction(client: LanguageClient) {
   );
 
   async function codeAction(editor: TextEditor) {
-    console.log("apexskier.typescript.codeAction");
-
     const selectedRange = editor.selectedRange;
     const selectedLspRange = rangeToLspRange(editor.document, selectedRange);
     if (!selectedLspRange) {

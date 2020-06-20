@@ -12,8 +12,6 @@ export function registerSignatureHelp(client: LanguageClient) {
   );
 
   async function signatureHelp(editor: TextEditor) {
-    console.log("apexskier.typescript.signatureHelp");
-
     const selectedRange = editor.selectedRange;
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;

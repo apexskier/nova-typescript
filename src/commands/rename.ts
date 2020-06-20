@@ -13,8 +13,6 @@ export function registerRename(client: LanguageClient) {
   );
 
   async function rename(editor: TextEditor) {
-    console.log("apexskier.typescript.rename");
-
     // Select full word. It will be showed in a palette so the user can review it
     editor.selectWordsContainingCursors();
 

@@ -31,7 +31,7 @@ class InformationView {
   }
 
   private readonly _tsVersionElement: Element = {
-    title: "Typescript Version",
+    title: "TypeScript Version",
     value: "",
     identifier: "tsversion",
   };

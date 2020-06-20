@@ -6,7 +6,7 @@
 
 Clone this project, and open it in Nova. Run the Development task to build scripts and auto-rebuild on file changes.
 
-Turn on extension development in Nova in Preferences > General > Extension Development. I've you've installed the Typescript extension from the Extension Library, disable it, then activate the local one with Extensions > Activate Project as Extension.
+Turn on extension development in Nova in Preferences > General > Extension Development. I've you've installed the TypeScript extension from the Extension Library, disable it, then activate the local one with Extensions > Activate Project as Extension.
 
 ### Debugging
 

@@ -4,7 +4,7 @@
 
 ### Changed
 
-* Upgrade bundled version of typescript to 3.9
+* Upgrade bundled version of TypeScript to 3.9
 
 ## v1.4.1
 
@@ -42,17 +42,17 @@
 
 ### Added
 
-* Display active typescript version to sidebar
+* Display active TypeScript version to sidebar
 * Improved "Find Symbol" sidebar UI
-* Extension falls back to it's own installation of typescript
+* Extension falls back to it's own installation of TypeScript
 
 ### Fixed
 
-* Fewer warnings about misconfigured typescript
+* Fewer warnings about misconfigured TypeScript
 
 ### Changed
 
-* Configuration for custom typescript installation has changed
+* Configuration for custom TypeScript installation has changed
 * Language server isn't bundled with published extension
 
 ## v1.1.0
@@ -78,6 +78,6 @@
 Initial release
 
 * Language Server support
-* Custom typescript installation support
+* Custom TypeScript installation support
 * "Go to Definition" editor command
 * "Rename" editor command
