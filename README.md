@@ -2,7 +2,7 @@
 
 This is a plugin providing TypeScript language support for the new [Nova editor from Panic](https://panic.com/nova/).
 
-[**Install now**](nova://extension/?id=apexskier.typescript)
+[**Install now**](https://camlittle.com/typescript.novaextension)
 
 [Extension README](./typescript.novaextension/README.md)
 
