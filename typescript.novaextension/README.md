@@ -32,7 +32,7 @@ From the menu, select Extensions > TypeScript.
 
 The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully.
 
-![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-findsymbol.png)
+![Find symbol sidebar](https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-sidebar.png)
 
 #### Find Symbol
 
