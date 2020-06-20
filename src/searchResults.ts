@@ -137,13 +137,6 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
 
-  // TODO: Opening the treeview may be broken
-  // treeView.reveal(response[0], {
-  //   select: false,
-  //   focus: true,
-  // });
-  // await treeView.reload();
-
   if (!treeView.visible) {
     nova.workspace.showInformativeMessage(
       "Done! View the TS/JS sidebar to see results."

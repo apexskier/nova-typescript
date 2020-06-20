@@ -18,8 +18,6 @@ export function registerFindSymbol(client: LanguageClient) {
   return compositeDisposable;
 
   async function findSymbol(workspace: Workspace) {
-    console.log("apexskier.typescript.findSymbol");
-
     query = await new Promise<string | null>((resolve) => {
       if (query != null) {
         workspace.showInputPalette(

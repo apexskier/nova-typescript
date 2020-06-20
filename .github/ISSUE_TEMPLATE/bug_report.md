@@ -23,10 +23,11 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
-- macOS version: [e.g. 10.15.3 (19D76)] <!-- get this from  > About This Mac -->
-- Nova version: [e.g. 1.0b10 (162453)] <!-- get this from Nova > About Nova -->
-- Extension version: [e.g. 1.4.2] <!-- get this from the Nova Extension Library -->
-- TypeScript version: [e.g. 3.9.2] <!-- get this from your project, e.g. yarn run tsc --version -->
+- macOS version: <!-- [e.g. 10.15.3 (19D76)] get this from  > About This Mac -->
+- Nova version: <!-- [e.g. 1.0b10 (162453)] get this from Nova > About Nova -->
+- Extension version: <!-- [e.g. 1.4.2] get this from the Nova Extension Library -->
+- TypeScript version: <!-- [e.g. 3.9.2] get this from your project, e.g. yarn run tsc --version -->
+- Sidebar information: <!-- [e.g. Status Running, TypeScript Version 3.9.2] get this from the extension sidebar -->
 
 **Additional context**
 Add any other context about the problem here.
