@@ -20,6 +20,6 @@ The extension relies on local copies of both `typescript-language-server` and `t
 
 To update, install locally in the `typescript.novaextension` directory, then run `npm shrinkwrap`.
 
-### Publishing notes
+## Publishing notes
 
 Always run `yarn build` first, so the `typescript.novaextension/node_modules` directory is cleared.
