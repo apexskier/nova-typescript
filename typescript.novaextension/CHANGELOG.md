@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.5.0
+
+### Changed
+
+* Improve documentation in readme and throughout extension
+* Sidebar "refresh" button now restarts language server
+
+### Added
+
+* Custom TypeScript library location support (now actually works!)
+   * Preference type changed to string
+   * Relative path support
+   * Auto-restart on preference change
+
 ## v1.4.2
 
 ### Changed
