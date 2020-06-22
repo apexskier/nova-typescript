@@ -26,8 +26,9 @@
     {
       "key": "apexskier.typescript.config.tslibPath",
       "title": "TypeScript Library",
-      "description": "Path to your locally installed TypeScript library, generally in node_modules/typescript/lib.",
-      "type": "path"
+      "description": "(optional) Path to a custom installed TypeScript library directory. See \"Using the workspace version of TypeScript\" in the README for details.",
+      "link": "nova://extension/?id=apexskier.typescript",
+      "type": "string"
     }
   ],
 
