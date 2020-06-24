@@ -34,4 +34,24 @@ If applicable, add screenshots to help explain your problem.
    - installation method: <!-- e.g. homebrew, nvm, built from source, etc -->
 
 **Additional context**
-Add any other context about the problem here.
+Add any other context about the problem here. 
+
+**npm-debug.log**
+
+<details>
+
+<summary>npm-debug.log</summary>
+
+<!--
+If you can find an npm debug log file for the extension error you're experiencing it will
+be very helpful.
+
+To find one, first run `grep -rl "apexskier.typescript" "$(npm config get cache)/_logs"` in
+your terminal. If you see any files output, grab the contents and paste them into the code
+fence below.
+-->
+
+```
+```
+
+</details>
