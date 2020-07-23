@@ -187,7 +187,7 @@ export async function activate() {
 
     client.start();
 
-    let versionProcess = new Process("/usr/bin/env", {
+    const versionProcess = new Process("/usr/bin/env", {
       args: ["node", nova.path.join(tslibPath, "tsc.js"), "--version"],
       stdio: ["ignore", "pipe", "ignore"],
     });

@@ -8,10 +8,10 @@ function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 
-let hr = new RegExp("^" + escapeRegExp(`file://${nova.environment["HOME"]}`));
+const hr = new RegExp("^" + escapeRegExp(`file://${nova.environment["HOME"]}`));
 function cleanPath(path: string) {
   const decodedPath = decodeURIComponent(path);
-  let wr = new RegExp("^" + escapeRegExp(`file://${nova.workspace.path}`));
+  const wr = new RegExp("^" + escapeRegExp(`file://${nova.workspace.path}`));
   return decodedPath.replace(wr, ".").replace(hr, "~");
 }
 
@@ -68,7 +68,7 @@ function symbolInformationSearchResultsTreeProvider(
       }${symbolKindToText[element.kind]}${
         element.deprecated ? " (deprecated)" : ""
       }`;
-      let position = element.location.range.start;
+      const position = element.location.range.start;
       item.image = `Symbol_${symbolKindToText[element.kind]}`;
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
       return item;
