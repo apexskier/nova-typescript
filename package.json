@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "concurrently": "^5.2.0",
-    "eslint": "^7.0.0",
+    "eslint": "^7.5.0",
     "eslint-plugin-nova": "^1.0.0-beta.4",
     "onchange": "^7.0.2",
     "prettier": "^2.0.5",
