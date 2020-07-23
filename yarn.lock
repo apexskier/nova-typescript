@@ -412,10 +412,10 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-plugin-nova@^1.0.0-beta.4:
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.0.0-beta.4.tgz#e6f835f98f1a2ca9ff3356507764def90809b5fa"
-  integrity sha512-uy94mHSJJHroPgICkSDid7tqVnjx3yu8pbmqM+RwymGEM6hocE34sMqvq0Po2eU0rJEZksZn4YFyJam74eHD9Q==
+eslint-plugin-nova@^1.0.0-beta.5:
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.0.0-beta.5.tgz#481ce5e9722dc436e55458af0a573b8467cedca9"
+  integrity sha512-iGnDkmH1pkf6d5ziAQAbvnCIGYW/OQpLOHfjViHT2OOfpzHzuSWYEKQkypTURDhEc300W/bn58M+2gAk4QQ3VQ==
 
 eslint-scope@^5.0.0:
   version "5.0.0"
