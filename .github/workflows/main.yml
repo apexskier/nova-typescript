@@ -23,6 +23,9 @@ jobs:
     
     - name: Lint
       run: yarn lint
+    
+    - name: Build
+      run: yarn build
       
     - name: "Create issues from TODOs"
       uses: "alstr/todo-to-issue-action@v1.1-beta"
