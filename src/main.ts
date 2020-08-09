@@ -47,7 +47,8 @@ async function installWrappedDependencies() {
 
 async function reload() {
   deactivate();
-  await activate();
+  console.log("reloading...");
+  await asyncActivate();
 }
 
 const informationView = new InformationView(reload);
