@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.5.1
+
+### Changed
+
+* Emit install errors in dev console
+* Upgrade bundled typescript
+
 ## v1.5.0
 
 ### Changed
@@ -10,9 +17,9 @@
 ### Added
 
 * Custom TypeScript library location support (now actually works!)
-   * Preference type changed to string
-   * Relative path support
-   * Auto-restart on preference change
+* Preference type changed to string
+* Relative path support
+* Auto-restart on preference change
 
 ## v1.4.2
 
