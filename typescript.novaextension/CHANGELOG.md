@@ -6,6 +6,7 @@
 
 * Emit install errors in dev console
 * Upgrade bundled typescript
+* Add mock typescript syntax (https://dev.panic.com/panic/nova-issues/-/issues/1454)
 
 ## v1.5.0
 
