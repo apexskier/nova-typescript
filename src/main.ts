@@ -20,7 +20,7 @@ nova.workspace.config.onDidChange(
 );
 
 let client: LanguageClient | null = null;
-let commands: Array<Disposable> = [];
+const compositeDisposable = new CompositeDisposable();
 
 // I hope this is safe to run concurrently
 async function installWrappedDependencies() {
@@ -167,12 +167,10 @@ async function asyncActivate() {
   );
 
   // register nova commands
-  commands = [
-    registerGoToDefinition(client),
-    registerRename(client),
-    registerCodeAction(client),
-    registerFindSymbol(client),
-  ];
+  compositeDisposable.add(registerGoToDefinition(client));
+  compositeDisposable.add(registerRename(client));
+  compositeDisposable.add(registerCodeAction(client));
+  compositeDisposable.add(registerFindSymbol(client));
 
   // register server-pushed commands
   registerApplyEdit(client);
@@ -212,6 +210,6 @@ export function activate() {
 
 export function deactivate() {
   client?.stop();
-  commands.forEach((command) => command.dispose());
+  compositeDisposable.dispose();
   informationView.status = "Deactivated";
 }
