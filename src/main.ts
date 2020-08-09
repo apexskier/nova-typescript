@@ -28,8 +28,12 @@ async function installWrappedDependencies() {
     const process = new Process("/usr/bin/env", {
       args: ["npm", "install"],
       cwd: nova.extension.path,
-      stdio: "ignore",
+      stdio: ["ignore", "pipe", "pipe"],
     });
+    if (nova.inDevMode()) {
+      process.onStdout((o) => console.log("installing:", o.trimRight()));
+    }
+    process.onStderr((e) => console.warn("installing:", e.trimRight()));
     process.onDidExit((status) => {
       if (status === 0) {
         resolve();
