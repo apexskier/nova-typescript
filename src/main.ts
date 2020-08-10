@@ -1,8 +1,9 @@
 import { registerGoToDefinition } from "./commands/goToDefinition";
 import { registerRename } from "./commands/rename";
 import { registerCodeAction } from "./commands/codeAction";
-import { registerApplyEdit } from "./requests/applyEdit";
 import { registerFindSymbol } from "./commands/findSymbol";
+import { registerAutoSuggest } from "./commands/autoSuggest";
+import { registerApplyEdit } from "./requests/applyEdit";
 import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
 
@@ -171,6 +172,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerRename(client));
   compositeDisposable.add(registerCodeAction(client));
   compositeDisposable.add(registerFindSymbol(client));
+  compositeDisposable.add(registerAutoSuggest(client));
 
   // register server-pushed commands
   registerApplyEdit(client);
