@@ -4,7 +4,7 @@
   "vendor": "Cameron Little",
   "description": "Advanced TypeScript language support for Nova",
   "version": "1.5.1",
-  "categories": ["languages", "issues", "sidebars"],
+  "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
   "repository": "https://github.com/apexskier/nova-typescript",
   "bugs": "https://github.com/apexskier/nova-typescript/issues",
