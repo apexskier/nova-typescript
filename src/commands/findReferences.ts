@@ -43,7 +43,5 @@ export function registerFindReferences(client: LanguageClient) {
       nova.workspace.showWarningMessage("Couldn't find references.");
       return;
     }
-
-    console.log(JSON.stringify(response));
   }
 }

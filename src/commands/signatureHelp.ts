@@ -40,7 +40,5 @@ export function registerSignatureHelp(client: LanguageClient) {
       nova.workspace.showWarningMessage("Couldn't find signature.");
       return;
     }
-
-    console.log(JSON.stringify(response));
   }
 }
