@@ -92,9 +92,7 @@ export function registerGoToDefinition(client: LanguageClient) {
     if (!isArray<lspTypes.Location | lspTypes.LocationLink>(response)) {
       handleLocation(response);
     } else if (response.length === 0) {
-      nova.workspace.showWarningMessage(
-        "Couldn't figure out what you've selected."
-      );
+      nova.workspace.showWarningMessage("Couldn't find definition.");
       return;
     } else if (response.length === 1) {
       if (lsp.Location.is(response[0])) {
