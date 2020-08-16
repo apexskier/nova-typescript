@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.5.2
+
+### Changed
+
+* Add extension to "Completions" category
+
+### Fixed
+
+* Fix error message when symbol can't be found
+* Fix async startup failures not being logged
+
 ## v1.5.1
 
 ### Changed
