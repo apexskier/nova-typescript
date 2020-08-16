@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c rollup.config.main.js && rm -rf typescript.novaextension/node_modules",
+    "test": "jest",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:eslint": "eslint --ignore-path .gitignore \"**/*.{ts,js}\"",
     "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json}\"",
