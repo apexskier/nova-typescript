@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.5.2
+## v1.5.3
 
 ### Changed
 
@@ -10,6 +10,10 @@
 
 * Fix error message when symbol can't be found
 * Fix async startup failures not being logged
+
+## v1.5.2
+
+Mistakenly released from dev branch.
 
 ## v1.5.1
 
