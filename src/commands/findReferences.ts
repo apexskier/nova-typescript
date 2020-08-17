@@ -27,11 +27,11 @@ export function registerFindReferences(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       position: selectedPosition,
       context: {
-        includeDeclaration: false, // TODO
+        includeDeclaration: true, // TODO
       },
     };
     const response = (await client.sendRequest(
-      "textDocument/findReferences",
+      "textDocument/references",
       params
     )) as lspTypes.Location[] | null;
 
