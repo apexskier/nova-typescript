@@ -18,21 +18,8 @@ describe("InformationView", () => {
     (global as any).TreeView = MockTreeView;
   });
 
-  it("registers a reload command", async () => {
-    const globalReload = jest.fn();
-    new InformationView(globalReload);
-    expect(nova.commands.register).toHaveBeenCalledWith(
-      "apexskier.typescript.refreshInformation",
-      expect.any(Function)
-    );
-    const command = (nova.commands.register as jest.Mock).mock.calls[0][1];
-    await command();
-    expect(reload).toHaveBeenCalledTimes(1);
-    expect(globalReload).toHaveBeenCalledTimes(1);
-  });
-
   it("has no subchildren", () => {
-    const iv = new InformationView(jest.fn());
+    const iv = new InformationView();
     expect(
       iv.getChildren({
         title: "title",
@@ -52,7 +39,7 @@ describe("InformationView", () => {
       None: Symbol("TreeItemCollapsibleState.None"),
     };
 
-    const iv = new InformationView(jest.fn());
+    const iv = new InformationView();
     const item = iv.getTreeItem({
       title: "title",
       value: "value",
@@ -69,7 +56,7 @@ describe("InformationView", () => {
   });
 
   it("displays the current status and typescript version", () => {
-    const iv = new InformationView(jest.fn());
+    const iv = new InformationView();
     expect(iv.getChildren(null)).toMatchInlineSnapshot(`
       Array [
         Object {
