@@ -91,6 +91,13 @@
         }
       },
       {
+        "title": "Find References",
+        "command": "apexskier.typescript.findReferences",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
+      },
+      {
         "title": "Rename Symbol",
         "command": "apexskier.typescript.rename",
         "filters": {
