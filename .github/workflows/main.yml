@@ -30,12 +30,3 @@ jobs:
     - name: Test
       run: yarn test
 
-    - name: "Create issues from TODOs"
-      uses: "alstr/todo-to-issue-action@v1.1-beta"
-      with:
-        REPO: ${{ github.repository }}
-        BEFORE: ${{ github.event.before }}
-        SHA: ${{ github.sha }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LABEL: "// TODO"
-        COMMENT_MARKER: "//"
