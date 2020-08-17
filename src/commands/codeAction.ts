@@ -23,7 +23,9 @@ export function registerCodeAction(client: LanguageClient) {
       return;
     }
 
-    console.log(JSON.stringify(selectedLspRange));
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(selectedLspRange));
+    }
 
     const params: lspTypes.CodeActionParams = {
       textDocument: { uri: editor.document.uri },
@@ -47,17 +49,23 @@ export function registerCodeAction(client: LanguageClient) {
     if (choice == null) {
       return;
     }
-    console.log(JSON.stringify(choice));
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(choice));
+    }
     if (lsp.Command.is(choice)) {
       const response = await executeCommand(client, choice);
-      console.log(JSON.stringify(response));
+      if (nova.inDevMode()) {
+        console.log(JSON.stringify(response));
+      }
     } else {
       if (choice.edit) {
         await applyWorkspaceEdit(choice.edit);
       }
       if (choice.command) {
         const response = await executeCommand(client, choice.command);
-        console.log(JSON.stringify(response));
+        if (nova.inDevMode()) {
+          console.log(JSON.stringify(response));
+        }
       }
     }
   }
