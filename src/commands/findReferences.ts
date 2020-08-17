@@ -14,8 +14,6 @@ export function registerFindReferences(client: LanguageClient) {
   );
 
   async function findReferences(editor: TextEditor) {
-    console.log("apexskier.typescript.findReferences");
-
     const selectedRange = editor.selectedRange;
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;
@@ -40,10 +38,12 @@ export function registerFindReferences(client: LanguageClient) {
     // never resolves, unimplemented
 
     if (response == null) {
-      nova.workspace.showWarningMessage("Couldn't find references.");
+      nova.workspace.showInformativeMessage("Couldn't find references.");
       return;
     }
 
-    console.log(JSON.stringify(response));
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(response));
+    }
   }
 }

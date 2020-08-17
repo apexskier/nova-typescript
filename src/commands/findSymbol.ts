@@ -8,26 +8,15 @@ import { createSymbolSearchResultsTree } from "../searchResults";
 export function registerFindSymbol(client: LanguageClient) {
   let query: string | null = null;
 
-  const compositeDisposable = new CompositeDisposable();
-  compositeDisposable.add(
-    nova.commands.register(
-      "apexskier.typescript.findSymbol",
-      wrapCommand(findSymbol)
-    )
+  return nova.commands.register(
+    "apexskier.typescript.findSymbol",
+    wrapCommand(findSymbol)
   );
-  return compositeDisposable;
 
   async function findSymbol(workspace: Workspace) {
     query = await new Promise<string | null>((resolve) => {
-      if (query != null) {
-        workspace.showInputPalette(
-          "Search for a symbol name",
-          { placeholder: query },
-          resolve
-        );
-      } else {
-        workspace.showInputPalette("Search for a symbol name", {}, resolve);
-      }
+      const options = query != null ? { placeholder: query } : {};
+      workspace.showInputPalette("Search for a symbol name", options, resolve);
     });
 
     if (!query) {
@@ -41,7 +30,7 @@ export function registerFindSymbol(client: LanguageClient) {
       | lspTypes.SymbolInformation[]
       | null;
     if (response == null || !response.length) {
-      nova.workspace.showWarningMessage("Couldn't find symbol.");
+      workspace.showWarningMessage("Couldn't find symbol.");
       return;
     }
 

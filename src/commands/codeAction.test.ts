@@ -4,10 +4,7 @@ import { registerCodeAction } from "./codeAction";
 
 describe("codeAction command", () => {
   beforeEach(() => {
-    (global as any).nova = {
-      inDevMode() {
-        return false;
-      },
+    (global as any).nova = Object.assign(nova, {
       commands: {
         register: jest.fn(),
       },
@@ -18,7 +15,7 @@ describe("codeAction command", () => {
         showInformativeMessage: jest.fn(),
         openFile: jest.fn().mockReturnValue(Promise.resolve(mockEditor)),
       },
-    };
+    });
 
     mockEditor.edit.mockClear();
   });
