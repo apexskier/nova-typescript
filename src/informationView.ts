@@ -4,7 +4,7 @@ type Element = {
   readonly identifier: string;
 };
 
-export class InformationView {
+export class InformationView implements TreeDataProvider<Element> {
   constructor(reload: () => Promise<void>) {
     this._treeView = new TreeView("apexskier.typescript.sidebar.info", {
       dataProvider: this,
@@ -48,7 +48,7 @@ export class InformationView {
     this._treeView.reload();
   }
 
-  getChildren(element: Element): Array<Element> {
+  getChildren(element: Element | null): Array<Element> {
     if (element == null) {
       return [this._statusElement, this._tsVersionElement];
     }

@@ -2,10 +2,10 @@ name: CI
 
 on:
   push:
-    branches: 
+    branches:
     - master
   pull_request:
-    branches: 
+    branches:
     - master
 
 jobs:
@@ -14,15 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Setup Node.js environment
       uses: actions/setup-node@v1.4.2
-    
+
     - name: Install dependencies
       run: yarn
-    
+
     - name: Lint
       run: yarn lint
-    
+
     - name: Build
       run: yarn build
+
+    - name: Test
+      run: yarn test
+
