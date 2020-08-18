@@ -59,34 +59,25 @@ export function registerGoToDefinition(client: LanguageClient) {
       _editor.scrollToPosition(novaRange.start);
     }
 
-    // TODO: If there's more than one result, show that somehow
-
-    async function handleLocation(location: lspTypes.Location) {
-      if (location.uri === editor.document.uri) {
-        showRangeInEditor(editor, location.range);
+    async function showLocation(uri: string, range: lspTypes.Range) {
+      if (uri === editor.document.uri) {
+        showRangeInEditor(editor, range);
       } else {
-        const newEditor = await openFile(location.uri);
+        const newEditor = await openFile(uri);
         if (!newEditor) {
-          nova.workspace.showWarningMessage(`Failed to open ${location.uri}`);
+          nova.workspace.showWarningMessage(`Failed to open ${uri}`);
           return;
         }
-        showRangeInEditor(newEditor, location.range);
+        showRangeInEditor(newEditor, range);
       }
     }
 
+    async function handleLocation(location: lspTypes.Location) {
+      showLocation(location.uri, location.range);
+    }
+
     async function handleLocationLink(location: lspTypes.LocationLink) {
-      if (location.targetUri === editor.document.uri) {
-        showRangeInEditor(editor, location.targetSelectionRange);
-      } else {
-        const newEditor = await openFile(location.targetUri);
-        if (!newEditor) {
-          nova.workspace.showWarningMessage(
-            `Failed to open ${location.targetUri}`
-          );
-          return;
-        }
-        showRangeInEditor(newEditor, location.targetSelectionRange);
-      }
+      showLocation(location.targetUri, location.targetSelectionRange);
     }
 
     if (!isArray<lspTypes.Location | lspTypes.LocationLink>(response)) {
@@ -107,13 +98,10 @@ export function registerGoToDefinition(client: LanguageClient) {
       } else {
         createLocationSearchResultsTree(
           editor.selectedText,
-          response.map(
-            (r) =>
-              ({
-                uri: r.targetUri,
-                range: r.targetSelectionRange,
-              } as lspTypes.Location)
-          )
+          response.map<lspTypes.Location>((r) => ({
+            uri: r.targetUri,
+            range: r.targetSelectionRange,
+          }))
         );
         response.forEach(handleLocationLink);
       }

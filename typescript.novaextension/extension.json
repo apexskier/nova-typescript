@@ -74,6 +74,10 @@
         "command": "apexskier.typescript.openWorkspaceConfig"
       },
       {
+        "title": "Restart Server",
+        "command": "apexskier.typescript.reload"
+      },
+      {
         "title": "Find Symbol",
         "command": "apexskier.typescript.findSymbol"
       }

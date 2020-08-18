@@ -13,6 +13,8 @@ nova.commands.register(
   })
 );
 
+nova.commands.register("apexskier.typescript.reload", reload);
+
 nova.config.onDidChange("apexskier.typescript.config.tslibPath", reload);
 nova.workspace.config.onDidChange(
   "apexskier.typescript.config.tslibPath",
@@ -22,7 +24,6 @@ nova.workspace.config.onDidChange(
 let client: LanguageClient | null = null;
 const compositeDisposable = new CompositeDisposable();
 
-// I hope this is safe to run concurrently
 async function installWrappedDependencies() {
   return new Promise((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
@@ -45,29 +46,12 @@ async function installWrappedDependencies() {
   });
 }
 
-async function reload() {
-  deactivate();
-  console.log("reloading...");
-  await asyncActivate();
-}
-
-const informationView = new InformationView(reload);
-
-async function asyncActivate() {
-  informationView.status = "Activating...";
-
-  try {
-    await installWrappedDependencies();
-  } catch (err) {
-    informationView.status = "Failed to install";
-    throw err;
-  }
-
-  // this determines which version of typescript is being run
-  // it should be project specific, so find the best option in this order:
-  // - explicitly configured
-  // - best guess (installed in the main node_modules)
-  // - within plugin (no choice of version)
+// this determines which version of typescript is being run
+// it should be project specific, so find the best option in this order:
+// - explicitly configured
+// - best guess (installed in the main node_modules)
+// - within plugin (no choice of version)
+function getTslibPath(): string | null {
   let tslibPath: string;
   const configTslib =
     nova.workspace.config.get(
@@ -83,7 +67,7 @@ async function asyncActivate() {
       nova.workspace.showErrorMessage(
         "Save your workspace before using a relative TypeScript library path."
       );
-      return;
+      return null;
     }
   } else if (
     nova.workspace.path &&
@@ -110,15 +94,29 @@ async function asyncActivate() {
     } else {
       console.error("typescript lib not found at", tslibPath);
     }
-    return;
+    return null;
   }
-  console.info("using tslib at:", tslibPath);
 
-  const runFile = nova.path.join(nova.extension.path, "run.sh");
-  // Uploading to the extension library makes this file not executable, so fix that
-  await new Promise((resolve, reject) => {
+  return tslibPath;
+}
+
+async function getTsVersion(tslibPath: string) {
+  return new Promise<string>((resolve) => {
+    const versionProcess = new Process("/usr/bin/env", {
+      args: ["node", nova.path.join(tslibPath, "tsc.js"), "--version"],
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    versionProcess.onStdout((versionString) => {
+      resolve(versionString.trim());
+    });
+    versionProcess.start();
+  });
+}
+
+async function makeFileExecutable(file: string) {
+  return new Promise((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
-      args: ["chmod", "u+x", runFile],
+      args: ["chmod", "u+x", file],
     });
     process.onDidExit((status) => {
       if (status === 0) {
@@ -129,10 +127,44 @@ async function asyncActivate() {
     });
     process.start();
   });
+}
+
+async function reload() {
+  deactivate();
+  console.log("reloading...");
+  await asyncActivate();
+}
+
+async function asyncActivate() {
+  const informationView = new InformationView();
+  compositeDisposable.add(informationView);
+
+  informationView.status = "Activating...";
+
+  try {
+    await installWrappedDependencies();
+  } catch (err) {
+    informationView.status = "Failed to install";
+    throw err;
+  }
+
+  const tslibPath = getTslibPath();
+  if (!tslibPath) {
+    informationView.status = "No tslib";
+    return;
+  }
+  console.info("using tslib at:", tslibPath);
+
+  const runFile = nova.path.join(nova.extension.path, "run.sh");
+
+  // Uploading to the extension library makes this file not executable, so fix that
+  await makeFileExecutable(runFile);
 
   let serviceArgs;
   if (nova.inDevMode() && nova.workspace.path) {
     const logDir = nova.path.join(nova.workspace.path, ".log");
+    console.log("logging to", logDir);
+
     // this breaks functionality
     // const inLog = nova.path.join(logDir, "languageClient-in.log");
     const outLog = nova.path.join(logDir, "languageClient-out.log");
@@ -142,8 +174,6 @@ async function asyncActivate() {
       // args: ["bash", "-c", `tee "${inLog}" | "${runFile}" | tee "${outLog}"`],
       args: ["bash", "-c", `"${runFile}" | tee "${outLog}"`],
     };
-
-    console.log("logging to", logDir);
   } else {
     serviceArgs = {
       path: runFile,
@@ -186,14 +216,9 @@ async function asyncActivate() {
 
   client.start();
 
-  const versionProcess = new Process("/usr/bin/env", {
-    args: ["node", nova.path.join(tslibPath, "tsc.js"), "--version"],
-    stdio: ["ignore", "pipe", "ignore"],
+  getTsVersion(tslibPath).then((version) => {
+    informationView.tsVersion = version;
   });
-  versionProcess.onStdout((versionString) => {
-    informationView.tsVersion = versionString.trim();
-  });
-  versionProcess.start();
 
   informationView.status = "Running";
 
@@ -211,5 +236,4 @@ export function activate() {
 export function deactivate() {
   client?.stop();
   compositeDisposable.dispose();
-  informationView.status = "Deactivated";
 }
