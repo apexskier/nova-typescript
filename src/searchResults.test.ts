@@ -26,6 +26,7 @@ beforeEach(() => {
   (global as any).nova = Object.assign(nova, {
     workspace: {
       showInformativeMessage: jest.fn(),
+      openFile: jest.fn(),
     },
   });
 });
@@ -81,6 +82,40 @@ describe("Symbol search results tree", () => {
     }));
     createSymbolSearchResultsTree(symbols);
     expect(nova.workspace.showInformativeMessage).toHaveBeenCalledTimes(1);
+  });
+
+  it("opens and selects the source when a result is focused", async () => {
+    TreeViewMock.mockImplementation(() => ({
+      ...mockTreeViewImplementation(),
+      onDidChangeSelection: jest.fn(),
+    }));
+    const mockEditor = {
+      document: {
+        getTextInRange() {
+          return "";
+        },
+        eol: "\n",
+      },
+      addSelectionForRange: jest.fn(),
+      scrollToPosition: jest.fn(),
+    };
+    nova.workspace.openFile = jest
+      .fn()
+      .mockReturnValueOnce(Promise.resolve(mockEditor));
+
+    createSymbolSearchResultsTree(symbols);
+    const provider: TreeDataProvider<string | lspTypes.SymbolInformation> =
+      TreeViewTypedMock.mock.calls[0][1].dataProvider;
+    const treeMock = TreeViewTypedMock.mock.results[0].value;
+    expect(treeMock.onDidChangeSelection).toBeCalledTimes(1);
+    const elements: Array<string | lspTypes.SymbolInformation> = [symbols[0]];
+    await treeMock.onDidChangeSelection.mock.calls[0][0](elements);
+  });
+
+  it("disposes of subsequently created trees", () => {
+    createSymbolSearchResultsTree(symbols);
+    const provider: TreeDataProvider<string | lspTypes.SymbolInformation> =
+      TreeViewTypedMock.mock.calls[0][1].dataProvider;
   });
 });
 

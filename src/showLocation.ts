@@ -4,7 +4,7 @@ import * as lsp from "vscode-languageserver-types";
 import { openFile } from "./novaUtils";
 import { lspRangeToRange } from "./lspNovaConversions";
 
-async function showRangeInEditor(editor: TextEditor, range: lspTypes.Range) {
+function showRangeInEditor(editor: TextEditor, range: lspTypes.Range) {
   const novaRange = lspRangeToRange(editor.document, range);
   editor.addSelectionForRange(novaRange);
   editor.scrollToPosition(novaRange.start);
@@ -23,8 +23,8 @@ export async function showLocation(
   location: lspTypes.Location | lspTypes.LocationLink
 ) {
   if (lsp.Location.is(location)) {
-    showRangeInUri(location.uri, location.range);
+    await showRangeInUri(location.uri, location.range);
   } else {
-    showRangeInUri(location.targetUri, location.targetSelectionRange);
+    await showRangeInUri(location.targetUri, location.targetSelectionRange);
   }
 }

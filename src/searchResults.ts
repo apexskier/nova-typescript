@@ -72,9 +72,9 @@ function symbolInformationSearchResultsTreeProvider(
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
       return item;
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        showLocation(element.location);
+        await showLocation(element.location);
       }
     },
   };
@@ -115,9 +115,9 @@ function locationSearchResultsTreeProvider(
       }
       return new TreeItem(name, TreeItemCollapsibleState.None);
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        showLocation(element);
+        await showLocation(element);
       }
     },
   };
@@ -130,8 +130,10 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
     dataProvider,
   });
 
-  treeView.onDidChangeSelection((elements) => {
-    elements.forEach(dataProvider.onSelect);
+  treeView.onDidChangeSelection(async (elements) => {
+    await Promise.all(
+      elements.map((element) => dataProvider.onSelect(element))
+    );
   });
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
