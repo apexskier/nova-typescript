@@ -13,9 +13,7 @@ nova.commands.register(
   })
 );
 
-nova.commands.register("apexskier.typescript.refreshInformation", async () => {
-  await reload();
-});
+nova.commands.register("apexskier.typescript.reload", reload);
 
 nova.config.onDidChange("apexskier.typescript.config.tslibPath", reload);
 nova.workspace.config.onDidChange(
@@ -26,7 +24,6 @@ nova.workspace.config.onDidChange(
 let client: LanguageClient | null = null;
 const compositeDisposable = new CompositeDisposable();
 
-// I hope this is safe to run concurrently
 async function installWrappedDependencies() {
   return new Promise((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
@@ -116,10 +113,10 @@ async function getTsVersion(tslibPath: string) {
   });
 }
 
-async function chmod({ mode, file }: { mode: string; file: string }) {
+async function makeFileExecutable(file: string) {
   return new Promise((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
-      args: ["chmod", mode, file],
+      args: ["chmod", "u+x", file],
     });
     process.onDidExit((status) => {
       if (status === 0) {
@@ -161,7 +158,7 @@ async function asyncActivate() {
   const runFile = nova.path.join(nova.extension.path, "run.sh");
 
   // Uploading to the extension library makes this file not executable, so fix that
-  await chmod({ file: runFile, mode: "u+x" });
+  await makeFileExecutable(runFile);
 
   let serviceArgs;
   if (nova.inDevMode() && nova.workspace.path) {
