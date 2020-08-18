@@ -47,7 +47,7 @@
             {
               "title": "Refresh",
               "image": "__builtin.refresh",
-              "command": "apexskier.typescript.refreshInformation"
+              "command": "apexskier.typescript.reload"
             }
           ]
         },
