@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { openFile } from "./novaUtils";
-import { lspRangeToRange } from "./lspNovaConversions";
+import { showLocation } from "./showLocation";
 
 // https://stackoverflow.com/a/6969486
 function escapeRegExp(string: string) {
@@ -75,7 +74,7 @@ function symbolInformationSearchResultsTreeProvider(
     },
     onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element.location);
+        showLocation(element.location);
       }
     },
   };
@@ -118,7 +117,7 @@ function locationSearchResultsTreeProvider(
     },
     onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element);
+        showLocation(element);
       }
     },
   };
@@ -149,21 +148,6 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
   lastTreeView = treeView;
 
   return treeView;
-}
-
-async function handleLocation(location: lspTypes.Location) {
-  const newEditor = await openFile(location.uri);
-  if (!newEditor) {
-    nova.workspace.showWarningMessage(`Failed to open ${location.uri}`);
-    return;
-  }
-  showRangeInEditor(newEditor, location.range);
-}
-
-async function showRangeInEditor(editor: TextEditor, range: lspTypes.Range) {
-  const novaRange = lspRangeToRange(editor.document, range);
-  editor.addSelectionForRange(novaRange);
-  editor.scrollToPosition(novaRange.start);
 }
 
 // pulled from types
