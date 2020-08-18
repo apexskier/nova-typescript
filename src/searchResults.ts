@@ -130,6 +130,7 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
     dataProvider,
   });
 
+  // TODO: I'd prefer this to be a double click command, instead of on select
   treeView.onDidChangeSelection(async (elements) => {
     await Promise.all(
       elements.map((element) => dataProvider.onSelect(element))
