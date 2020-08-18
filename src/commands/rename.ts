@@ -33,7 +33,7 @@ export function registerRename(client: LanguageClient) {
         resolve
       );
     });
-    if (!newName) {
+    if (!newName || newName == editor.selectedText) {
       return;
     }
 
@@ -53,7 +53,7 @@ export function registerRename(client: LanguageClient) {
     await applyWorkspaceEdit(response);
 
     // go back to original document
-    nova.workspace.openFile(editor.document.uri);
+    await nova.workspace.openFile(editor.document.uri);
     editor.scrollToCursorPosition();
   }
 }
