@@ -146,8 +146,6 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
     lastTreeView.dispose();
   }
   lastTreeView = treeView;
-
-  return treeView;
 }
 
 // pulled from types
