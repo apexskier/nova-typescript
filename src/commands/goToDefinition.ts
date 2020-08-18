@@ -19,8 +19,6 @@ export function registerGoToDefinition(client: LanguageClient) {
   );
 
   async function goToDefinition(editor: TextEditor) {
-    console.log("apexskier.typescript.goToDefinition");
-
     const selectedRange = editor.selectedRange;
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;
