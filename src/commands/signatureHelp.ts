@@ -25,14 +25,16 @@ export function registerSignatureHelp(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       position: selectedPosition,
       context: {
-        triggerKind: 1, // Invoked
+        triggerKind: 2, // TriggerCharacter, Invoked doesn't work here
         isRetrigger: false,
       },
     };
+    console.log("params", JSON.stringify(params));
     const response = (await client.sendRequest(
       "textDocument/signatureHelp",
       params
     )) as lspTypes.SignatureHelp | null;
+    console.log("response", JSON.stringify(response));
 
     // This resolves, but doesn't seem to ever provide help
 
@@ -40,5 +42,26 @@ export function registerSignatureHelp(client: LanguageClient) {
       nova.workspace.showInformativeMessage("Couldn't find signature help.");
       return;
     }
+
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(response));
+    }
+
+    function stringifyDocs(doc: string | lspTypes.MarkupContent) {
+      if (typeof doc == "string") {
+        return doc;
+      } else {
+        // NOTE: this doesn't do any correct rendering
+        return doc.value;
+      }
+    }
+    const content =
+      response.signatures
+        .filter((s) => s.documentation)
+        .map((s) => `${s.label}\n${stringifyDocs(s.documentation!)}`)
+        .join("\n\n")
+        .trim() || response.signatures[response.activeSignature ?? 0].label;
+
+    nova.workspace.showInformativeMessage(content);
   }
 }
