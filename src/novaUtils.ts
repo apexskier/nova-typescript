@@ -11,17 +11,13 @@ export function wrapCommand(
 }
 
 export async function openFile(uri: string) {
-  let newEditor = await nova.workspace.openFile(uri);
+  const newEditor = await nova.workspace.openFile(uri);
   if (newEditor) {
     return newEditor;
   }
   console.warn("failed first open attempt, retrying once", uri);
   // try one more time, this doesn't resolve if the file isn't already open. Need to file a bug
-  newEditor = await nova.workspace.openFile(uri);
-  if (newEditor) {
-    return newEditor;
-  }
-  return null;
+  return await nova.workspace.openFile(uri);
 }
 
 export async function showChoicePalette<T>(
