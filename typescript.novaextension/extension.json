@@ -1,7 +1,7 @@
 {
   "identifier": "apexskier.typescript",
   "name": "TypeScript",
-  "vendor": "Cameron Little",
+  "organization": "Cameron Little",
   "description": "Advanced TypeScript language support for Nova",
   "version": "1.5.3",
   "categories": ["completions", "languages", "issues", "sidebars"],
