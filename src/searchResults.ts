@@ -181,7 +181,7 @@ const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
 };
 
 const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: string } = {
-// const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: NovaSymbolType } = {
+  // const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: NovaSymbolType } = {
   1: "file",
   2: "package", // Module
   3: "package", // Namespace
@@ -207,5 +207,5 @@ const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: string } = {
   23: "struct",
   24: "variable", // Event
   25: "expression", // Operator
-  26: "type" // TypeParameter
+  26: "type", // TypeParameter
 };
