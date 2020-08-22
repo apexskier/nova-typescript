@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { openFile } from "./novaUtils";
-import { lspRangeToRange } from "./lspNovaConversions";
+import { showLocation } from "./showLocation";
 
 // https://stackoverflow.com/a/6969486
 function escapeRegExp(string: string) {
@@ -73,9 +72,9 @@ function symbolInformationSearchResultsTreeProvider(
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
       return item;
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element.location);
+        await showLocation(element.location);
       }
     },
   };
@@ -116,9 +115,9 @@ function locationSearchResultsTreeProvider(
       }
       return new TreeItem(name, TreeItemCollapsibleState.None);
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element);
+        await showLocation(element);
       }
     },
   };
@@ -131,8 +130,11 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
     dataProvider,
   });
 
-  treeView.onDidChangeSelection((elements) => {
-    elements.forEach(dataProvider.onSelect);
+  // TODO: I'd prefer this to be a double click command, instead of on select
+  treeView.onDidChangeSelection(async (elements) => {
+    await Promise.all(
+      elements.map((element) => dataProvider.onSelect(element))
+    );
   });
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
@@ -147,23 +149,6 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
     lastTreeView.dispose();
   }
   lastTreeView = treeView;
-
-  return treeView;
-}
-
-async function handleLocation(location: lspTypes.Location) {
-  const newEditor = await openFile(location.uri);
-  if (!newEditor) {
-    nova.workspace.showWarningMessage(`Failed to open ${location.uri}`);
-    return;
-  }
-  showRangeInEditor(newEditor, location.range);
-}
-
-async function showRangeInEditor(editor: TextEditor, range: lspTypes.Range) {
-  const novaRange = lspRangeToRange(editor.document, range);
-  editor.addSelectionForRange(novaRange);
-  editor.scrollToPosition(novaRange.start);
 }
 
 // pulled from types

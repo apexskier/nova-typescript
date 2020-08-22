@@ -6,12 +6,6 @@ describe("InformationView", () => {
   beforeEach(() => {
     reload.mockClear();
 
-    (global as any).nova = Object.assign(nova, {
-      commands: {
-        register: jest.fn(),
-      },
-    });
-
     class MockTreeView {
       reload = reload;
     }
