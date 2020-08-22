@@ -68,7 +68,7 @@ function symbolInformationSearchResultsTreeProvider(
         element.deprecated ? " (deprecated)" : ""
       }`;
       const position = element.location.range.start;
-      item.image = `Symbol_${symbolKindToText[element.kind]}`;
+      item.image = `__symbol.${symbolKindToNovaSymbol[element.kind]}`;
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
       return item;
     },
@@ -151,8 +151,6 @@ function showTreeView(dataProvider: MyTreeProvider<unknown>) {
   lastTreeView = treeView;
 }
 
-// pulled from types
-// TODO: it would be nice to map each of these to a custom icon
 const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   1: "File",
   2: "Module",
@@ -180,4 +178,34 @@ const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   24: "Event",
   25: "Operator",
   26: "TypeParameter",
+};
+
+const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: string } = {
+// const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: NovaSymbolType } = {
+  1: "file",
+  2: "package", // Module
+  3: "package", // Namespace
+  4: "package",
+  5: "class",
+  6: "method",
+  7: "property",
+  8: "Field",
+  9: "constructor",
+  10: "enum",
+  11: "interface",
+  12: "function",
+  13: "variable",
+  14: "constant",
+  15: "variable", // String
+  16: "variable", // Number
+  17: "variable", // Boolean
+  18: "variable", // Array
+  19: "variable", // Object
+  20: "keyword", // Key
+  21: "variable", // Null
+  22: "enum-member",
+  23: "struct",
+  24: "variable", // Event
+  25: "expression", // Operator
+  26: "type" // TypeParameter
 };
