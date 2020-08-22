@@ -41,6 +41,22 @@ async function installWrappedDependencies() {
   });
 }
 
+async function makeFileExecutable(file: string) {
+  return new Promise((resolve, reject) => {
+    const process = new Process("/usr/bin/env", {
+      args: ["chmod", "u+x", file],
+    });
+    process.onDidExit((status) => {
+      if (status === 0) {
+        resolve();
+      } else {
+        reject(status);
+      }
+    });
+    process.start();
+  });
+}
+
 async function getTsVersion(tslibPath: string) {
   return new Promise<string>((resolve, reject) => {
     const process = new Process("/usr/bin/env", {
@@ -54,22 +70,6 @@ async function getTsVersion(tslibPath: string) {
     process.onDidExit((status) => {
       if (status === 0) {
         resolve(str);
-      } else {
-        reject(status);
-      }
-    });
-    process.start();
-  });
-}
-
-async function makeFileExecutable(file: string) {
-  return new Promise((resolve, reject) => {
-    const process = new Process("/usr/bin/env", {
-      args: ["chmod", "u+x", file],
-    });
-    process.onDidExit((status) => {
-      if (status === 0) {
-        resolve();
       } else {
         reject(status);
       }
@@ -176,7 +176,7 @@ async function asyncActivate() {
 
 export function activate() {
   console.log("activating...");
-  asyncActivate().catch((err) => {
+  return asyncActivate().catch((err) => {
     console.error("Failed to activate");
     console.error(err);
   });
