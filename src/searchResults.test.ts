@@ -135,7 +135,7 @@ describe("Symbol search results tree", () => {
     expect(provider.getTreeItem(symbols[0])).toMatchInlineSnapshot(`
       MockTreeItem {
         "descriptiveText": "String",
-        "image": "Symbol_String",
+        "image": "__symbol.variable",
         "state": Symbol(TreeItemCollapsibleState.None),
         "title": "symbol1",
         "tooltip": "fileURI1:1:2",
