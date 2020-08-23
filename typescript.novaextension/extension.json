@@ -1,9 +1,9 @@
 {
   "identifier": "apexskier.typescript",
   "name": "TypeScript",
-  "vendor": "Cameron Little",
+  "organization": "Cameron Little",
   "description": "Advanced TypeScript language support for Nova",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
   "repository": "https://github.com/apexskier/nova-typescript",
@@ -47,7 +47,7 @@
             {
               "title": "Refresh",
               "image": "__builtin.refresh",
-              "command": "apexskier.typescript.refreshInformation"
+              "command": "apexskier.typescript.reload"
             }
           ]
         },
@@ -72,6 +72,10 @@
       {
         "title": "Preferences",
         "command": "apexskier.typescript.openWorkspaceConfig"
+      },
+      {
+        "title": "Restart Server",
+        "command": "apexskier.typescript.reload"
       },
       {
         "title": "Find Symbol",

@@ -16,7 +16,11 @@ export function registerAutoSuggest(client: LanguageClient) {
   // this isn't being called at all
   const completionAssistant: CompletionAssistant = {
     provideCompletionItems(editor, context) {
-      console.log("providing suggestions", editor.document.uri);
+      console.log(
+        "providing suggestions",
+        editor.document.uri,
+        JSON.stringify(context)
+      );
       return [];
       // return await autoSuggest(editor) ?? []
     },

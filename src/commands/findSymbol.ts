@@ -15,15 +15,8 @@ export function registerFindSymbol(client: LanguageClient) {
 
   async function findSymbol(workspace: Workspace) {
     query = await new Promise<string | null>((resolve) => {
-      if (query != null) {
-        workspace.showInputPalette(
-          "Search for a symbol name",
-          { placeholder: query },
-          resolve
-        );
-      } else {
-        workspace.showInputPalette("Search for a symbol name", {}, resolve);
-      }
+      const options = query != null ? { placeholder: query } : {};
+      workspace.showInputPalette("Search for a symbol name", options, resolve);
     });
 
     if (!query) {
@@ -37,7 +30,7 @@ export function registerFindSymbol(client: LanguageClient) {
       | lspTypes.SymbolInformation[]
       | null;
     if (response == null || !response.length) {
-      nova.workspace.showWarningMessage("Couldn't find symbol.");
+      workspace.showWarningMessage("Couldn't find symbol.");
       return;
     }
 

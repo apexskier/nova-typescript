@@ -4,19 +4,11 @@ type Element = {
   readonly identifier: string;
 };
 
-export class InformationView {
-  constructor(reload: () => Promise<void>) {
+export class InformationView implements TreeDataProvider<Element>, Disposable {
+  constructor() {
     this._treeView = new TreeView("apexskier.typescript.sidebar.info", {
       dataProvider: this,
     });
-
-    nova.commands.register(
-      "apexskier.typescript.refreshInformation",
-      async () => {
-        await reload();
-        this.reload();
-      }
-    );
 
     this.getChildren = this.getChildren.bind(this);
     this.getTreeItem = this.getTreeItem.bind(this);
@@ -48,7 +40,7 @@ export class InformationView {
     this._treeView.reload();
   }
 
-  getChildren(element: Element): Array<Element> {
+  getChildren(element: Element | null): Array<Element> {
     if (element == null) {
       return [this._statusElement, this._tsVersionElement];
     }
@@ -60,5 +52,10 @@ export class InformationView {
     item.descriptiveText = element.value;
     item.identifier = element.identifier;
     return item;
+  }
+
+  dispose() {
+    this.status = "Disposed";
+    this._treeView.dispose();
   }
 }
