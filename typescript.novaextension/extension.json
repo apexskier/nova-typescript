@@ -2,7 +2,7 @@
   "identifier": "apexskier.typescript",
   "name": "TypeScript",
   "organization": "Cameron Little",
-  "description": "Advanced TypeScript language support for Nova",
+  "description": "Advanced TypeScript and JavaScript language support for Nova",
   "version": "1.5.3",
   "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
@@ -14,6 +14,8 @@
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:tsx",
+    "onLanguage:javascript",
+    "onLanguage:jsx",
     "onWorkspaceContains:tsconfig.json"
   ],
 
