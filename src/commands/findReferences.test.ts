@@ -1,6 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
+import * as searchResultsModule from "../searchResults";
 import { registerFindReferences } from "./findReferences";
+
+jest.mock("../searchResults");
 
 describe("findReferences command", () => {
   beforeEach(() => {
@@ -73,8 +76,12 @@ describe("findReferences command", () => {
 
     expect(mockLanguageClient.sendRequest).toHaveBeenNthCalledWith(
       1,
-      "textDocument/findReferences",
+      "textDocument/references",
       expect.anything()
+    );
+
+    expect(searchResultsModule.createLocationSearchResultsTree).toBeCalledTimes(
+      1
     );
   });
 });

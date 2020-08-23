@@ -251,6 +251,19 @@ describe("Location search results tree", () => {
       }
     `);
   });
+
+  it.only("cleans filepaths before rendering them", () => {
+    (nova.workspace as any).path = "/workspace";
+    createLocationSearchResultsTree("name", locations);
+    const provider: TreeDataProvider<string | lspTypes.SymbolInformation> =
+      TreeViewTypedMock.mock.calls[0][1].dataProvider;
+    expect(provider.getTreeItem("file:///workspace/path").name).toBe("./path");
+    expect(provider.getTreeItem("file:///home/path").name).toBe("~/path");
+    expect(provider.getTreeItem("file:///path").name).toBe("/path");
+    expect(
+      provider.getTreeItem("file:///Volumes/Macintosh HD/home/path").name
+    ).toBe("~/path");
+  });
 });
 
 it.each([

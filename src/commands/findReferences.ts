@@ -2,10 +2,9 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import { wrapCommand } from "../novaUtils";
 import { rangeToLspRange } from "../lspNovaConversions";
+import { createLocationSearchResultsTree } from "../searchResults";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
-
-// This isn't supported by typescript-language-server. Hopefully we can get it at some point
 
 export function registerFindReferences(client: LanguageClient) {
   return nova.commands.register(
@@ -15,6 +14,7 @@ export function registerFindReferences(client: LanguageClient) {
 
   async function findReferences(editor: TextEditor) {
     const selectedRange = editor.selectedRange;
+    const selectedText = editor.selectedText;
     const selectedPosition = rangeToLspRange(editor.document, selectedRange)
       ?.start;
     if (!selectedPosition) {
@@ -27,23 +27,22 @@ export function registerFindReferences(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       position: selectedPosition,
       context: {
-        includeDeclaration: false, // TODO
+        includeDeclaration: true,
       },
     };
     const response = (await client.sendRequest(
-      "textDocument/findReferences",
+      "textDocument/references",
       params
     )) as lspTypes.Location[] | null;
-
-    // never resolves, unimplemented
-
     if (response == null) {
       nova.workspace.showInformativeMessage("Couldn't find references.");
       return;
     }
 
     if (nova.inDevMode()) {
-      console.log(JSON.stringify(response));
+      console.log(JSON.stringify(response, null, "  "));
     }
+
+    createLocationSearchResultsTree(selectedText, response);
   }
 }

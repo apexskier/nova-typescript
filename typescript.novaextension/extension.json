@@ -2,7 +2,7 @@
   "identifier": "apexskier.typescript",
   "name": "TypeScript",
   "organization": "Cameron Little",
-  "description": "Advanced TypeScript language support for Nova",
+  "description": "Advanced TypeScript and JavaScript language support for Nova",
   "version": "1.5.3",
   "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
@@ -14,6 +14,8 @@
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:tsx",
+    "onLanguage:javascript",
+    "onLanguage:jsx",
     "onWorkspaceContains:tsconfig.json"
   ],
 
@@ -53,10 +55,11 @@
         },
         {
           "id": "apexskier.typescript.sidebar.symbols",
-          "name": "Search Results",
+          "name": "Results",
+          "placeholderText": "Results from “Find Symbol”, “Find Reference” and “Go to Definition” will show here.",
           "headerCommands": [
             {
-              "title": "Search",
+              "title": "Find Symbol",
               "image": "Search",
               "tooltip": "Open the Find Symbol palette",
               "command": "apexskier.typescript.findSymbol"
@@ -86,6 +89,13 @@
       {
         "title": "Go to Definition",
         "command": "apexskier.typescript.goToDefinition",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
+      },
+      {
+        "title": "Find References",
+        "command": "apexskier.typescript.findReferences",
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
