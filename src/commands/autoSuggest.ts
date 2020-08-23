@@ -13,7 +13,7 @@ function render(content: string | lspTypes.MarkupContent) {
 
 export function registerAutoSuggest(client: LanguageClient) {
   // TODO: in future this could use "client/registerCapability" to add more functionlity, if the language server supports
-  
+
   return nova.commands.register(
     "apexskier.typescript.autoSuggest",
     wrapCommand(autoSuggest)
@@ -41,7 +41,7 @@ export function registerAutoSuggest(client: LanguageClient) {
       params
     )) as lspTypes.CompletionItem[] | lspTypes.CompletionList | null;
     if (!response) {
-      nova.workspace.showWarningMessage("No completions found.");
+      nova.workspace.showInformativeMessage("No completions found.");
       return;
     }
 
@@ -69,10 +69,10 @@ export function registerAutoSuggest(client: LanguageClient) {
         "completionItem/resolve",
         choice
       )) as lspTypes.CompletionItem;
-      
-      if (nova.inDevMode()){
-      console.log(JSON.stringify(completionItem, null, "  "));
-    }
+
+      if (nova.inDevMode()) {
+        console.log(JSON.stringify(completionItem, null, "  "));
+      }
 
       const actions = {
         async Insert() {
@@ -108,7 +108,10 @@ export function registerAutoSuggest(client: LanguageClient) {
 
 ${render(completionItem.documentation)}`;
       }
-      if (completionItem.detail && completionItem.detail !== completionItem.label) {
+      if (
+        completionItem.detail &&
+        completionItem.detail !== completionItem.label
+      ) {
         message += `
 
 ${completionItem.detail}`;
