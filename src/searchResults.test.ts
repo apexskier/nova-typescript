@@ -44,7 +44,7 @@ const TreeViewMock: jest.Mock<Partial<TreeView<unknown>>> = TreeViewTypedMock;
 
 class MockTreeItem {
   // eslint-disable-next-line no-unused-vars
-  constructor(readonly title: unknown, readonly state: unknown) {}
+  constructor(readonly name: unknown, readonly state: unknown) {}
 }
 (global as any).TreeItem = MockTreeItem;
 (global as any).TreeItemCollapsibleState = {
@@ -152,9 +152,9 @@ describe("Symbol search results tree", () => {
     expect(provider.getChildren("fileURI2")).toEqual(symbols.slice(1));
     expect(provider.getTreeItem("fileURI1")).toMatchInlineSnapshot(`
       MockTreeItem {
+        "name": "fileURI1",
         "path": "fileURI1",
         "state": undefined,
-        "title": "fileURI1",
       }
     `);
     expect(provider.getTreeItem(symbols[0])).toMatchInlineSnapshot(`
@@ -162,8 +162,8 @@ describe("Symbol search results tree", () => {
         "command": "apexskier.typescript.showSearchResult",
         "descriptiveText": "String",
         "image": "__symbol.variable",
+        "name": "symbol1",
         "state": Symbol(TreeItemCollapsibleState.None),
-        "title": "symbol1",
         "tooltip": "fileURI1:1:2",
       }
     `);
@@ -239,15 +239,15 @@ describe("Location search results tree", () => {
     expect(provider.getChildren("fileURI2")).toEqual(locations.slice(1));
     expect(provider.getTreeItem("fileURI1")).toMatchInlineSnapshot(`
       MockTreeItem {
+        "name": "fileURI1",
         "path": "fileURI1",
         "state": undefined,
-        "title": "fileURI1",
       }
-      `);
+    `);
     expect(provider.getTreeItem(locations[0])).toMatchInlineSnapshot(`
       MockTreeItem {
+        "name": "name",
         "state": Symbol(TreeItemCollapsibleState.None),
-        "title": "name",
       }
     `);
   });
