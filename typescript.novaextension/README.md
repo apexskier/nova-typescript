@@ -7,8 +7,10 @@ This extension provides rich TypeScript integration through a dedicated language
 Right click source code and choose the following from the TypeScript menu.
 
 * Go to Definition
-* Rename
+* Find References
+* Rename Symbol
 * Code Actions
+* Offer Suggestions (experimental)
 
 ### Workspace commands:
 
@@ -36,9 +38,15 @@ The sidebar shows status information about the extension including the version o
 
 #### Find Symbol
 
-Find symbol performs a project search for a symbol. Results are shown in the sidebar.
+Find Symbol performs a project search for a symbol. Results are shown in the sidebar.
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png" width="400" alt="Find symbol sidebar">
+
+#### Find References
+
+Find References shows all usages of a given variable, function, or other symbol. Results are shown in the sidebar.
+
+<img src="https://user-images.githubusercontent.com/329222/90985881-070b2680-e57f-11ea-83e6-89ab3d4df055.png" width="400" alt="Find references sidebar">
 
 #### Using the workspace version of TypeScript
 

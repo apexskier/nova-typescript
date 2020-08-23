@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.6.0
+
+### Added
+
+* Add "Find References" command
+* Add experimental "Offer Suggestions" command
+
+### Changed
+
+* Auto activates in javascript workspaces
+* Search results now opened by double clicking instead of selecting
+* Find Symbol now uses builtin nova images for types of symbols
+* Search results UI cleanup
+
+### Fixed
+
+* Properly dispose of more resources when extension reloads
+
 ## v1.5.3
 
 ### Changed
