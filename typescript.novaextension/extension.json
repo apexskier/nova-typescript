@@ -113,6 +113,13 @@
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }
+      },
+      {
+        "title": "Offer Suggestion (experimental)",
+        "command": "apexskier.typescript.autoSuggest",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
       }
     ]
   }

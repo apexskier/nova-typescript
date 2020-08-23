@@ -40,7 +40,5 @@ export function registerSignatureHelp(client: LanguageClient) {
       nova.workspace.showInformativeMessage("Couldn't find signature help.");
       return;
     }
-
-    console.log(JSON.stringify(response));
   }
 }

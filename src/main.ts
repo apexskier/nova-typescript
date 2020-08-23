@@ -1,3 +1,4 @@
+import { registerAutoSuggest } from "./commands/autoSuggest";
 import { registerCodeAction } from "./commands/codeAction";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
@@ -147,11 +148,12 @@ async function asyncActivate() {
   );
 
   // register nova commands
+  compositeDisposable.add(registerAutoSuggest(client));
+  compositeDisposable.add(registerCodeAction(client));
+  compositeDisposable.add(registerFindReferences(client));
+  compositeDisposable.add(registerFindSymbol(client));
   compositeDisposable.add(registerGoToDefinition(client));
   compositeDisposable.add(registerRename(client));
-  compositeDisposable.add(registerCodeAction(client));
-  compositeDisposable.add(registerFindSymbol(client));
-  compositeDisposable.add(registerFindReferences(client));
 
   // register server-pushed commands
   registerApplyEdit(client);
