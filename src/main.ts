@@ -1,8 +1,9 @@
+import { registerCodeAction } from "./commands/codeAction";
+import { registerFindReferences } from "./commands/findReferences";
+import { registerFindSymbol } from "./commands/findSymbol";
 import { registerGoToDefinition } from "./commands/goToDefinition";
 import { registerRename } from "./commands/rename";
-import { registerCodeAction } from "./commands/codeAction";
 import { registerApplyEdit } from "./requests/applyEdit";
-import { registerFindSymbol } from "./commands/findSymbol";
 import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
 import { getTsLibPath } from "./tsLibPath";
@@ -150,6 +151,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerRename(client));
   compositeDisposable.add(registerCodeAction(client));
   compositeDisposable.add(registerFindSymbol(client));
+  compositeDisposable.add(registerFindReferences(client));
 
   // register server-pushed commands
   registerApplyEdit(client);

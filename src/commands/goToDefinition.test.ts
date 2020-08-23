@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { registerGoToDefinition } from "./goToDefinition";
 import * as searchResultsModule from "../searchResults";
 import * as showLocationModule from "../showLocation";
+import { registerGoToDefinition } from "./goToDefinition";
 
 jest.mock("../searchResults");
 jest.mock("../showLocation");
@@ -197,6 +197,9 @@ describe("goToDefinition command", () => {
         registerGoToDefinition
       );
       await command(mockEditor);
+      expect(
+        searchResultsModule.createLocationSearchResultsTree
+      ).toBeCalledTimes(1);
       expect(showLocationModule.showLocation).toBeCalledTimes(results.length);
       results.forEach((result, i) => {
         expect(showLocationModule.showLocation).toHaveBeenNthCalledWith(
