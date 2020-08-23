@@ -129,15 +129,15 @@ describe("tsLibPath", () => {
       expect(nova.workspace.showErrorMessage as jest.Mock).toBeCalledTimes(0);
       expect(global.console.error).toBeCalledTimes(1);
     });
+  });
 
-    it("warns if the workspace isn't saved, but is configured relatively", () => {
-      (nova.workspace.path as any) = "";
-      (nova.workspace.config.get as any) = jest.fn(() => "../workspaceconfig");
-      expect(getTsLibPath()).toBeNull();
-      expect(nova.workspace.showErrorMessage as jest.Mock).toBeCalledTimes(1);
-      expect(nova.workspace.showErrorMessage as jest.Mock).toBeCalledWith(
-        "Save your workspace before using a relative TypeScript library path."
-      );
-    });
+  it("warns if the workspace isn't saved, but is configured relatively", () => {
+    (nova.workspace.path as any) = "";
+    (nova.workspace.config.get as any) = jest.fn(() => "../workspaceconfig");
+    expect(getTsLibPath()).toBeNull();
+    expect(nova.workspace.showErrorMessage as jest.Mock).toBeCalledTimes(1);
+    expect(nova.workspace.showErrorMessage as jest.Mock).toBeCalledWith(
+      "Save your workspace before using a relative TypeScript library path."
+    );
   });
 });
