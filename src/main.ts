@@ -151,10 +151,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerRename(client));
   compositeDisposable.add(registerCodeAction(client));
   compositeDisposable.add(registerFindSymbol(client));
-  // not fully functional
-  if (nova.inDevMode()) {
-    compositeDisposable.add(registerFindReferences(client));
-  }
+  compositeDisposable.add(registerFindReferences(client));
 
   // register server-pushed commands
   registerApplyEdit(client);
