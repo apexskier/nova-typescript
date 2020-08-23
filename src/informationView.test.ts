@@ -6,12 +6,6 @@ describe("InformationView", () => {
   beforeEach(() => {
     reload.mockClear();
 
-    (global as any).nova = Object.assign(nova, {
-      commands: {
-        register: jest.fn(),
-      },
-    });
-
     class MockTreeView {
       reload = reload;
     }
@@ -32,7 +26,7 @@ describe("InformationView", () => {
   it("renders tree items", () => {
     class MockTreeItem {
       // eslint-disable-next-line no-unused-vars
-      constructor(readonly title: unknown, readonly state: unknown) {}
+      constructor(readonly name: unknown, readonly state: unknown) {}
     }
     (global as any).TreeItem = MockTreeItem;
     (global as any).TreeItemCollapsibleState = {
@@ -49,8 +43,8 @@ describe("InformationView", () => {
       MockTreeItem {
         "descriptiveText": "value",
         "identifier": "identifier",
+        "name": "title",
         "state": Symbol(TreeItemCollapsibleState.None),
-        "title": "title",
       }
     `);
   });

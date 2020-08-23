@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { openFile } from "./novaUtils";
-import { lspRangeToRange } from "./lspNovaConversions";
+import { wrapCommand } from "./novaUtils";
+import { showLocation } from "./showLocation";
 
 // https://stackoverflow.com/a/6969486
 function escapeRegExp(string: string) {
@@ -15,9 +15,11 @@ function cleanPath(path: string) {
   return decodedPath.replace(wr, ".").replace(hr, "~");
 }
 
-type MyTreeProvider<T> = TreeDataProvider<T> & { onSelect(element: T): void };
+type MyTreeProvider<T> = TreeDataProvider<T> & {
+  onSelect(element: T): Promise<void>;
+};
 
-let lastTreeView: TreeView<unknown> | null = null;
+let lastDisposable: Disposable | null = null;
 
 export function createSymbolSearchResultsTree(
   response: Array<lspTypes.SymbolInformation>
@@ -34,7 +36,7 @@ export function createLocationSearchResultsTree(
 
 function symbolInformationSearchResultsTreeProvider(
   response: Array<lspTypes.SymbolInformation>
-) {
+): MyTreeProvider<string | lspTypes.SymbolInformation> {
   // group results by file
   const files = new Map<string, Array<lspTypes.SymbolInformation>>();
   response.forEach((r) => {
@@ -44,7 +46,7 @@ function symbolInformationSearchResultsTreeProvider(
     files.get(r.location.uri)?.push(r);
   });
 
-  const dataProvider: MyTreeProvider<string | lspTypes.SymbolInformation> = {
+  return {
     getChildren(element) {
       if (element == null) {
         return Array.from(files.keys());
@@ -69,24 +71,23 @@ function symbolInformationSearchResultsTreeProvider(
         element.deprecated ? " (deprecated)" : ""
       }`;
       const position = element.location.range.start;
-      item.image = `Symbol_${symbolKindToText[element.kind]}`;
+      item.image = `__symbol.${symbolKindToNovaSymbol[element.kind]}`;
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
+      item.command = "apexskier.typescript.showSearchResult";
       return item;
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element.location);
+        await showLocation(element.location);
       }
     },
   };
-
-  return dataProvider;
 }
 
 function locationSearchResultsTreeProvider(
   name: string,
   locations: Array<lspTypes.Location>
-) {
+): MyTreeProvider<string | lspTypes.Location> {
   // group results by file
   const files = new Map<string, Array<lspTypes.Location>>();
   locations.forEach((r) => {
@@ -96,7 +97,7 @@ function locationSearchResultsTreeProvider(
     files.get(r.uri)?.push(r);
   });
 
-  const dataProvider: MyTreeProvider<string | lspTypes.Location> = {
+  return {
     getChildren(element) {
       if (element == null) {
         return Array.from(files.keys());
@@ -116,58 +117,42 @@ function locationSearchResultsTreeProvider(
       }
       return new TreeItem(name, TreeItemCollapsibleState.None);
     },
-    onSelect(element) {
+    async onSelect(element) {
       if (typeof element !== "string") {
-        handleLocation(element);
+        await showLocation(element);
       }
     },
   };
-
-  return dataProvider;
 }
 
-function showTreeView(dataProvider: MyTreeProvider<unknown>) {
+function showTreeView<T>(dataProvider: MyTreeProvider<T>) {
+  lastDisposable?.dispose();
+
+  const compositeDisposable = new CompositeDisposable();
+
   const treeView = new TreeView("apexskier.typescript.sidebar.symbols", {
     dataProvider,
   });
-
-  treeView.onDidChangeSelection((elements) => {
-    elements.forEach(dataProvider.onSelect);
-  });
+  compositeDisposable.add(treeView);
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
-
   if (!treeView.visible) {
     nova.workspace.showInformativeMessage(
       "Done! View the TS/JS sidebar to see results."
     );
   }
 
-  if (lastTreeView) {
-    lastTreeView.dispose();
-  }
-  lastTreeView = treeView;
+  const command = nova.commands.register(
+    "apexskier.typescript.showSearchResult",
+    wrapCommand(async () => {
+      await Promise.all(treeView.selection.map(dataProvider.onSelect));
+    })
+  );
+  compositeDisposable.add(command);
 
-  return treeView;
+  lastDisposable = compositeDisposable;
 }
 
-async function handleLocation(location: lspTypes.Location) {
-  const newEditor = await openFile(location.uri);
-  if (!newEditor) {
-    nova.workspace.showWarningMessage(`Failed to open ${location.uri}`);
-    return;
-  }
-  showRangeInEditor(newEditor, location.range);
-}
-
-async function showRangeInEditor(editor: TextEditor, range: lspTypes.Range) {
-  const novaRange = lspRangeToRange(editor.document, range);
-  editor.addSelectionForRange(novaRange);
-  editor.scrollToPosition(novaRange.start);
-}
-
-// pulled from types
-// TODO: it would be nice to map each of these to a custom icon
 const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   1: "File",
   2: "Module",
@@ -195,4 +180,34 @@ const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   24: "Event",
   25: "Operator",
   26: "TypeParameter",
+};
+
+const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: string } = {
+  // const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: NovaSymbolType } = {
+  1: "file",
+  2: "package", // Module
+  3: "package", // Namespace
+  4: "package",
+  5: "class",
+  6: "method",
+  7: "property",
+  8: "Field",
+  9: "constructor",
+  10: "enum",
+  11: "interface",
+  12: "function",
+  13: "variable",
+  14: "constant",
+  15: "variable", // String
+  16: "variable", // Number
+  17: "variable", // Boolean
+  18: "variable", // Array
+  19: "variable", // Object
+  20: "keyword", // Key
+  21: "variable", // Null
+  22: "enum-member",
+  23: "struct",
+  24: "variable", // Event
+  25: "expression", // Operator
+  26: "type", // TypeParameter
 };

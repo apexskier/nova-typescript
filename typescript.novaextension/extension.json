@@ -1,8 +1,8 @@
 {
   "identifier": "apexskier.typescript",
   "name": "TypeScript",
-  "vendor": "Cameron Little",
-  "description": "Advanced TypeScript language support for Nova",
+  "organization": "Cameron Little",
+  "description": "Advanced TypeScript and JavaScript language support for Nova",
   "version": "1.5.3",
   "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
@@ -14,6 +14,8 @@
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:tsx",
+    "onLanguage:javascript",
+    "onLanguage:jsx",
     "onWorkspaceContains:tsconfig.json"
   ],
 
@@ -47,7 +49,7 @@
             {
               "title": "Refresh",
               "image": "__builtin.refresh",
-              "command": "apexskier.typescript.refreshInformation"
+              "command": "apexskier.typescript.reload"
             }
           ]
         },

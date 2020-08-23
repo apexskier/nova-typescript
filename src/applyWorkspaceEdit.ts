@@ -13,6 +13,9 @@ export async function applyWorkspaceEdit(
   // this could be parallelized
   for (const uri in workspaceEdit.changes) {
     const changes = workspaceEdit.changes[uri];
+    if (!changes.length) {
+      continue;
+    }
     const editor = await openFile(uri);
     if (!editor) {
       nova.workspace.showWarningMessage(`Failed to open ${uri}`);

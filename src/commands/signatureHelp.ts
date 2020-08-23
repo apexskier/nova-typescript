@@ -37,7 +37,7 @@ export function registerSignatureHelp(client: LanguageClient) {
     // This resolves, but doesn't seem to ever provide help
 
     if (response == null) {
-      nova.workspace.showWarningMessage("Couldn't find signature.");
+      nova.workspace.showInformativeMessage("Couldn't find signature help.");
       return;
     }
 
