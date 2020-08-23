@@ -176,10 +176,14 @@ async function asyncActivate() {
 
 export function activate() {
   console.log("activating...");
-  return asyncActivate().catch((err) => {
-    console.error("Failed to activate");
-    console.error(err);
-  });
+  return asyncActivate()
+    .catch((err) => {
+      console.error("Failed to activate");
+      console.error(err);
+    })
+    .then(() => {
+      console.log("activated");
+    });
 }
 
 export function deactivate() {

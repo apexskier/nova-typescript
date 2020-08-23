@@ -29,7 +29,11 @@ jest.useFakeTimers();
 
 const originalLog = global.console.log;
 global.console.log = jest.fn((...args) => {
-  if (args[0] === "activating..." || args[0] === "reloading...") {
+  if (
+    args[0] === "activating..." ||
+    args[0] === "activated" ||
+    args[0] === "reloading..."
+  ) {
     return;
   }
   originalLog(...args);
