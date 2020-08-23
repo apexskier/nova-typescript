@@ -2,7 +2,7 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import { rangeToLspRange, lspRangeToRange } from "../lspNovaConversions";
 import { wrapCommand, showChoicePalette } from "../novaUtils";
-import { executeCommand } from "../commands/codeAction";
+import { executeCommand } from "./codeAction";
 
 function render(content: string | lspTypes.MarkupContent) {
   if (typeof content === "string") {
