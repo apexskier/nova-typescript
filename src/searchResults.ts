@@ -127,7 +127,9 @@ function locationSearchResultsTreeProvider(
         item.path = element;
       } else {
         item = new TreeItem(name, TreeItemCollapsibleState.None);
-        item.descriptiveText = `:${element.range.start.line + 1}:${element.range.start.character + 1}`;
+        item.descriptiveText = `:${element.range.start.line + 1}:${
+          element.range.start.character + 1
+        }`;
       }
       item.command = "apexskier.typescript.showSearchResult";
       return item;
