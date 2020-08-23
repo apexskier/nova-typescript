@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
+import { wrapCommand } from "./novaUtils";
 import { showLocation } from "./showLocation";
 
 // https://stackoverflow.com/a/6969486
@@ -14,9 +15,11 @@ function cleanPath(path: string) {
   return decodedPath.replace(wr, ".").replace(hr, "~");
 }
 
-type MyTreeProvider<T> = TreeDataProvider<T> & { onSelect(element: T): void };
+type MyTreeProvider<T> = TreeDataProvider<T> & {
+  onSelect(element: T): Promise<void>;
+};
 
-let lastTreeView: TreeView<unknown> | null = null;
+let lastDisposable: Disposable | null = null;
 
 export function createSymbolSearchResultsTree(
   response: Array<lspTypes.SymbolInformation>
@@ -33,7 +36,7 @@ export function createLocationSearchResultsTree(
 
 function symbolInformationSearchResultsTreeProvider(
   response: Array<lspTypes.SymbolInformation>
-) {
+): MyTreeProvider<string | lspTypes.SymbolInformation> {
   // group results by file
   const files = new Map<string, Array<lspTypes.SymbolInformation>>();
   response.forEach((r) => {
@@ -43,7 +46,7 @@ function symbolInformationSearchResultsTreeProvider(
     files.get(r.location.uri)?.push(r);
   });
 
-  const dataProvider: MyTreeProvider<string | lspTypes.SymbolInformation> = {
+  return {
     getChildren(element) {
       if (element == null) {
         return Array.from(files.keys());
@@ -70,6 +73,7 @@ function symbolInformationSearchResultsTreeProvider(
       const position = element.location.range.start;
       item.image = `__symbol.${symbolKindToNovaSymbol[element.kind]}`;
       item.tooltip = `${element.location.uri}:${position.line}:${position.character}`;
+      item.command = "apexskier.typescript.showSearchResult";
       return item;
     },
     async onSelect(element) {
@@ -78,14 +82,12 @@ function symbolInformationSearchResultsTreeProvider(
       }
     },
   };
-
-  return dataProvider;
 }
 
 function locationSearchResultsTreeProvider(
   name: string,
   locations: Array<lspTypes.Location>
-) {
+): MyTreeProvider<string | lspTypes.Location> {
   // group results by file
   const files = new Map<string, Array<lspTypes.Location>>();
   locations.forEach((r) => {
@@ -95,7 +97,7 @@ function locationSearchResultsTreeProvider(
     files.get(r.uri)?.push(r);
   });
 
-  const dataProvider: MyTreeProvider<string | lspTypes.Location> = {
+  return {
     getChildren(element) {
       if (element == null) {
         return Array.from(files.keys());
@@ -121,34 +123,34 @@ function locationSearchResultsTreeProvider(
       }
     },
   };
-
-  return dataProvider;
 }
 
-function showTreeView(dataProvider: MyTreeProvider<unknown>) {
+function showTreeView<T>(dataProvider: MyTreeProvider<T>) {
+  lastDisposable?.dispose();
+
+  const compositeDisposable = new CompositeDisposable();
+
   const treeView = new TreeView("apexskier.typescript.sidebar.symbols", {
     dataProvider,
   });
-
-  // TODO: I'd prefer this to be a double click command, instead of on select
-  treeView.onDidChangeSelection(async (elements) => {
-    await Promise.all(
-      elements.map((element) => dataProvider.onSelect(element))
-    );
-  });
+  compositeDisposable.add(treeView);
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
-
   if (!treeView.visible) {
     nova.workspace.showInformativeMessage(
       "Done! View the TS/JS sidebar to see results."
     );
   }
 
-  if (lastTreeView) {
-    lastTreeView.dispose();
-  }
-  lastTreeView = treeView;
+  const command = nova.commands.register(
+    "apexskier.typescript.showSearchResult",
+    wrapCommand(async () => {
+      await Promise.all(treeView.selection.map(dataProvider.onSelect));
+    })
+  );
+  compositeDisposable.add(command);
+
+  lastDisposable = compositeDisposable;
 }
 
 const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {

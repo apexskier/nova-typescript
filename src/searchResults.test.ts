@@ -6,6 +6,30 @@ import {
   createLocationSearchResultsTree,
 } from "./searchResults";
 
+(global as any).nova = Object.assign(nova, {
+  commands: {
+    register: jest.fn(),
+  },
+  workspace: {
+    showInformativeMessage: jest.fn(),
+    showErrorMessage(err: unknown) {
+      throw err;
+    },
+    openFile: jest.fn(),
+  },
+});
+
+class CompositeDisposableMock implements Disposable {
+  private _disposables: Array<Disposable> = [];
+  add(disposable: Disposable) {
+    this._disposables.push(disposable);
+  }
+  dispose() {
+    this._disposables.forEach((d) => d.dispose());
+  }
+}
+(global as any).CompositeDisposable = CompositeDisposableMock;
+
 function mockTreeViewImplementation() {
   return {
     reload: jest.fn(),
@@ -31,12 +55,11 @@ beforeEach(() => {
   TreeViewMock.mockReset();
   TreeViewMock.mockImplementation(mockTreeViewImplementation);
 
-  (global as any).nova = Object.assign(nova, {
-    workspace: {
-      showInformativeMessage: jest.fn(),
-      openFile: jest.fn(),
-    },
-  });
+  (nova.commands.register as jest.Mock)
+    .mockReset()
+    .mockReturnValue({ dispose: jest.fn() });
+  (nova.workspace.showInformativeMessage as jest.Mock).mockReset();
+  (nova.workspace.openFile as jest.Mock).mockReset();
 });
 
 describe("Symbol search results tree", () => {
@@ -85,10 +108,10 @@ describe("Symbol search results tree", () => {
     expect(nova.workspace.showInformativeMessage).toHaveBeenCalledTimes(1);
   });
 
-  it("opens and selects the source when a result is focused", async () => {
+  it("registers a double click command to open each search result", async () => {
     TreeViewMock.mockImplementation(() => ({
       ...mockTreeViewImplementation(),
-      onDidChangeSelection: jest.fn(),
+      selection: [symbols[0]],
     }));
     const mockEditor = {
       document: {
@@ -105,10 +128,12 @@ describe("Symbol search results tree", () => {
       .mockReturnValueOnce(Promise.resolve(mockEditor));
 
     createSymbolSearchResultsTree(symbols);
-    const treeMock = TreeViewTypedMock.mock.results[0].value;
-    expect(treeMock.onDidChangeSelection).toBeCalledTimes(1);
-    const elements: Array<string | lspTypes.SymbolInformation> = [symbols[0]];
-    await treeMock.onDidChangeSelection.mock.calls[0][0](elements);
+    expect(nova.commands.register).toBeCalledWith(
+      "apexskier.typescript.showSearchResult",
+      expect.any(Function)
+    );
+    const command = (nova.commands.register as jest.Mock).mock.calls[0][1];
+    await command();
 
     expect(nova.workspace.openFile).toBeCalledTimes(1);
     expect(nova.workspace.openFile).toBeCalledWith("fileURI1");
@@ -134,6 +159,7 @@ describe("Symbol search results tree", () => {
     `);
     expect(provider.getTreeItem(symbols[0])).toMatchInlineSnapshot(`
       MockTreeItem {
+        "command": "apexskier.typescript.showSearchResult",
         "descriptiveText": "String",
         "image": "__symbol.variable",
         "state": Symbol(TreeItemCollapsibleState.None),
@@ -172,7 +198,7 @@ describe("Location search results tree", () => {
   it("opens and selects the source when a result is focused", async () => {
     TreeViewMock.mockImplementation(() => ({
       ...mockTreeViewImplementation(),
-      onDidChangeSelection: jest.fn(),
+      selection: [locations[0]],
     }));
     const mockEditor = {
       document: {
@@ -189,10 +215,12 @@ describe("Location search results tree", () => {
       .mockReturnValueOnce(Promise.resolve(mockEditor));
 
     createLocationSearchResultsTree("name", locations);
-    const treeMock = TreeViewTypedMock.mock.results[0].value;
-    expect(treeMock.onDidChangeSelection).toBeCalledTimes(1);
-    const elements: Array<string | lspTypes.Location> = [locations[0]];
-    await treeMock.onDidChangeSelection.mock.calls[0][0](elements);
+    expect(nova.commands.register).toBeCalledWith(
+      "apexskier.typescript.showSearchResult",
+      expect.any(Function)
+    );
+    const command = (nova.commands.register as jest.Mock).mock.calls[0][1];
+    await command();
 
     expect(nova.workspace.openFile).toBeCalledTimes(1);
     expect(nova.workspace.openFile).toBeCalledWith("fileURI1");
@@ -254,7 +282,7 @@ it.each([
     () => createLocationSearchResultsTree("name", []),
     () => createSymbolSearchResultsTree([]),
   ],
-])("disposes of subsequently created trees", (a, b) => {
+])("disposes of subsequently created objects", (a, b) => {
   a();
   expect(TreeView).toHaveBeenCalledTimes(1);
   expect(TreeView).toHaveBeenCalledWith(
@@ -264,10 +292,21 @@ it.each([
   expect(nova.workspace.showInformativeMessage).not.toBeCalled();
   const treeMock1 = TreeViewTypedMock.mock.results[0].value;
   expect(treeMock1.dispose).not.toBeCalled();
+  expect(nova.commands.register).toBeCalledWith(
+    "apexskier.typescript.showSearchResult",
+    expect.any(Function)
+  );
+  (nova.commands.register as jest.Mock).mock.results.forEach(({ value }) => {
+    expect(value.dispose).not.toBeCalled();
+  });
 
   b();
   expect(TreeView).toHaveBeenCalledTimes(2);
   const treeMock2 = TreeViewTypedMock.mock.results[1].value;
   expect(treeMock1.dispose).toBeCalled();
   expect(treeMock2.dispose).not.toBeCalled();
+  const command1 = (nova.commands.register as jest.Mock).mock.results[0].value;
+  expect(command1.dispose).toBeCalled();
+  const command2 = (nova.commands.register as jest.Mock).mock.results[1].value;
+  expect(command2.dispose).toBeCalled();
 });
