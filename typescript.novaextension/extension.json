@@ -55,10 +55,11 @@
         },
         {
           "id": "apexskier.typescript.sidebar.symbols",
-          "name": "Search Results",
+          "name": "Results",
+          "placeholderText": "Results from “Find Symbol”, “Find Reference” and “Go to Definition” will show here.",
           "headerCommands": [
             {
-              "title": "Search",
+              "title": "Find Symbol",
               "image": "Search",
               "tooltip": "Open the Find Symbol palette",
               "command": "apexskier.typescript.findSymbol"

@@ -34,6 +34,9 @@ export function registerFindSymbol(client: LanguageClient) {
       return;
     }
 
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(response, null, "  "));
+    }
     createSymbolSearchResultsTree(response);
   }
 }

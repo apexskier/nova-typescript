@@ -7,12 +7,23 @@ import { showLocation } from "./showLocation";
 function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
+const filePrefix = new RegExp("^" + escapeRegExp("file://"));
 
 const hr = new RegExp("^" + escapeRegExp(`file://${nova.environment["HOME"]}`));
+const stdVolumePrefix = new RegExp(
+  "^" + escapeRegExp("file:///Volumes/Macintosh HD")
+);
 function cleanPath(path: string) {
-  const decodedPath = decodeURIComponent(path);
   const wr = new RegExp("^" + escapeRegExp(`file://${nova.workspace.path}`));
-  return decodedPath.replace(wr, ".").replace(hr, "~");
+  path = decodeURIComponent(path);
+  path = path.replace(stdVolumePrefix, "file://");
+  return (
+    path
+      .replace(wr, ".")
+      .replace(hr, "~")
+      // needs to go last
+      .replace(filePrefix, "")
+  );
 }
 
 type MyTreeProvider<T> = TreeDataProvider<T> & {
@@ -107,15 +118,19 @@ function locationSearchResultsTreeProvider(
       return [];
     },
     getTreeItem(element) {
+      let item: TreeItem;
       if (typeof element === "string") {
-        const item = new TreeItem(
+        item = new TreeItem(
           cleanPath(element),
           TreeItemCollapsibleState.Expanded
         );
         item.path = element;
-        return item;
+      } else {
+        item = new TreeItem(name, TreeItemCollapsibleState.None);
+        item.descriptiveText = `:${element.range.start.line + 1}:${element.range.start.character + 1}`;
       }
-      return new TreeItem(name, TreeItemCollapsibleState.None);
+      item.command = "apexskier.typescript.showSearchResult";
+      return item;
     },
     async onSelect(element) {
       if (typeof element !== "string") {
