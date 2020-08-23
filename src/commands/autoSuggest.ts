@@ -12,6 +12,8 @@ function render(content: string | lspTypes.MarkupContent) {
 }
 
 export function registerAutoSuggest(client: LanguageClient) {
+  // TODO: in future this could use "client/registerCapability" to add more functionlity, if the language server supports
+  
   return nova.commands.register(
     "apexskier.typescript.autoSuggest",
     wrapCommand(autoSuggest)
@@ -43,6 +45,7 @@ export function registerAutoSuggest(client: LanguageClient) {
       return;
     }
 
+    // NOTE: isIncomplete isn't handled here
     const items = (Array.isArray(response)
       ? response
       : response.items
@@ -66,6 +69,10 @@ export function registerAutoSuggest(client: LanguageClient) {
         "completionItem/resolve",
         choice
       )) as lspTypes.CompletionItem;
+      
+      if (nova.inDevMode()){
+      console.log(JSON.stringify(completionItem, null, "  "));
+    }
 
       const actions = {
         async Insert() {
@@ -101,7 +108,7 @@ export function registerAutoSuggest(client: LanguageClient) {
 
 ${render(completionItem.documentation)}`;
       }
-      if (completionItem.detail) {
+      if (completionItem.detail && completionItem.detail !== completionItem.label) {
         message += `
 
 ${completionItem.detail}`;

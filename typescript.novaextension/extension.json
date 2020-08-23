@@ -105,7 +105,7 @@
         }
       },
       {
-        "title": "TypeScript Suggest",
+        "title": "Offer Suggestion",
         "command": "apexskier.typescript.autoSuggest",
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
