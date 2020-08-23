@@ -1,21 +1,4 @@
-import { registerGoToDefinition } from "./commands/goToDefinition";
-import { registerRename } from "./commands/rename";
-import { registerCodeAction } from "./commands/codeAction";
-import { registerFindSymbol } from "./commands/findSymbol";
-import { registerAutoSuggest } from "./commands/autoSuggest";
-import { registerApplyEdit } from "./requests/applyEdit";
-import { wrapCommand } from "./novaUtils";
-import { InformationView } from "./informationView";
 import { getTsLibPath } from "./tsLibPath";
-
-nova.commands.register(
-  "apexskier.typescript.openWorkspaceConfig",
-  wrapCommand(function openWorkspaceConfig(workspace: Workspace) {
-    workspace.openConfig("apexskier.typescript");
-  })
-);
-
-nova.commands.register("apexskier.typescript.reload", reload);
 
 let client: LanguageClient | null = null;
 const compositeDisposable = new CompositeDisposable();
@@ -58,49 +41,21 @@ async function makeFileExecutable(file: string) {
   });
 }
 
-async function getTsVersion(tslibPath: string) {
-  return new Promise<string>((resolve, reject) => {
-    const process = new Process("/usr/bin/env", {
-      args: ["node", nova.path.join(tslibPath, "tsc.js"), "--version"],
-      stdio: ["ignore", "pipe", "ignore"],
-    });
-    let str = "";
-    process.onStdout((versionString) => {
-      str += versionString.trim();
-    });
-    process.onDidExit((status) => {
-      if (status === 0) {
-        resolve(str);
-      } else {
-        reject(status);
-      }
-    });
-    process.start();
-  });
-}
-
-async function reload() {
-  deactivate();
-  console.log("reloading...");
-  await asyncActivate();
-}
-
 async function asyncActivate() {
-  const informationView = new InformationView();
-  compositeDisposable.add(informationView);
+  await installWrappedDependencies();
 
-  informationView.status = "Activating...";
-
-  try {
-    await installWrappedDependencies();
-  } catch (err) {
-    informationView.status = "Failed to install";
-    throw err;
-  }
+  const completionAssistant: CompletionAssistant = {
+    provideCompletionItems(editor, context) {
+      console.log("providing suggestions", editor.document.uri, context);
+      return [];
+    },
+  };
+  compositeDisposable.add(
+    nova.assistants.registerCompletionAssistant("*", completionAssistant)
+  );
 
   const tslibPath = getTsLibPath();
   if (!tslibPath) {
-    informationView.status = "No tslib";
     return;
   }
   console.info("using tslib at:", tslibPath);
@@ -146,34 +101,15 @@ async function asyncActivate() {
     }
   );
 
-  // register nova commands
-  compositeDisposable.add(registerGoToDefinition(client));
-  compositeDisposable.add(registerRename(client));
-  compositeDisposable.add(registerCodeAction(client));
-  compositeDisposable.add(registerFindSymbol(client));
-  compositeDisposable.add(registerAutoSuggest(client));
-
-  // register server-pushed commands
-  registerApplyEdit(client);
-
-  // Not working, I'm guessing Nova intercepts this notification.
-  client.onNotification("initialized", () => {
-    console.log("initialized");
-  });
-
-  client.onNotification("window/showMessage", (params) => {
-    console.log("window/showMessage", JSON.stringify(params));
-  });
-
+  // TEST CASES
+  // 1: completions not provide
   client.start();
 
-  getTsVersion(tslibPath).then((version) => {
-    informationView.tsVersion = version;
-  });
+  // 2: completions provided
 
-  informationView.status = "Running";
-
-  informationView.reload(); // this is needed, otherwise the view won't show up properly, possibly a Nova bug
+  // 3: completions provided
+  client.start();
+  client.stop();
 }
 
 export function activate() {
