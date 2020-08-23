@@ -27,7 +27,7 @@ export function registerFindReferences(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       position: selectedPosition,
       context: {
-        includeDeclaration: true, // TODO
+        includeDeclaration: true,
       },
     };
     const response = (await client.sendRequest(
