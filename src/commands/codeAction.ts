@@ -73,7 +73,7 @@ export function registerCodeAction(client: LanguageClient) {
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-current/#workspace_executeCommand
 // NOTE: this actually handled "externally" in the applyEdit command handler
-async function executeCommand(
+export async function executeCommand(
   client: LanguageClient,
   command: lspTypes.Command
 ) {
