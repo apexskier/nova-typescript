@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-# env
-# echo $PATH
-# dirname $(command -v node)
+# env > /dev/stderr
+# echo $PATH > /dev/stderr
+# dirname $(command -v node) > /dev/stderr
 # note: any output from this script will be used by nova's language server thing, so it'll break functionality
 
 cd "$WORKSPACE_DIR"
