@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.6.1
+
+### Changed
+
+* Remove confirmation/documentation message from "Offer Suggestions"
+
 ## v1.6.0
 
 ### Added
