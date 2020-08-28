@@ -155,7 +155,9 @@ async function asyncActivate() {
   compositeDisposable.add(registerFindSymbol(client));
   compositeDisposable.add(registerGoToDefinition(client));
   compositeDisposable.add(registerRename(client));
-  compositeDisposable.add(registerSignatureHelp(client));
+  if (nova.inDevMode()) {
+    compositeDisposable.add(registerSignatureHelp(client));
+  }
 
   // register server-pushed commands
   registerApplyEdit(client);
