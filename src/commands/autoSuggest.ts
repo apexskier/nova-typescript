@@ -4,13 +4,6 @@ import { rangeToLspRange, lspRangeToRange } from "../lspNovaConversions";
 import { wrapCommand, showChoicePalette } from "../novaUtils";
 import { executeCommand } from "./codeAction";
 
-function render(content: string | lspTypes.MarkupContent) {
-  if (typeof content === "string") {
-    return content;
-  }
-  return content.value;
-}
-
 export function registerAutoSuggest(client: LanguageClient) {
   // TODO: in future this could use "client/registerCapability" to add more functionlity, if the language server supports
 
