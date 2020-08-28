@@ -40,11 +40,11 @@ export function registerSignatureHelp(client: LanguageClient) {
       "textDocument/signatureHelp",
       params
     )) as lspTypes.SignatureHelp | null;
-    
+
     if (nova.inDevMode()) {
       console.log(JSON.stringify(response));
     }
-    
+
     // This resolves, but doesn't work often.
     // it seemed to be working at one point...
 
