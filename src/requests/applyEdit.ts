@@ -11,7 +11,6 @@ export function registerApplyEdit(client: LanguageClient) {
   client.onRequest(
     "workspace/applyEdit",
     async (params: lspTypes.ApplyWorkspaceEditParams) => {
-      console.log("workspace/applyEdit", params.label);
       await applyWorkspaceEdit(params.edit);
     }
   );

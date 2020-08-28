@@ -56,7 +56,7 @@ describe("signatureHelp command", () => {
 
     expect(nova.workspace.showInformativeMessage).toBeCalledTimes(1);
     expect(nova.workspace.showInformativeMessage).toHaveBeenCalledWith(
-      "Couldn't find signature help."
+      "Couldn't find documentation."
     );
   });
 });
