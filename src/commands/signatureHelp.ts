@@ -45,6 +45,9 @@ export function registerSignatureHelp(client: LanguageClient) {
     if (nova.inDevMode()) {
       console.log(JSON.stringify(response));
     }
+    
+    // This resolves, but doesn't work often.
+    // it seemed to be working at one point...
 
     if (response == null || response.activeSignature == null) {
       nova.workspace.showInformativeMessage("Couldn't find documentation.");
