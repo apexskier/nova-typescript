@@ -32,8 +32,7 @@ export function registerSignatureHelp(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       position: selectedPosition,
       context: {
-        triggerKind: 2, // TriggerCharacter, Invoked doesn't work here
-        triggerCharacter: ".",
+        triggerKind: 1, // Invoked
         isRetrigger: false,
       },
     };
