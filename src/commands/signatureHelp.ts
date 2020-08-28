@@ -5,6 +5,13 @@ import { rangeToLspRange } from "../lspNovaConversions";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 
+function render(content: string | lspTypes.MarkupContent) {
+  if (typeof content === "string") {
+    return content;
+  }
+  return content.value;
+}
+
 export function registerSignatureHelp(client: LanguageClient) {
   return nova.commands.register(
     "apexskier.typescript.signatureHelp",
@@ -34,11 +41,27 @@ export function registerSignatureHelp(client: LanguageClient) {
       params
     )) as lspTypes.SignatureHelp | null;
 
-    // This resolves, but doesn't seem to ever provide help
+    if (nova.inDevMode()) {
+      console.log(JSON.stringify(response));
+    }
 
-    if (response == null) {
-      nova.workspace.showInformativeMessage("Couldn't find signature help.");
+    // This resolves, but doesn't work often.
+    // it seemed to be working at one point...
+
+    if (response == null || response.activeSignature == null) {
+      nova.workspace.showInformativeMessage("Couldn't find documentation.");
       return;
     }
+
+    const signature = response.signatures[response.activeSignature];
+
+    let message = signature.label;
+    if (signature.documentation) {
+      message += `
+
+${render(signature.documentation)}`;
+    }
+
+    nova.workspace.showInformativeMessage(message);
   }
 }
