@@ -82,5 +82,5 @@ export async function executeCommand(
     command: command.command,
     arguments: command.arguments,
   };
-  return client.sendRequest("workspace/executeCommand", params) as any | null;
+  return client.sendRequest("workspace/executeCommand", params);
 }
