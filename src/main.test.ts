@@ -127,6 +127,9 @@ describe("test suite", () => {
       args: ["npm", "install"],
       cwd: "/extension",
       stdio: ["ignore", "pipe", "pipe"],
+      env: {
+        NO_UPDATE_NOTIFIER: "true",
+      },
     });
     // makes the run script executable
     expect(Process).toHaveBeenNthCalledWith(2, "/usr/bin/env", {
