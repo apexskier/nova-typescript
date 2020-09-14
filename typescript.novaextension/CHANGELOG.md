@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.6.2
+
+### Changed
+
+- Removed stub language syntax
+- When using bundled TypeScript, don't emit npm update checks
+
 ## v1.6.1
 
 ### Changed
