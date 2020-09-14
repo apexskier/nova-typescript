@@ -9,6 +9,8 @@ assignees: ''
 
 A clear and concise description of what the bug is.
 
+<!-- Any hard crashes of the editor should [also be filed with Panic](https://dev.panic.com/panic/nova-issues/-/issues/new). Feel free to cross-file them here as well, but make sure to include a link to Panic's issue. -->
+
 **To reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'
