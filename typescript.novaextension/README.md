@@ -6,17 +6,17 @@ This extension provides rich TypeScript integration through a dedicated language
 
 Right click source code and choose the following from the TypeScript menu.
 
-* Go to Definition
-* Find References
-* Rename Symbol
-* Code Actions
-* Offer Suggestions (experimental)
+- Go to Definition
+- Find References
+- Rename Symbol
+- Code Actions
+- Offer Suggestions (experimental)
 
 ### Workspace commands:
 
 From the menu, select Extensions > TypeScript.
 
-* Find Symbol
+- Find Symbol
 
 ### Usage
 

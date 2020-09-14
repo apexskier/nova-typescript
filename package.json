@@ -9,10 +9,10 @@
     "test": "jest",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:eslint": "eslint --ignore-path .gitignore \"**/*.{ts,js}\"",
-    "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json}\"",
+    "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json,md}\"",
     "fix": "concurrently 'yarn:fix:*'",
     "fix:eslint": "eslint --fix --ignore-path .gitignore \"**/*.{ts,js}\"",
-    "fix:prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js,json}\"",
+    "fix:prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js,json,md}\"",
     "watch": "onchange -i \"src/**\" \"rollup.*.js\" -- npm run build"
   },
   "repository": {
