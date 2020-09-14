@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<syntax name="__typescript_extension">
-<!--
-	This file exists to satisfy nova extension requirements
-	See https://dev.panic.com/panic/nova-issues/-/issues/1454
--->
-</syntax>
