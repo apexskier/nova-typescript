@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import type * as lspTypes from "vscode-languageserver-protocol";
 import { registerSignatureHelp } from "./signatureHelp";
 
 describe("signatureHelp command", () => {
