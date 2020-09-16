@@ -32,7 +32,7 @@ From the menu, select Extensions > TypeScript.
 
 #### Sidebar
 
-The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully.
+The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully. To access the sidebar, click the “All Sidebars” button. It can be dragged into the sidebar header for quick access.
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-sidebar.png" width="400" alt="Sidebar information">
 
