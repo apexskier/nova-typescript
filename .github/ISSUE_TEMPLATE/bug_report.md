@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report a problem with the extension's functionality
 title: ""
 labels: bug
 assignees: ""
@@ -8,7 +8,7 @@ assignees: ""
 
 A clear and concise description of what the bug is.
 
-<!-- Any hard crashes of the editor should [also be filed with Panic](https://dev.panic.com/panic/nova-issues/-/issues/new). Feel free to cross-file them here as well, but make sure to include a link to Panic's issue. -->
+<!-- Any hard crashes of the editor should [also be filed with Panic](https://nova.app/help/?ext=TypeScript%20(apexskier.typescript)%20(reported%20fromhttps%3A%2F%2Fgithub.com%2Fapexskier%2Fnova-typescript%2Fissues%2Fnew)). Feel free to cross-file them here as well, but make sure to include a link to Panic's issue. -->
 
 **To reproduce**
 Steps to reproduce the behavior:
