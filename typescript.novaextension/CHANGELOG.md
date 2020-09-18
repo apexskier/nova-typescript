@@ -1,5 +1,15 @@
 # Changelog
 
+## future
+
+### Added
+
+- Support disabling processing on javascript files
+
+### Fixed
+
+- Display global tsserver path configuration in UI
+
 ## v1.6.2
 
 ### Changed
