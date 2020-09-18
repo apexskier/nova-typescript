@@ -20,9 +20,13 @@ From the menu, select Extensions > TypeScript.
 
 ### Usage
 
-#### Screenshots
+#### Editor functionality
+
+Main functionality is found inline in the editor.
 
 **Inline errors**
+
+Inline errors can also be found in the Issues sidebar (View > Sidebars > Show Issues Sidebar).
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-error.png" width="400" alt="Example errors">
 
@@ -32,19 +36,19 @@ From the menu, select Extensions > TypeScript.
 
 #### Sidebar
 
-The sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully. To access the sidebar, click the “All Sidebars” button or View > Sidebars > Show All Sidebars, then the TS/JS item. It can be dragged into the sidebar header for quick access.
+The TS/JS sidebar shows status information about the extension including the version of typescript it's using and if it's started successfully. To access the sidebar, click the “All Sidebars” button or View > Sidebars > Show All Sidebars, then the TS/JS item. It can be dragged into the sidebar header for quick access.
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/3cbd2a83f37df63e3e249d16d741ebea82254640/typescript.novaextension/Images/README/example-sidebar.png" width="400" alt="Sidebar information">
 
 #### Find Symbol
 
-Find Symbol performs a project search for a symbol. Results are shown in the sidebar.
+Find Symbol performs a project search for a symbol. Results are shown in the TS/JS sidebar.
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/fdf669355c7ffcec4a943ebc9de76b45738f08a7/typescript.novaextension/Images/README/example-findsymbol.png" width="400" alt="Find symbol sidebar">
 
 #### Find References
 
-Find References shows all usages of a given variable, function, or other symbol. Results are shown in the sidebar.
+Find References shows all usages of a given variable, function, or other symbol. Results are shown in the TS/JS sidebar.
 
 <img src="https://user-images.githubusercontent.com/329222/90985881-070b2680-e57f-11ea-83e6-89ab3d4df055.png" width="400" alt="Find references sidebar">
 
