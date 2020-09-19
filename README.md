@@ -16,8 +16,6 @@ Nova's language server support conforms to the [Language Server Protocol](https:
 
 ## Images
 
-Icons have been created in Figma. View or contribute at https://www.figma.com/file/po3JE7AsJcpr0XyhAsfGH3/.
-
-I'd like to use the symbol icons that show up in the autocomplete menu in Nova for my sidebar search so the extension feels more built-in. It looks like Nova generates these by merging a color, a character, and an internal asset called `symbol-effects`, so they're not really usable without stealing and recreating them.
+Custom icons have been created in Figma. View or contribute at https://www.figma.com/file/po3JE7AsJcpr0XyhAsfGH3/.
 
 The main logo comes from https://github.com/remojansen/logo.ts/.

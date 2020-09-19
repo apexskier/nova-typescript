@@ -199,8 +199,9 @@ const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   26: "TypeParameter",
 };
 
-const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: string } = {
-  // const symbolKindToNovaSymbol: { [key in lspTypes.SymbolKind]: NovaSymbolType } = {
+const symbolKindToNovaSymbol: {
+  [key in lspTypes.SymbolKind]: NovaSymbolType;
+} = {
   1: "file",
   2: "package", // Module
   3: "package", // Namespace
