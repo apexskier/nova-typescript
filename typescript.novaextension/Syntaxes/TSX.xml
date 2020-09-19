@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax name="tsx">
+    <meta>
+        <name>TSX</name>
+        <type>script</type>
+        <preferred-file-extension>tsx</preferred-file-extension>
+        <parent>typescript</parent>
+    </meta>
+    
+    <detectors>
+        <extension priority="1.0">tsx</extension>
+    </detectors>
+    
+    <indentation>
+        <increase>
+            <expression>(\{[^}\"']*$)|(\[[^\]\"']*$)|(\([^)\"']*$)</expression>
+        </increase>
+        <decrease>
+            <expression>^\s*(\s*/\*.*\*/\s*)*[\}\]\)\\]</expression>
+        </decrease>
+    </indentation>
+    
+    <comments>
+        <multiline>
+            <starts-with>
+                <expression>{/*</expression>
+            </starts-with>
+            <ends-with>
+                <expression>*/}</expression>
+            </ends-with>
+        </multiline>
+    </comments>
+    
+    <brackets>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+    </brackets>
+    
+    <surrounding-pairs>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+        <pair open="&apos;" close="&apos;" />
+        <pair open="&quot;" close="&quot;" />
+        <pair open="`" close="`" />
+    </surrounding-pairs>
+    
+    <completions>
+        <!-- "foo" -->
+        <provider>
+            <selector>*:not(string,comment), *:not(string,comment)</selector>
+            <expression>(?&lt;!\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+            
+            <symbols type="function" syntax="javascript">
+                <behavior>
+                    <arguments prefix="(" suffix=")" separator=", " />
+                </behavior>
+            </symbols>
+            <symbols type="class" syntax="javascript" />
+            <symbols type="variable,constant,argument" syntax="javascript" />
+        </provider>
+        
+        <!-- ".foo" -->
+        <provider>
+            <selector>*:not(string,comment), *:not(string,comment)</selector>
+            <expression>(?&lt;=\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+            
+            <symbols type="function" syntax="javascript">
+                <behavior>
+                    <arguments prefix="(" suffix=")" separator=", " />
+                </behavior>
+            </symbols>
+            <symbols type="property" syntax="javascript" />
+        </provider>
+    </completions>
+    
+    <scopes>
+        <!-- Tags -->
+        <include syntax="self" collection="tags" />
+        
+        <include syntax="typescript" collection="*" />
+    </scopes>
+    
+    <collections>
+        <!-- Tags -->
+        <collection name="tags">
+            <scope name="tsx.tag.close">
+                <symbol type="tag">
+                    <context behavior="end" group-by-name="true" />
+                </symbol>
+                <expression>&lt;/((?:[a-zA-Z_][a-zA-Z0-9_-]*\:)?(?:[a-zA-Z_][a-zA-Z0-9_-]*)(?:\.[a-zA-Z_][a-zA-Z0-9-_]*)*)&gt;</expression>
+                <capture number="1" name="tsx.tag.name" />
+            </scope>
+            <scope name="tsx.tag-definition.open">
+                <symbol type="tag">
+                    <context behavior="start" group-by-name="true" />
+                </symbol>
+                <starts-with>
+                    <expression>&lt;((?:[a-zA-Z_][a-zA-Z0-9_-]*\:)?(?:[a-zA-Z_][a-zA-Z0-9_-]*)(?:\.[a-zA-Z_][a-zA-Z0-9-_]*)*)</expression>
+                    <capture number="0" name="tsx.tag.open" />
+                    <capture number="1" name="tsx.tag.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>/?&gt;</expression>
+                    <capture number="0" name="tsx.tag.open" />
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <!-- Cut off if any valid JavaScript assignment or block is encountered -->
+                        <expression>(?=\b(?:var|function|class|if|else|for|while)\b)</expression>
+                    </cut-off>
+                    <include syntax="javascript" collection="comments" />
+                    <include syntax="self" collection="attributes" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Tag Attributes -->
+        <collection name="attributes">
+            <scope name="tsx.tag-attribute-definition">
+                <starts-with>
+                    <expression>((?:[a-zA-Z_][a-zA-Z0-9_-]*\:)?(?:[a-zA-Z_][a-zA-Z0-9_-]*))\s*(=?)</expression>
+                    <capture number="1" name="tsx.tag.attribute.name" />
+                    <capture number="2" name="tsx.tag.attribute.equals-sign" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=(\}|&apos;|&quot;))</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <!-- Cut off if any valid JavaScript assignment or block is encountered -->
+                        <expression>(?=\b(?:var|function|class|if|else|for|while)\b)</expression>
+                    </cut-off>
+                    <scope name="tsx.value.assignment">
+                        <symbol type="block">
+                            <context behavior="subtree" />
+                        </symbol>
+                        <starts-with>
+                            <expression>\{</expression>
+                            <capture number="0" name="tsx.value.assignment.bracket" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>\}</expression>
+                            <capture number="0" name="tsx.value.assignment.bracket" />
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <!-- Cut off if any valid JavaScript assignment or block is encountered -->
+                                <expression>(?=\b(?:var|function|class|if|else|for|while)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" />
+                        </subscopes>
+                    </scope>
+                    <scope name="tsx.string.double-quoted">
+                        <starts-with>
+                            <expression>&quot;</expression>
+                            <capture number="0" name="tsx.string.double-quoted.delimiter" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>&quot;|(?:(?&lt;!\\)$)</expression>
+                            <capture number="0" name="tsx.string.double-quoted.delimiter" />
+                        </ends-with>
+                        <subscopes>
+                            <scope name="tsx.string.double-quoted.escape">
+                                <expression>\\(?:\\|&apos;|&quot;|n|r|t|b|f)</expression>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                    <scope name="tsx.string.single-quoted">
+                        <starts-with>
+                            <expression>&apos;</expression>
+                            <capture number="0" name="tsx.string.single-quoted.delimiter" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>&apos;|(?:(?&lt;!\\)$)</expression>
+                            <capture number="0" name="tsx.string.single-quoted.delimiter" />
+                        </ends-with>
+                        <subscopes>
+                            <scope name="tsx.string.single-quoted.escape">
+                                <expression>\\(?:\\|&apos;|&quot;|n|r|t|b|f)</expression>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+        </collection>
+    </collections>
+</syntax>

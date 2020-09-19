@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax name="typescript">
+    <meta>
+        <name>TypeScript</name>
+        <type>script</type>
+        <preferred-file-extension>ts</preferred-file-extension>
+        <parent>javascript</parent>
+        <scriptable shebang="#!/usr/bin/env typescript" />
+    </meta>
+    
+    <detectors>
+        <extension priority="1.0">ts</extension>
+    </detectors>
+    
+    <indentation>
+        <increase>
+            <expression>(\{[^}\"']*$)|(\[[^\]\"']*$)|(\([^)\"']*$)</expression>
+        </increase>
+        <decrease>
+            <expression>^\s*(\s*/\*.*\*/\s*)*[\}\]\)\\]</expression>
+        </decrease>
+    </indentation>
+    
+    <comments>
+        <single>
+            <expression>//</expression>
+        </single>
+        <multiline>
+            <starts-with>
+                <expression>/*</expression>
+            </starts-with>
+            <ends-with>
+                <expression>*/</expression>
+            </ends-with>
+        </multiline>
+    </comments>
+    
+    <brackets>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+    </brackets>
+    
+    <surrounding-pairs>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+        <pair open="&apos;" close="&apos;" />
+        <pair open="&quot;" close="&quot;" />
+        <pair open="`" close="`" />
+    </surrounding-pairs>
+    
+    <completions>
+        <!-- "foo" -->
+        <provider>
+            <selector>*:not(string,comment), *:not(string,comment)</selector>
+            <expression>(?&lt;!\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+            
+            <symbols type="function">
+                <behavior>
+                    <arguments prefix="(" suffix=")" separator=", " />
+                </behavior>
+            </symbols>
+            <symbols type="class,package,protocol" />
+            <symbols type="variable,constant,argument" />
+        </provider>
+        
+        <!-- ".foo" -->
+        <provider>
+            <selector>*:not(string,comment), *:not(string,comment)</selector>
+            <expression>(?&lt;=\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+            
+            <symbols type="function">
+                <behavior>
+                    <arguments prefix="(" suffix=")" separator=", " />
+                </behavior>
+            </symbols>
+            <symbols type="property" />
+        </provider>
+    </completions>
+    
+    <scopes>
+        <include syntax="self" collection="comments" />
+        <include syntax="self" collection="blocks" />
+        <include syntax="self" collection="definitions" />
+        <include syntax="self" collection="keywords" />
+        <include syntax="self" collection="values" />
+        <include syntax="self" collection="identifiers" />
+        <include syntax="self" collection="syntax" />
+    </scopes>
+    
+    <collections>
+        <!-- Comments -->
+        <collection name="comments">
+            <scope name="typescript.comment.single.shebang">
+                <expression>^\#!(.*)$</expression>
+                <capture number="1" name="typescript.comment.content" />
+            </scope>
+            <scope name="typescript.comment.single" spell-check="true">
+                <expression>\/\/(.*)$</expression>
+                <capture number="1" name="typescript.comment.content" />
+            </scope>
+            <scope name="typescript.comment.block" spell-check="true">
+                <symbol type="comment">
+                    <context behavior="subtree" />
+                </symbol>
+                <starts-with>
+                    <expression>\/\*</expression>
+                </starts-with>
+                <ends-with>
+                    <expression>\*\/</expression>
+                </ends-with>
+            </scope>
+        </collection>
+        
+        <!-- Blocks -->
+        <collection name="blocks">
+            <scope name="typescript.block">
+                <symbol type="block">
+                    <context behavior="subtree" />
+                </symbol>
+                <starts-with>
+                    <expression>\{</expression>
+                    <capture number="0" name="typescript.block.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>\}</expression>
+                    <capture number="0" name="typescript.block.bracket" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Definitions -->
+        <collection name="definitions">
+            <!-- Constant -->
+            <scope name="typescript.definition.constant">
+                <symbol type="constant" scope="local" />
+                <starts-with>
+                    <expression>\b(const)\s+([a-zA-Z_][A-Za-z0-9_]*)\b</expression>
+                    <capture number="1" name="typescript.keyword.const" />
+                    <capture number="2" name="typescript.identifier.constant.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>\=|;</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.constant.type">
+                        <starts-with>
+                            <expression>\:</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\=|\;)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="types" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+            
+            <!-- Variable -->
+            <scope name="typescript.definition.variable">
+                <symbol type="variable" scope="local" />
+                <starts-with>
+                    <expression>\b(let)\s+([a-zA-Z_][A-Za-z0-9_]*)\b</expression>
+                    <capture number="1" name="typescript.keyword.let" />
+                    <capture number="2" name="typescript.identifier.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>\=|;</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.constant.type">
+                        <starts-with>
+                            <expression>\:</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\=|\;)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="types" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+            
+            <!-- Interface -->
+            <scope name="typescript.definition.interface">
+                <symbol type="interface" />
+                <starts-with>
+                    <expression>\b(?:(export)\s+)?(interface)\s+([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                    <capture number="1" name="typescript.keyword.export" />
+                    <capture number="2" name="typescript.keyword.interface" />
+                    <capture number="3" name="typescript.identifier.type.interface.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.definition.interface.extends">
+                        <starts-with>
+                            <expression>extends</expression>
+                            <capture number="0" name="typescript.keyword.extends" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\{)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <scope name="typescript.identifier.type.interface.parent">
+                                <expression>([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                            </scope>
+                            <scope name="typescript.comma">
+                                <expression>,</expression>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                    <scope name="typescript.block">
+                        <symbol type="block">
+                            <context behavior="subtree" fold-type="class" />
+                        </symbol>
+                        <starts-with>
+                            <expression>\{</expression>
+                            <capture number="0" name="typescript.bracket" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>\}</expression>
+                            <capture number="0" name="typescript.bracket" />
+                        </ends-with>
+                        <subscopes>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="properties" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+            
+            <!-- Module -->
+            <scope name="typescript.definition.module">
+                <symbol type="package" />
+                <expression>\b(module)\s+([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                <capture number="1" name="typescript.keyword.module" />
+                <capture number="2" name="typescript.identifier.type.module.name" />
+            </scope>
+            
+            <!-- Class -->
+            <scope name="typescript.definition.class">
+                <symbol type="class">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>\b(?:(export)\s+)?(class)\s+([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                    <capture number="1" name="typescript.keyword.export" />
+                    <capture number="2" name="typescript.keyword.class" />
+                    <capture number="3" name="typescript.identifier.type.class.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.definition.class.extends">
+                        <starts-with>
+                            <expression>\b(extends)</expression>
+                            <capture number="1" name="typescript.keyword.extends" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\{|implements)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <scope name="typescript.identifier.type.class.superclass">
+                                <expression>([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                            </scope>
+                            <scope name="typescript.comma">
+                                <expression>,</expression>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                    <scope name="typescript.definition.class.implements">
+                        <starts-with>
+                            <expression>\b(implements)</expression>
+                            <capture number="1" name="typescript.keyword.implements" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\{|extends)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <scope name="typescript.identifier.type.interface.parent">
+                                <expression>([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                            </scope>
+                            <scope name="typescript.comma">
+                                <expression>,</expression>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                    <scope name="typescript.block">
+                        <symbol type="block">
+                            <context behavior="subtree" fold-type="class" />
+                        </symbol>
+                        <starts-with>
+                            <expression>\{</expression>
+                            <capture number="0" name="typescript.bracket" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>\}</expression>
+                            <capture number="0" name="typescript.bracket" />
+                        </ends-with>
+                        <subscopes>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="properties" />
+                            <include syntax="self" collection="methods" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+            
+            <!-- Function -->
+            <scope name="typescript.definition.function">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>\b(?:(export)\s+)?(function)\s+([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                    <capture number="1" name="typescript.keyword.export" />
+                    <capture number="2" name="typescript.keyword.function" />
+                    <capture number="3" name="typescript.identifier.function.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
+                    <include syntax="self" collection="function-blocks" />
+                    <scope name="typescript.function.return-type">
+                        <starts-with>
+                            <expression>\:</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\{|\;)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="types" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+            
+            <!-- Anonymous Function -->
+            <scope name="typescript.definition.function.anonymous">
+                <symbol type="function" anonymous="true">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>\b(function)(?=\s*\()</expression>
+                    <capture number="1" name="typescript.keyword" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
+                    <include syntax="self" collection="function-blocks" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Methods -->
+        <collection name="methods">
+            <scope name="typescript.method.constructor">
+                <symbol type="method">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>\b(constructor)\s*(?=\()</expression>
+                    <capture number="1" name="typescript.keyword.name.constructor" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
+                    <include syntax="self" collection="function-blocks" />
+                </subscopes>
+            </scope>
+            <scope name="typescript.method">
+                <symbol type="method">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(?:\b(public|private|protected)\s+)?([a-zA-Z_][a-zA-Z0-9_]*)</expression>
+                    <capture number="1" name="typescript.keyword" />
+                    <capture number="2" name="typescript.identifier.method.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
+                    <include syntax="self" collection="blocks" />
+                    <scope name="typescript.method.return-type">
+                        <starts-with>
+                            <expression>\:</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\{|\;)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="types" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Properties -->
+        <collection name="properties">
+            <scope name="typescript.definition.property">
+                <symbol type="property" scope="private" />
+                <starts-with>
+                    <expression>\b(?:(public|private|protected)\s+)?([a-zA-Z_][A-Za-z0-9_]*)(\?|!)?\s*(?=\:|\=)</expression>
+                    <capture number="1" name="typescript.keyword" />
+                    <capture number="2" name="typescript.identifier.property.name" />
+                    <capture number="3" name="typescript.operator" />
+                </starts-with>
+                <ends-with>
+                    <expression>$</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.definition.property.types">
+                        <starts-with>
+                            <expression>\:</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>$|(?=\=)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="types" />
+                        </subscopes>
+                    </scope>
+                    <scope name="typescript.definition.property.value">
+                        <starts-with>
+                            <expression>\=</expression>
+                            <capture number="0" name="typescript.operator" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>$</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <include syntax="self" collection="comments" />
+                            <include syntax="self" collection="blocks" />
+                            <include syntax="self" collection="values" />
+                            <include syntax="self" collection="identifiers" />
+                        </subscopes>
+                    </scope>
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Arguments -->
+        <collection name="arguments">
+            <scope name="typescript.arguments">
+                <include syntax="self" collection="comments" />
+                <starts-with>
+                    <expression>\(</expression>
+                    <capture number="0" name="typescript.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>\)</expression>
+                    <capture number="0" name="typescript.bracket" />
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <scope name="typescript.separator">
+                        <expression>,</expression>
+                    </scope>
+                    <scope name="typescript.identifier.argument.rest">
+                        <symbol type="argument" />
+                        <expression>(\.\.\.)\b([a-zA-Z_][A-Za-z0-9_]*)\b</expression>
+                        <capture number="1" name="typescript.operator" />
+                        <capture number="2" name="typescript.identifier.argument.rest.name" />
+                    </scope>
+                    <scope name="typescript.argument">
+                        <symbol type="argument" />
+                        <starts-with>
+                            <expression>(?:(public|private|protected)\s+)?\b([a-zA-Z_][A-Za-z0-9_]*)\b</expression>
+                            <capture number="1" name="typescript.keyword" />
+                            <capture number="2" name="typescript.identifier.argument.name" />
+                        </starts-with>
+                        <ends-with>
+                            <expression>(?=\)|\,)</expression>
+                        </ends-with>
+                        <subscopes>
+                            <cut-off>
+                                <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                            </cut-off>
+                            <scope name="typescript.argument.types">
+                                <starts-with>
+                                    <expression>\:</expression>
+                                    <capture number="0" name="typescript.operator" />
+                                </starts-with>
+                                <ends-with>
+                                    <expression>(?=\)|\,|\=)</expression>
+                                </ends-with>
+                                <subscopes>
+                                    <cut-off>
+                                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                                    </cut-off>
+                                    <include syntax="self" collection="comments" />
+                                    <include syntax="self" collection="types" />
+                                </subscopes>
+                            </scope>
+                            <scope name="typescript.argument.default-value">
+                                <starts-with>
+                                    <expression>\=</expression>
+                                    <capture number="0" name="typescript.operator" />
+                                </starts-with>
+                                <ends-with>
+                                    <expression>(?=\)|\,)</expression>
+                                </ends-with>
+                                <subscopes>
+                                    <cut-off>
+                                        <expression>(?=\b(?:public|private|protected|function|class|if|else|while|for)\b)</expression>
+                                    </cut-off>
+                                    <include syntax="self" collection="comments" />
+                                    <include syntax="self" collection="values" />
+                                    <include syntax="self" collection="identifiers" />
+                                </subscopes>
+                            </scope>
+                        </subscopes>
+                    </scope>
+                    <include syntax="self" collection="values" />
+                    <include syntax="self" collection="syntax" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Function Blocks -->
+        <collection name="function-blocks">
+            <scope name="typescript.block">
+                <symbol type="block">
+                    <context behavior="subtree" fold-type="function" />
+                </symbol>
+                <starts-with>
+                    <expression>\{</expression>
+                    <capture number="0" name="typescript.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>\}</expression>
+                    <capture number="0" name="typescript.bracket" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Types -->
+        <collection name="types">
+            <scope name="typescript.identifier.type.core">
+                <strings>
+                    <string>void</string>
+                    <string>any</string>
+                    <string>boolean</string>
+                    <string>number</string>
+                    <string>string</string>
+                    <string>symbol</string>
+                </strings>
+            </scope>
+            <scope name="typescript.operator.pipe">
+                <expression>\|</expression>
+            </scope>
+            <scope name="typescript.operator.dot">
+                <expression>\.</expression>
+            </scope>
+            <scope name="typescript.operator.container">
+                <expression>&lt;|&gt;</expression>
+            </scope>
+            <scope name="typescript.operator.array">
+                <expression>\[\]</expression>
+            </scope>
+            <scope name="typescript.identifier.type">
+                <expression>([a-zA-Z_][A-Za-z0-9_]*)</expression>
+            </scope>
+        </collection>
+        
+        <!-- Keywords -->
+        <collection name="keywords">
+            <scope name="typescript.keyword">
+                <strings>
+                    <string>abstract</string>
+                    <string>as</string>
+                    <string>async</string>
+                    <string>await</string>
+                    <string>break</string>
+                    <string>case</string>
+                    <string>catch</string>
+                    <string>class</string>
+                    <string>const</string>
+                    <string>constructor</string>
+                    <string>continue</string>
+                    <string>declare</string>
+                    <string>debugger</string>
+                    <string>default</string>
+                    <string>delete</string>
+                    <string>do</string>
+                    <string>else</string>
+                    <string>enum</string>
+                    <string>export</string>
+                    <string>extends</string>
+                    <string>finally</string>
+                    <string>for</string>
+                    <string>from</string>
+                    <string>function</string>
+                    <string>get</string>
+                    <string>if</string>
+                    <string>is</string>
+                    <string>implements</string>
+                    <string>import</string>
+                    <string>in</string>
+                    <string>instanceof</string>
+                    <string>interface</string>
+                    <string>label</string>
+                    <string>let</string>
+                    <string>module</string>
+                    <string>namespace</string>
+                    <string>new</string>
+                    <string>of</string>
+                    <string>package</string>
+                    <string>private</string>
+                    <string>protected</string>
+                    <string>public</string>
+                    <string>require</string>
+                    <string>return</string>
+                    <string>set</string>
+                    <string>static</string>
+                    <string>super</string>
+                    <string>switch</string>
+                    <string>this</string>
+                    <string>throw</string>
+                    <string>try</string>
+                    <string>type</string>
+                    <string>typeof</string>
+                    <string>var</string>
+                    <string>void</string>
+                    <string>while</string>
+                    <string>with</string>
+                    <string>yield</string>
+                </strings>
+            </scope>
+        </collection>
+        
+        <!-- Values -->
+        <collection name="values">
+            <include syntax="self" collection="strings" />
+            <scope name="typescript.value.null">
+                <strings>
+                    <string>null</string>
+                    <string>undefined</string>
+                    <string>NaN</string>
+                    <string>Infinity</string>
+                </strings>
+            </scope>
+            <scope name="typescript.value.boolean">
+                <strings>
+                    <string>true</string>
+                    <string>false</string>
+                </strings>
+            </scope>
+            <scope name="typescript.value.number.hex">
+                <expression>\b0x[a-fA-F0-9]+\b</expression>
+            </scope>
+            <scope name="typescript.value.number">
+                <expression>\b\-?(?:\d+(?:\.\d*)?|(?:\.\d+))\b</expression>
+            </scope>
+            
+            <!-- Arrow Functions -->
+            <scope name="typescript.definition.function.arrow">
+                <symbol type="function" scope="local">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(?=\([a-zA-Z0-9_,\\\*\.\s]*\)\s*=&gt;\s*\{)|(?=\b[a-zA-Z_][A-Za-z0-9_]*\b\s*=&gt;\s*\{)</expression>
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=\})</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <scope name="typescript.identifier.argument.name.single">
+                        <symbol type="argument" />
+                        <expression>\b[a-zA-Z_][A-Za-z0-9_]*\b(?=\s*=&gt;)</expression>
+                    </scope>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
+                    <scope name="typescript.operator">
+                        <expression>=&gt;</expression>
+                    </scope>
+                    <include syntax="self" collection="function-blocks" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Strings -->
+        <collection name="strings">
+            <scope name="typescript.string.backtick-quoted">
+                <starts-with>
+                    <expression>`</expression>
+                    <capture number="0" name="typescript.string.backtick-quoted.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>`|(?:(?&lt;!\\)$)</expression>
+                    <capture number="0" name="typescript.string.backtick-quoted.delimiter" />
+                </ends-with>
+                <subscopes>
+                    <scope name="typescript.string.backtick-quoted.escape">
+                        <expression>\\(?:\\|&apos;|&quot;|n|r|t|b|f)</expression>
+                    </scope>
+                    <scope name="typescript.string-template">
+                        <starts-with>
+                            <expression>\$\{</expression>
+                        </starts-with>
+                        <ends-with>
+                            <expression>\}|(?=`)|(?:(?&lt;!\\)$)</expression>
+                        </ends-with>
+                    </scope>
+                </subscopes>
+            </scope>
+            <scope name="typescript.string.double-quoted">
+                <starts-with>
+                    <expression>&quot;</expression>
+                    <capture number="0" name="typescript.string.double-quoted.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>&quot;|(?:(?&lt;!\\)$)</expression>
+                    <capture number="0" name="typescript.string.double-quoted.delimiter" />
+                </ends-with>
+                <subscopes>
+                    <scope name="typescript.string.double-quoted.escape">
+                        <expression>\\(?:\\|&apos;|&quot;|n|r|t|b|f)</expression>
+                    </scope>
+                </subscopes>
+            </scope>
+            <scope name="typescript.string.single-quoted">
+                <starts-with>
+                    <expression>&apos;</expression>
+                    <capture number="0" name="typescript.string.single-quoted.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>&apos;|(?:(?&lt;!\\)$)</expression>
+                    <capture number="0" name="typescript.string.single-quoted.delimiter" />
+                </ends-with>
+                <subscopes>
+                    <scope name="typescript.string.single-quoted.escape">
+                        <expression>\\(?:\\|&apos;|&quot;|n|r|t|b|f)</expression>
+                    </scope>
+                </subscopes>
+            </scope>
+            <scope name="typescript.string.regex">
+                <expression>/(?!\s)(?:[^/\\]|\\.)*/</expression>
+            </scope>
+        </collection>
+        
+        <!-- Identifiers -->
+        <collection name="identifiers">
+            <scope name="typescript.identifier.core.global">
+                <strings prefix="(?&lt;!\.)">
+                    <string>arguments</string>
+                    <string>crypto</string>
+                    <string>document</string>
+                    <string>localStorage</string>
+                    <string>sessionStorage</string>
+                    <string>window</string>
+                    <string>Object</string>
+                    <string>Symbol</string>
+                    <string>Boolean</string>
+                    <string>Date</string>
+                    <string>Function</string>
+                    <string>Math</string>
+                    <string>Number</string>
+                    <string>String</string>
+                    <string>RegExp</string>
+                    <string>Array</string>
+                    <string>Int8Array</string>
+                    <string>Uint8Array</string>
+                    <string>Uint8ClampedArray</string>
+                    <string>Int16Array</string>
+                    <string>Uint16Array</string>
+                    <string>Int32Array</string>
+                    <string>Uint32Array</string>
+                    <string>Float32Array</string>
+                    <string>Float64Array</string>
+                    <string>Map</string>
+                    <string>Set</string>
+                    <string>WeakMap</string>
+                    <string>WeakSet</string>
+                    <string>ArrayBuffer</string>
+                    <string>DataView</string>
+                    <string>JSON</string>
+                    <string>Promise</string>
+                    <string>Generator</string>
+                    <string>GeneratorFunction</string>
+                    <string>Reflect</string>
+                    <string>Proxy</string>
+                    <string>Intl</string>
+                    <string>Error</string>
+                    <string>EvalError</string>
+                    <string>InternalError</string>
+                    <string>RangeError</string>
+                    <string>ReferenceError</string>
+                    <string>SyntaxError</string>
+                    <string>TypeError</string>
+                    <string>URIError</string>
+                </strings>
+            </scope>
+            <scope name="typescript.identifier.core.function">
+                <strings prefix="(?&lt;!\.)" suffix="(?=\()">
+                    <string>decodeURLComponent</string>
+                    <string>decodeURI</string>
+                    <string>encodeURIComponent</string>
+                    <string>encodeURI</string>
+                    <string>escape</string>
+                    <string>eval</string>
+                    <string>isFinite</string>
+                    <string>isNaN</string>
+                    <string>parseFloat</string>
+                    <string>parseInt</string>
+                    <string>unescape</string>
+                </strings>
+            </scope>
+            <scope name="typescript.identifier.property">
+                <expression>\b(?&lt;=\.)([a-zA-Z_][a-zA-Z0-9_]*)(?!\()\b</expression>
+            </scope>
+            <scope name="typescript.identifier.method">
+                <expression>\b(?&lt;=\.)([a-zA-Z_][a-zA-Z0-9_]*)(?=\()\b</expression>
+            </scope>
+            <scope name="typescript.identifier.function">
+                <expression>\b(?&lt;!\.)([a-zA-Z_][a-zA-Z0-9_]*)(?=\()\b</expression>
+            </scope>
+            <scope name="typescript.identifier.constant">
+                <expression>\b(?&lt;![a-z0-9_])[A-Z_][A-Za-z0-9_]*\b</expression>
+            </scope>
+            <scope name="typescript.identifier">
+                <expression>\b[a-zA-Z_][A-Za-z0-9_]*\b</expression>
+            </scope>
+        </collection>
+        
+        <!-- Syntax -->
+        <collection name="syntax">
+            <scope name="typescript.bracket.block.start">
+                <symbol type="block">
+                    <context behavior="start" />
+                </symbol>
+                <expression>\{</expression>
+            </scope>
+            <scope name="typescript.bracket.block.end">
+                <symbol type="block">
+                    <context behavior="end" />
+                </symbol>
+                <expression>\}</expression>
+            </scope>
+            <scope name="typescript.bracket">
+                <expression>[\(\[\)\]]</expression>
+            </scope>
+            <scope name="typescript.operator">
+                <expression>(\+|\-|\*|/|%|\+\+|\-\-|\=|\=\=|!\=|\+\=|\-\=|\*\=|/\=|%\=|\&lt;|\&gt;|\&lt;\=|\&gt;=|\=\=\=|!\=\=|&amp;&amp;|\||\|\||!|\^|&amp;|\&lt;\&lt;|\&gt;\&gt;|~)</expression>
+            </scope>
+            <scope name="typescript.comma">
+                <expression>,</expression>
+            </scope>
+            <scope name="typescript.semicolon">
+                <expression>;</expression>
+            </scope>
+        </collection>
+    </collections>
+</syntax>
