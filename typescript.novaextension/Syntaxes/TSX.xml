@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<syntax name="tsx">
+<syntax name="tsx-ext">
     <meta>
-        <name>TSX</name>
+        <name>TSX (extension)</name>
         <type>script</type>
         <preferred-file-extension>tsx</preferred-file-extension>
         <parent>typescript</parent>

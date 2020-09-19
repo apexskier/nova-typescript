@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<syntax name="typescript">
+<syntax name="typescript-ext">
     <meta>
-        <name>TypeScript</name>
+        <name>TypeScript (extension)</name>
         <type>script</type>
         <preferred-file-extension>ts</preferred-file-extension>
         <parent>javascript</parent>
-        <scriptable shebang="#!/usr/bin/env typescript" />
+        <scriptable shebang="#!/usr/bin/env npx ts-node" />
     </meta>
     
     <detectors>
