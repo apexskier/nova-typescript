@@ -209,7 +209,7 @@ const symbolKindToNovaSymbol: {
   5: "class",
   6: "method",
   7: "property",
-  8: "Field",
+  8: "property", // Field
   9: "constructor",
   10: "enum",
   11: "interface",
