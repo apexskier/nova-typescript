@@ -10,7 +10,7 @@ Run `yarn` in a terminal to install dependencies.
 
 Run the Development task to build scripts and auto-rebuild on file changes.
 
-Turn on extension development in Nova in Preferences > General > Extension Development. I've you've installed the TypeScript extension from the Extension Library, disable it, then activate the local one with Extensions > Activate Project as Extension.
+Turn on extension development in Nova in Preferences > General > Extension Development. If you've installed the TypeScript extension from the Extension Library, disable it, then activate the local one with Extensions > Activate Project as Extension.
 
 ### Debugging
 
