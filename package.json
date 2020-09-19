@@ -10,6 +10,7 @@
     "lint": "concurrently 'yarn:lint:*'",
     "lint:eslint": "eslint --ignore-path .gitignore \"**/*.{ts,js}\"",
     "lint:prettier": "prettier --ignore-path .gitignore --check \"**/*.{ts,js,json,md}\"",
+    "lint:json": "find . -name node_modules -prune -false -o -type f -name '*.json' -exec node -e 'require(\"{}\")' \\;",
     "fix": "concurrently 'yarn:fix:*'",
     "fix:eslint": "eslint --fix --ignore-path .gitignore \"**/*.{ts,js}\"",
     "fix:prettier": "prettier --ignore-path .gitignore --write \"**/*.{ts,js,json,md}\"",
