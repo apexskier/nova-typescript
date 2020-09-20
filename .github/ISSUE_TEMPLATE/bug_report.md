@@ -8,9 +8,10 @@ assignees: ""
 
 A clear and concise description of what the bug is.
 
-<!-- Any hard crashes of the editor should [also be filed with Panic](https://nova.app/help/?ext=TypeScript%20(apexskier.typescript)%20(reported%20fromhttps%3A%2F%2Fgithub.com%2Fapexskier%2Fnova-typescript%2Fissues%2Fnew)). Feel free to cross-file them here as well. -->
+Any hard crashes of the editor should [also be filed with Panic](https://nova.app/help/?ext=TypeScript%20(apexskier.typescript)%20(reported%20fromhttps%3A%2F%2Fgithub.com%2Fapexskier%2Fnova-typescript%2Fissues%2Fnew)). Feel free to cross-file them here as well.
 
 **To reproduce**
+
 Steps to reproduce the behavior:
 
 1. Go to '...'
@@ -19,9 +20,11 @@ Steps to reproduce the behavior:
 4. See error
 
 **Expected behavior**
+
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
+
 If applicable, add screenshots to help explain your problem.
 
 **Environment (please complete the following information):**
@@ -38,10 +41,9 @@ If applicable, add screenshots to help explain your problem.
 
 **Extension console output**
 
-<!--
-from Extensions > Show Extension Console, anything coming from the Source "TypeScript" or "TypeScript Language Server"
-Copying text preferred, for accessibility and searching.
--->
+Turn on extension development in Nova in Preferences > General > Extension Development. Then open the extension console with Extensions > Show Extension Console and copy anything coming from the Source "TypeScript" or "TypeScript Language Server".
+Copying text is preferred over screenshots, for accessibility and searching.
 
 **Additional context**
+
 Add any other context about the problem here.
