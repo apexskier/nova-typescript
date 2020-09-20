@@ -222,6 +222,34 @@ describe("test suite", () => {
       expect(compositeDisposable.dispose).toBeCalledTimes(1);
     });
 
+    it("shows an error if activation fails", async () => {
+      resetMocks();
+      global.console.error = jest.fn();
+      global.console.warn = jest.fn();
+      nova.workspace.showErrorMessage = jest.fn();
+
+      (ProcessMock as jest.Mock<Partial<Process>>).mockImplementationOnce(
+        () => ({
+          onStdout: jest.fn(),
+          onStderr: jest.fn((cb) => {
+            cb("some output on stderr");
+            return { dispose: jest.fn() };
+          }),
+          onDidExit: jest.fn((cb) => {
+            cb(1);
+            return { dispose: jest.fn() };
+          }),
+          start: jest.fn(),
+        })
+      );
+
+      await activate();
+
+      expect(nova.workspace.showErrorMessage).toBeCalledWith(
+        new Error("Failed to install:\n\nsome output on stderr")
+      );
+    });
+
     test("reload", async () => {
       resetMocks();
 
