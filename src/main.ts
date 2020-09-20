@@ -33,15 +33,19 @@ async function installWrappedDependencies() {
         NO_UPDATE_NOTIFIER: "true",
       },
     });
+    let errOutput = "";
     if (nova.inDevMode()) {
       process.onStdout((o) => console.log("installing:", o.trimRight()));
     }
-    process.onStderr((e) => console.warn("installing:", e.trimRight()));
+    process.onStderr((e) => {
+      console.warn("installing:", e.trimRight());
+      errOutput += e;
+    });
     process.onDidExit((status) => {
       if (status === 0) {
         resolve();
       } else {
-        reject(new Error("failed to install"));
+        reject(new Error(`Failed to install:\n\n${errOutput}`));
       }
     });
     process.start();
@@ -196,6 +200,7 @@ export function activate() {
     .catch((err) => {
       console.error("Failed to activate");
       console.error(err);
+      nova.workspace.showErrorMessage(err);
     })
     .then(() => {
       console.log("activated");
