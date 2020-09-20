@@ -1,6 +1,6 @@
 # Changelog
 
-## future
+## v1.7.0
 
 ### Added
 
@@ -9,6 +9,11 @@
 ### Fixed
 
 - Display global tsserver path configuration in UI
+
+### Changed
+
+- Display error message with more details when activation fails
+- Documentation updates
 
 ## v1.6.2
 
