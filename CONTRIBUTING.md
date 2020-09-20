@@ -26,6 +26,22 @@ The extension relies on local copies of both `typescript-language-server` and `t
 
 To update, install locally in the `typescript.novaextension` directory, then run `npm shrinkwrap`.
 
+## Pull Requests
+
+### Changelog
+
+All user-facing changes should be documented in [CHANGELOG.md](./CHANGELOG.md).
+
+- If not present, add a `## future` section above the latest release
+- If not present, add a `###` heading for the category of your changes. Categories can include
+   - Breaking - backwards incompatible changes (semver major version bump)
+   - Added - new features (semver minor version bump)
+   - Fixed - bugfixes (semver patch version bump)
+   - Changed - tweaks or changes that don't significantly change how the extension is used
+- Add a single line for each change you've made
+
 ## Publishing notes
 
 Always run `yarn build` first, so the `typescript.novaextension/node_modules` directory is cleared.
+
+Replace `future` in the changelog with a new version, following semver. Update the version in the [bug report template](./.github/ISSUE_TEMPLATE/bug_report.md), [`package.json`](./package.json), and [extension manifest](./typescript.novaextension/extension.json).
