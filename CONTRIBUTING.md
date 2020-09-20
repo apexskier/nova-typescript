@@ -12,6 +12,8 @@ Run the Development task to build scripts and auto-rebuild on file changes.
 
 Turn on extension development in Nova in Preferences > General > Extension Development. If you've installed the TypeScript extension from the Extension Library, disable it, then activate the local one with Extensions > Activate Project as Extension.
 
+**note** Running the watcher can cause a lot of restarts of the extension, which often causes Nova's extension service to crash. I'd recommend building manually instead. If the extension service crashes, deactivate the project as an extension and reactivate it.
+
 ### Debugging
 
 To debug the underlying language server, modify the `run.sh` file to use the [`--inspect` flag](https://nodejs.org/en/docs/guides/debugging-getting-started/) and use [your preferred inspector to debug](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients).
