@@ -57,3 +57,7 @@ Find References shows all usages of a given variable, function, or other symbol.
 This extension will automatically find the workspace version of TypeScript installed under `node_modules` in your workspace root. If one isn't installed it will use a recent, bundled version of typescript.
 
 To customize this you can specify the TypeScript library location in workspace preferences (Extensions > TypeScript > Preferences > TypeScript Library) as an absolute or workspace-relative path. This should point to a directory containing the TypeScript `tsserver.js` file, generally ending with `node_modules/typescript/lib`. If installed globally, you can find the installation location using `npm list -g typescript` (e.g. "/usr/local/lib/node_modules/typescript/lib"). (You should only need this if your workspace doesn't install typescript under the workspace's root `node_modules` directory or you use a global installation of TypeScript)
+
+#### Enable/Disable for Javascript
+
+In certain situations, such as when working with Flow types, you may need to disable this in javascript files. You can do this by configuring preferences per-project in Project Settings or globally in the Extension Library.

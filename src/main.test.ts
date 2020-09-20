@@ -4,6 +4,9 @@ jest.mock("./informationView");
 jest.mock("./tsLibPath", () => ({
   getTsLibPath: () => "/tsLibPath",
 }));
+jest.mock("./isEnabledForJavascript", () => ({
+  isEnabledForJavascript: () => true,
+}));
 
 jest.useFakeTimers();
 

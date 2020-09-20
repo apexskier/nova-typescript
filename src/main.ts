@@ -9,6 +9,7 @@ import { registerApplyEdit } from "./requests/applyEdit";
 import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
 import { getTsLibPath } from "./tsLibPath";
+import { isEnabledForJavascript } from "./isEnabledForJavascript";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
@@ -135,6 +136,10 @@ async function asyncActivate() {
     };
   }
 
+  const syntaxes = ["typescript", "tsx"];
+  if (isEnabledForJavascript()) {
+    syntaxes.push("javascript", "jsx");
+  }
   client = new LanguageClient(
     "apexskier.typescript",
     "TypeScript Language Server",
@@ -147,7 +152,7 @@ async function asyncActivate() {
       },
     },
     {
-      syntaxes: ["typescript", "tsx", "javascript", "jsx"],
+      syntaxes,
     }
   );
 

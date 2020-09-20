@@ -24,6 +24,23 @@
     "filesystem": "readwrite"
   },
 
+  "config": [
+    {
+      "key": "apexskier.typescript.config.tslibPath",
+      "title": "TypeScript Library",
+      "description": "(optional) Path to a custom installed TypeScript library directory. See \"Using the workspace version of TypeScript\" in the README for details.",
+      "link": "nova://extension/?id=apexskier.typescript",
+      "type": "string"
+    },
+    {
+      "key": "apexskier.typescript.config.isEnabledForJavascript",
+      "title": "Enable on Javascript Files",
+      "description": "Enable TypeScript editor functionality for javascript and jsx files.",
+      "type": "boolean",
+      "default": true
+    }
+  ],
+
   "config-workspace": [
     {
       "key": "apexskier.typescript.config.tslibPath",
@@ -31,6 +48,14 @@
       "description": "(optional) Path to a custom installed TypeScript library directory. See \"Using the workspace version of TypeScript\" in the README for details.",
       "link": "nova://extension/?id=apexskier.typescript",
       "type": "string"
+    },
+    {
+      "key": "apexskier.typescript.config.isEnabledForJavascript",
+      "title": "Enable on Javascript Files",
+      "description": "Enable TypeScript editor functionality for javascript and jsx files.",
+      "type": "enum",
+      "values": ["Inherit from Global Settings", "Disable", "Enable"],
+      "default": "Inherit from Global Settings"
     }
   ],
 
