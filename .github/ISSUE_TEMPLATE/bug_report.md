@@ -8,7 +8,7 @@ assignees: ""
 
 A clear and concise description of what the bug is.
 
-Any hard crashes of the editor should [also be filed with Panic](https://nova.app/help/?ext=TypeScript%20(apexskier.typescript)%20(reported%20fromhttps%3A%2F%2Fgithub.com%2Fapexskier%2Fnova-typescript%2Fissues%2Fnew)). Feel free to cross-file them here as well.
+Any hard crashes of the editor should also be filed with Panic (Help > Report a Problem or Feature Request...). Feel free to cross-file them here as well.
 
 **To reproduce**
 
@@ -27,7 +27,7 @@ A clear and concise description of what you expected to happen.
 
 If applicable, add screenshots to help explain your problem.
 
-**Environment (please complete the following information):**
+**Environment**
 
 - Nova version: <!-- [e.g. 1.0 (200961)] get this from Nova > About Nova -->
 - Extension version: <!-- [e.g. 1.6.2] get this from the Nova Extension Library -->
