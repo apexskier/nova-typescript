@@ -34,10 +34,10 @@ All user-facing changes should be documented in [CHANGELOG.md](./CHANGELOG.md).
 
 - If not present, add a `## future` section above the latest release
 - If not present, add a `###` heading for the category of your changes. Categories can include
-   - Breaking - backwards incompatible changes (semver major version bump)
-   - Added - new features (semver minor version bump)
-   - Fixed - bugfixes (semver patch version bump)
-   - Changed - tweaks or changes that don't significantly change how the extension is used
+  - Breaking - backwards incompatible changes (semver major version bump)
+  - Added - new features (semver minor version bump)
+  - Fixed - bugfixes (semver patch version bump)
+  - Changed - tweaks or changes that don't significantly change how the extension is used
 - Add a single line for each change you've made
 
 ## Publishing notes
