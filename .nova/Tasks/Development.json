@@ -9,6 +9,9 @@
       "script": "npm run watch"
     }
   },
+  "environment": {
+    "NO_UPDATE_NOTIFIER": "true"
+  },
   "identifier": "6FA1209E-7DBA-4707-8FE3-FDACFA6DEFB9",
   "openLogOnRun": "start",
   "persistent": true
