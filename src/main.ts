@@ -122,14 +122,19 @@ async function asyncActivate() {
 
   let serviceArgs;
   if (nova.inDevMode() && nova.workspace.path) {
-    const logDir = nova.path.join(nova.workspace.path, ".log");
+    const logDir = nova.path.join(nova.workspace.path, "logs");
+    await new Promise((resolve, reject) => {
+      const p = new Process("/usr/bin/env", {
+        args: ["mkdir", "-p", logDir],
+      });
+      p.onDidExit((status) => (status === 0 ? resolve() : reject()));
+      p.start();
+    });
     console.log("logging to", logDir);
-
-    // this breaks functionality
+    // passing inLog breaks some requests for an unknown reason
     // const inLog = nova.path.join(logDir, "languageClient-in.log");
     const outLog = nova.path.join(logDir, "languageClient-out.log");
     serviceArgs = {
-      // path: runFile,
       path: "/usr/bin/env",
       // args: ["bash", "-c", `tee "${inLog}" | "${runFile}" | tee "${outLog}"`],
       args: ["bash", "-c", `"${runFile}" | tee "${outLog}"`],

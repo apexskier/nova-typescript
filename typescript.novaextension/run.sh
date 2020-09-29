@@ -13,14 +13,14 @@ cd "$WORKSPACE_DIR"
 
 # path is stripped in the extension execution environment somehow
 # symlinks have issues when the extension is submitted to the library, so we don't use node_modules/.bin
-PATH=$(dirname $(command -v node)) node \
+node \
 	"$DIR/node_modules/typescript-language-server/lib/cli.js" \
 	--stdio \
 	--tsserver-path="$TSLIB_PATH/tsserver.js"
 
 # use this for debugging
-# PATH=$(dirname $(command -v node)) node \
-# 	--inspect \
+# node \
+# 	--inspect-brk \
 # 	"$DIR/../node_modules/typescript-language-server/lib/cli.js" \
 # 	--stdio \
-# 	--tsserver-path="$TSLIB_PATH/../bin/tsserver"
+# 	--tsserver-path="$TSLIB_PATH/tsserver"
