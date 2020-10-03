@@ -108,6 +108,10 @@
       {
         "title": "Find Symbol",
         "command": "apexskier.typescript.findSymbol"
+      },
+      {
+        "title": "Force Unlock Dependency Installation",
+        "command": "apexskier.typescript.forceClearLock"
       }
     ],
     "editor": [

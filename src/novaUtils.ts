@@ -19,23 +19,3 @@ export async function openFile(uri: string) {
   // try one more time, this doesn't resolve if the file isn't already open. Need to file a bug
   return await nova.workspace.openFile(uri);
 }
-
-export async function showChoicePalette<T>(
-  choices: T[],
-  choiceToString: (choice: T) => string,
-  options?: { placeholder?: string }
-) {
-  const index = await new Promise<number | null>((resolve) =>
-    nova.workspace.showChoicePalette(
-      choices.map(choiceToString),
-      options,
-      (_, index) => {
-        resolve(index);
-      }
-    )
-  );
-  if (index == null) {
-    return null;
-  }
-  return choices[index];
-}

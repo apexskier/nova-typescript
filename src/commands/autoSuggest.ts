@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
+import { asyncNova } from "nova-extension-utils";
 import { rangeToLspRange, lspRangeToRange } from "../lspNovaConversions";
-import { wrapCommand, showChoicePalette } from "../novaUtils";
+import { wrapCommand } from "../novaUtils";
 import { executeCommand } from "./codeAction";
 
 export function registerAutoSuggest(client: LanguageClient) {
@@ -50,7 +51,7 @@ export function registerAutoSuggest(client: LanguageClient) {
       return;
     }
 
-    const choice = await showChoicePalette(
+    let choice = await asyncNova.showChoicePalette(
       items,
       (item) => `${item.label}${item.detail ? `- ${item.detail}` : ""}`,
       { placeholder: "suggestions" }
@@ -59,13 +60,13 @@ export function registerAutoSuggest(client: LanguageClient) {
       return;
     }
 
-    const completionItem = (await client.sendRequest(
+    choice = (await client.sendRequest(
       "completionItem/resolve",
       choice
     )) as lspTypes.CompletionItem;
 
     if (nova.inDevMode()) {
-      console.log(JSON.stringify(completionItem, null, "  "));
+      console.log(JSON.stringify(choice, null, "  "));
     }
 
     const { textEdit, additionalTextEdits, command } = choice;

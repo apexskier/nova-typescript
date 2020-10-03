@@ -1,5 +1,17 @@
 # Changelog
 
+## future
+
+### Changed
+
+- Major behind the scene changes to dependency management
+  - Performance improvements
+  - More reliability with multiple open workspaces
+
+### Fixed
+
+- Use full completion result in manual auto-suggest command
+
 ## v1.7.0
 
 ### Added

@@ -7,6 +7,7 @@ jest.mock("./tsLibPath", () => ({
 jest.mock("./isEnabledForJavascript", () => ({
   isEnabledForJavascript: () => true,
 }));
+jest.mock("nova-extension-utils");
 
 jest.useFakeTimers();
 
@@ -59,6 +60,12 @@ describe("test suite", () => {
   const { activate, deactivate } = require("./main");
 
   function resetMocks() {
+    const {
+      dependencyManagement: { installWrappedDependencies },
+    } = require("nova-extension-utils");
+    installWrappedDependencies
+      .mockReset()
+      .mockImplementation(() => Promise.resolve());
     nova.fs.access = jest.fn().mockReturnValue(true);
     (nova.commands.register as jest.Mock).mockReset();
     LanguageClientMock.mockReset().mockImplementation(() => ({
@@ -95,6 +102,14 @@ describe("test suite", () => {
     );
 
     expect(CompositeDisposable).toBeCalledTimes(1);
+
+    const {
+      registerDependencyUnlockCommand,
+    } = require("nova-extension-utils").dependencyManagement;
+    expect(registerDependencyUnlockCommand).toBeCalledTimes(1);
+    expect(registerDependencyUnlockCommand).toBeCalledWith(
+      "apexskier.typescript.forceClearLock"
+    );
   });
 
   function assertActivationBehavior() {
@@ -124,22 +139,20 @@ describe("test suite", () => {
       expect.any(Function)
     );
 
-    expect(Process).toBeCalledTimes(3);
     // installs dependencies
-    expect(Process).toHaveBeenNthCalledWith(1, "/usr/bin/env", {
-      args: ["npm", "install"],
-      cwd: "/extension",
-      stdio: ["ignore", "pipe", "pipe"],
-      env: {
-        NO_UPDATE_NOTIFIER: "true",
-      },
-    });
+
+    const {
+      dependencyManagement: { installWrappedDependencies },
+    } = require("nova-extension-utils");
+    expect(installWrappedDependencies).toBeCalledTimes(1);
+
+    expect(Process).toBeCalledTimes(2);
     // makes the run script executable
-    expect(Process).toHaveBeenNthCalledWith(2, "/usr/bin/env", {
+    expect(Process).toHaveBeenNthCalledWith(1, "/usr/bin/env", {
       args: ["chmod", "u+x", "/extension/run.sh"],
     });
     // gets the typescript version
-    expect(Process).toHaveBeenNthCalledWith(3, "/usr/bin/env", {
+    expect(Process).toHaveBeenNthCalledWith(2, "/usr/bin/env", {
       args: ["node", "/tsLibPath/tsc.js", "--version"],
       stdio: ["ignore", "pipe", "ignore"],
     });
@@ -178,15 +191,6 @@ describe("test suite", () => {
           start: jest.fn(),
         }))
         .mockImplementationOnce(() => ({
-          onStdout: jest.fn(),
-          onStderr: jest.fn(),
-          onDidExit: jest.fn((cb) => {
-            cb(0);
-            return { dispose: jest.fn() };
-          }),
-          start: jest.fn(),
-        }))
-        .mockImplementationOnce(() => ({
           onStdout: jest.fn((cb) => {
             cb("ts v1.2.3\n");
             return { dispose: jest.fn() };
@@ -205,7 +209,7 @@ describe("test suite", () => {
         informationViewModule.InformationView
       >).mock.instances[0];
       expect(informationView.tsVersion).toBeUndefined();
-      const tsVersionProcess: Process = ProcessMock.mock.results[2].value;
+      const tsVersionProcess: Process = ProcessMock.mock.results[1].value;
       const exitCB = (tsVersionProcess.onDidExit as jest.Mock).mock.calls[0][0];
       exitCB(0);
       // allow promise to execute
@@ -228,19 +232,11 @@ describe("test suite", () => {
       global.console.warn = jest.fn();
       nova.workspace.showErrorMessage = jest.fn();
 
-      (ProcessMock as jest.Mock<Partial<Process>>).mockImplementationOnce(
-        () => ({
-          onStdout: jest.fn(),
-          onStderr: jest.fn((cb) => {
-            cb("some output on stderr");
-            return { dispose: jest.fn() };
-          }),
-          onDidExit: jest.fn((cb) => {
-            cb(1);
-            return { dispose: jest.fn() };
-          }),
-          start: jest.fn(),
-        })
+      const {
+        dependencyManagement: { installWrappedDependencies },
+      } = require("nova-extension-utils");
+      installWrappedDependencies.mockImplementation(() =>
+        Promise.reject(new Error("Failed to install:\n\nsome output on stderr"))
       );
 
       await activate();

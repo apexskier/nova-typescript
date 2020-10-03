@@ -1,3 +1,4 @@
+import { dependencyManagement } from "nova-extension-utils";
 import { registerAutoSuggest } from "./commands/autoSuggest";
 import { registerCodeAction } from "./commands/codeAction";
 import { registerFindReferences } from "./commands/findReferences";
@@ -14,43 +15,18 @@ import { isEnabledForJavascript } from "./isEnabledForJavascript";
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
   wrapCommand(function openWorkspaceConfig(workspace: Workspace) {
-    workspace.openConfig("apexskier.typescript");
+    workspace.openConfig();
   })
 );
 
 nova.commands.register("apexskier.typescript.reload", reload);
 
+dependencyManagement.registerDependencyUnlockCommand(
+  "apexskier.typescript.forceClearLock"
+);
+
 let client: LanguageClient | null = null;
 const compositeDisposable = new CompositeDisposable();
-
-async function installWrappedDependencies() {
-  return new Promise((resolve, reject) => {
-    const process = new Process("/usr/bin/env", {
-      args: ["npm", "install"],
-      cwd: nova.extension.path,
-      stdio: ["ignore", "pipe", "pipe"],
-      env: {
-        NO_UPDATE_NOTIFIER: "true",
-      },
-    });
-    let errOutput = "";
-    if (nova.inDevMode()) {
-      process.onStdout((o) => console.log("installing:", o.trimRight()));
-    }
-    process.onStderr((e) => {
-      console.warn("installing:", e.trimRight());
-      errOutput += e;
-    });
-    process.onDidExit((status) => {
-      if (status === 0) {
-        resolve();
-      } else {
-        reject(new Error(`Failed to install:\n\n${errOutput}`));
-      }
-    });
-    process.start();
-  });
-}
 
 async function makeFileExecutable(file: string) {
   return new Promise((resolve, reject) => {
@@ -102,7 +78,7 @@ async function asyncActivate() {
   informationView.status = "Activating...";
 
   try {
-    await installWrappedDependencies();
+    await dependencyManagement.installWrappedDependencies(compositeDisposable);
   } catch (err) {
     informationView.status = "Failed to install";
     throw err;
@@ -132,8 +108,8 @@ async function asyncActivate() {
     });
     console.log("logging to", logDir);
     // passing inLog breaks some requests for an unknown reason
-    // const inLog = nova.path.join(logDir, "languageClient-in.log");
-    const outLog = nova.path.join(logDir, "languageClient-out.log");
+    // const inLog = nova.path.join(logDir, "languageServer-in.log");
+    const outLog = nova.path.join(logDir, "languageServer-out.log");
     serviceArgs = {
       path: "/usr/bin/env",
       // args: ["bash", "-c", `tee "${inLog}" | "${runFile}" | tee "${outLog}"`],
@@ -158,6 +134,7 @@ async function asyncActivate() {
       env: {
         TSLIB_PATH: tslibPath,
         WORKSPACE_DIR: nova.workspace.path ?? "",
+        INSTALL_DIR: dependencyManagement.getDependencyDirectory(),
       },
     },
     {
