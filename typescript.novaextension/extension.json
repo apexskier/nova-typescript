@@ -41,7 +41,7 @@
     }
   ],
 
-  "config-workspace": [
+  "configWorkspace": [
     {
       "key": "apexskier.typescript.config.tslibPath",
       "title": "TypeScript Library",
