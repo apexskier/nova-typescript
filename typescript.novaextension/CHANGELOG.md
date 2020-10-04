@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+### Fixed
+
+- Fix issue with dependency installation locking during failures
+
 ## v1.8.0
 
 ### Changed
