@@ -3232,10 +3232,10 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
-nova-extension-utils@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/nova-extension-utils/-/nova-extension-utils-1.0.2.tgz#71712e33f8d116520653d4562534ac642a8a3bc1"
-  integrity sha512-/YNfx/WM/eE9/JfV21VygafINR2x3kiwY/LhaS2PDv4Z8k4Ysu2PiN5hydHTBw0hqoW6HipN3HPZwuudSVR6rQ==
+nova-extension-utils@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/nova-extension-utils/-/nova-extension-utils-1.0.3.tgz#a79ae810d91dac9d4e30f33d7846507c882b1705"
+  integrity sha512-pr+Dy0TbEjVqzEeypyDplvMsCR4FMdwuipuZB3WiKmHncG6RXzAXsnWa1uLnVoTSmk9Zg2sTCMF1jwEqJUzNOQ==
 
 npm-run-path@^2.0.0:
   version "2.0.2"
