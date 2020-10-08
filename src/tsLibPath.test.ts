@@ -74,7 +74,9 @@ describe("tsLibPath", () => {
 
     it("uses the extension installation if workspace hasn't been saved", () => {
       (nova.workspace.path as any) = "";
-      expect(getTsLibPath()).toBe("/dependencyManagement/node_modules/typescript/lib");
+      expect(getTsLibPath()).toBe(
+        "/dependencyManagement/node_modules/typescript/lib"
+      );
     });
 
     it("uses the workspace config", () => {
