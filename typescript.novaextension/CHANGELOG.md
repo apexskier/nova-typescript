@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+### Fixed
+
+- Fix not using dependency installation correctly
+
 ## v1.8.1
 
 ### Fixed

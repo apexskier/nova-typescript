@@ -1,3 +1,5 @@
+import { dependencyManagement } from "nova-extension-utils";
+
 function reload() {
   nova.commands.invoke("apexskier.typescript.reload");
 }
@@ -43,7 +45,7 @@ export function getTsLibPath(): string | null {
     );
   } else {
     tslibPath = nova.path.join(
-      nova.extension.path,
+      dependencyManagement.getDependencyDirectory(),
       "node_modules/typescript/lib"
     );
   }
