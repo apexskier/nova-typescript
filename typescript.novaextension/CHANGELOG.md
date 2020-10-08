@@ -1,10 +1,10 @@
 # Changelog
 
-## future
+## v1.8.2
 
 ### Fixed
 
-- Fix not using dependency installation correctly
+- Fix bad bundled dependency location
 
 ## v1.8.1
 
