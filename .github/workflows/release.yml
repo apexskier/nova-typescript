@@ -2,13 +2,13 @@ name: Release management
 
 on:
   release:
-	types: [published]
+    types: [published]
 
 jobs:
   release:
-	runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-	steps:
-	  - uses: apexskier/github-release-commenter@v1
-		with:
-		  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: apexskier/github-release-commenter@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
