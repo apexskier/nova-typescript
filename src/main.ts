@@ -146,14 +146,31 @@ async function asyncActivate() {
     compositeDisposable.add(registerSignatureHelp(client));
   }
 
-  // Not working, I'm guessing Nova intercepts this notification.
-  client.onNotification("initialized", () => {
-    console.log("initialized");
-  });
-
-  client.onNotification("window/showMessage", (params) => {
-    console.log("window/showMessage", JSON.stringify(params));
-  });
+  compositeDisposable.add(
+    client.onDidStop((err) => {
+      let message = "TypeScript Language Server stopped unexpectedly";
+      if (err) {
+        message += `:\n\n${err.toString()}`;
+      } else {
+        message += ".";
+      }
+      message +=
+        "\n\nPlease report this, along with any output in the Extension Console.";
+      nova.workspace.showActionPanel(
+        message,
+        {
+          buttons: ["Restart", "Ignore"],
+        },
+        (index) => {
+          if (index == 0) {
+            nova.commands.invoke("apexskier.typescript.reload");
+          } else {
+            informationView.status = "Stopped";
+          }
+        }
+      );
+    })
+  );
 
   client.start();
 

@@ -9,6 +9,7 @@
 ### Breaking
 
 - Remove functionality now supplied by Nova directly (Go to Definition, Code Action, Offer Suggestions)
+- Handle language server crashes more gracefully (requires Nova 2)
 
 ## v1.8.2
 
