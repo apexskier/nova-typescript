@@ -116,13 +116,6 @@
     ],
     "editor": [
       {
-        "title": "Go to Definition",
-        "command": "apexskier.typescript.goToDefinition",
-        "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
-        }
-      },
-      {
         "title": "Find References",
         "command": "apexskier.typescript.findReferences",
         "filters": {
@@ -132,20 +125,6 @@
       {
         "title": "Rename Symbol",
         "command": "apexskier.typescript.rename",
-        "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
-        }
-      },
-      {
-        "title": "Code Action",
-        "command": "apexskier.typescript.codeAction",
-        "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
-        }
-      },
-      {
-        "title": "Offer Suggestions (experimental)",
-        "command": "apexskier.typescript.autoSuggest",
         "filters": {
           "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
         }

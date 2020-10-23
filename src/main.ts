@@ -1,12 +1,8 @@
 import { dependencyManagement } from "nova-extension-utils";
-import { registerAutoSuggest } from "./commands/autoSuggest";
-import { registerCodeAction } from "./commands/codeAction";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
-import { registerGoToDefinition } from "./commands/goToDefinition";
 import { registerRename } from "./commands/rename";
 import { registerSignatureHelp } from "./commands/signatureHelp";
-import { registerApplyEdit } from "./requests/applyEdit";
 import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
 import { getTsLibPath } from "./tsLibPath";
@@ -143,18 +139,12 @@ async function asyncActivate() {
   );
 
   // register nova commands
-  compositeDisposable.add(registerAutoSuggest(client));
-  compositeDisposable.add(registerCodeAction(client));
   compositeDisposable.add(registerFindReferences(client));
   compositeDisposable.add(registerFindSymbol(client));
-  compositeDisposable.add(registerGoToDefinition(client));
   compositeDisposable.add(registerRename(client));
   if (nova.inDevMode()) {
     compositeDisposable.add(registerSignatureHelp(client));
   }
-
-  // register server-pushed commands
-  registerApplyEdit(client);
 
   // Not working, I'm guessing Nova intercepts this notification.
   client.onNotification("initialized", () => {
