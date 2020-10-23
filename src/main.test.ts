@@ -113,17 +113,9 @@ describe("test suite", () => {
   });
 
   function assertActivationBehavior() {
-    expect(nova.commands.register).toBeCalledTimes(6);
-    expect(nova.commands.register).toBeCalledWith(
-      "apexskier.typescript.goToDefinition",
-      expect.any(Function)
-    );
+    expect(nova.commands.register).toBeCalledTimes(3);
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.rename",
-      expect.any(Function)
-    );
-    expect(nova.commands.register).toBeCalledWith(
-      "apexskier.typescript.codeAction",
       expect.any(Function)
     );
     expect(nova.commands.register).toBeCalledWith(
@@ -132,10 +124,6 @@ describe("test suite", () => {
     );
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.findReferences",
-      expect.any(Function)
-    );
-    expect(nova.commands.register).toBeCalledWith(
-      "apexskier.typescript.autoSuggest",
       expect.any(Function)
     );
 
@@ -162,11 +150,7 @@ describe("test suite", () => {
       LanguageClientMock.mock.results[0].value;
     expect(languageClient.start).toBeCalledTimes(1);
 
-    expect(languageClient.onRequest).toBeCalledTimes(1);
-    expect(languageClient.onRequest).toBeCalledWith(
-      "workspace/applyEdit",
-      expect.any(Function)
-    );
+    expect(languageClient.onRequest).not.toBeCalled();
 
     expect(informationViewModule.InformationView).toBeCalledTimes(1);
     const informationView = (informationViewModule.InformationView as jest.Mock<
