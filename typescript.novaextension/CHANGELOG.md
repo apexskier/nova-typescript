@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+### Breaking
+
+- Remove functionality now supplied by Nova directly (Go to Definition, Code Action, Offer Suggestions)
+
 ## v1.8.2
 
 ### Fixed
