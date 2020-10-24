@@ -1,30 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
+import { cleanPath } from "nova-extension-utils";
 import { wrapCommand } from "./novaUtils";
 import { showLocation } from "./showLocation";
-
-// https://stackoverflow.com/a/6969486
-function escapeRegExp(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-}
-const filePrefix = new RegExp("^" + escapeRegExp("file://"));
-
-const hr = new RegExp("^" + escapeRegExp(`file://${nova.environment["HOME"]}`));
-const stdVolumePrefix = new RegExp(
-  "^" + escapeRegExp("file:///Volumes/Macintosh HD")
-);
-function cleanPath(path: string) {
-  const wr = new RegExp("^" + escapeRegExp(`file://${nova.workspace.path}`));
-  path = decodeURIComponent(path);
-  path = path.replace(stdVolumePrefix, "file://");
-  return (
-    path
-      .replace(wr, ".")
-      .replace(hr, "~")
-      // needs to go last
-      .replace(filePrefix, "")
-  );
-}
 
 type MyTreeProvider<T> = TreeDataProvider<T> & {
   onSelect(element: T): Promise<void>;

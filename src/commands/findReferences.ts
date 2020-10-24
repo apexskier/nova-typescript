@@ -39,10 +39,6 @@ export function registerFindReferences(client: LanguageClient) {
       return;
     }
 
-    if (nova.inDevMode()) {
-      console.log(JSON.stringify(response, null, "  "));
-    }
-
     createLocationSearchResultsTree(selectedText, response);
   }
 }

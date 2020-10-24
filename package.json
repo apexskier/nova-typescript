@@ -37,7 +37,7 @@
     "eslint": "^7.11.0",
     "eslint-plugin-nova": "^1.1.0",
     "jest": "^26.5.3",
-    "nova-extension-utils": "^1.1.0",
+    "nova-extension-utils": "^1.2.1",
     "onchange": "^7.0.2",
     "prettier": "^2.1.2",
     "rollup": "^2.32.0",
