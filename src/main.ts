@@ -74,7 +74,19 @@ async function asyncActivate() {
   informationView.status = "Activating...";
 
   try {
-    await dependencyManagement.installWrappedDependencies(compositeDisposable);
+    await dependencyManagement.installWrappedDependencies(compositeDisposable, {
+      console: {
+        log: (...args: Array<unknown>) => {
+          console.log("dependencyManagement:", ...args);
+        },
+        info: (...args: Array<unknown>) => {
+          console.info("dependencyManagement:", ...args);
+        },
+        warn: (...args: Array<unknown>) => {
+          console.warn("dependencyManagement:", ...args);
+        },
+      },
+    });
   } catch (err) {
     informationView.status = "Failed to install";
     throw err;
