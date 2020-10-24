@@ -14,6 +14,7 @@ jest.useFakeTimers();
 (global as any).nova = Object.assign(nova, {
   commands: {
     register: jest.fn(),
+    invoke: jest.fn(),
   },
   workspace: {
     path: "/workspace",
@@ -71,6 +72,7 @@ describe("test suite", () => {
     LanguageClientMock.mockReset().mockImplementation(() => ({
       onRequest: jest.fn(),
       onNotification: jest.fn(),
+      onDidStop: jest.fn(),
       start: jest.fn(),
       stop: jest.fn(),
     }));
@@ -228,6 +230,50 @@ describe("test suite", () => {
       expect(nova.workspace.showErrorMessage).toBeCalledWith(
         new Error("Failed to install:\n\nsome output on stderr")
       );
+    });
+
+    it("handles unexpected crashes", async () => {
+      resetMocks();
+      nova.workspace.showActionPanel = jest.fn();
+
+      await activate();
+
+      const languageClient: LanguageClient =
+        LanguageClientMock.mock.results[0].value;
+      const stopCallback = (languageClient.onDidStop as jest.Mock).mock
+        .calls[0][0];
+
+      stopCallback(new Error("Mock language server crash"));
+
+      expect(nova.workspace.showActionPanel).toBeCalledTimes(1);
+      const actionPanelCall = (nova.workspace.showActionPanel as jest.Mock).mock
+        .calls[0];
+      expect(actionPanelCall[0]).toMatchInlineSnapshot(`
+        "TypeScript Language Server stopped unexpectedly:
+
+        Error: Mock language server crash
+
+        Please report this, along with any output in the Extension Console."
+      `);
+      expect(actionPanelCall[1].buttons).toHaveLength(2)
+      
+      const informationView = (informationViewModule.InformationView as jest.Mock<
+        informationViewModule.InformationView
+      >).mock.instances[0];
+      expect(informationView.status).toBe("Stopped");
+
+      const actionCallback = actionPanelCall[2];      
+      
+      // reload
+      expect(nova.commands.invoke).not.toBeCalled();
+      actionCallback(0)
+      expect(nova.commands.invoke).toBeCalledTimes(1);
+      expect(nova.commands.invoke).toBeCalledWith(
+        "apexskier.typescript.reload"
+      );
+      
+      // ignore
+      actionCallback(1);
     });
 
     test("reload", async () => {

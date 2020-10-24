@@ -148,6 +148,8 @@ async function asyncActivate() {
 
   compositeDisposable.add(
     client.onDidStop((err) => {
+      informationView.status = "Stopped";
+      
       let message = "TypeScript Language Server stopped unexpectedly";
       if (err) {
         message += `:\n\n${err.toString()}`;
@@ -164,8 +166,6 @@ async function asyncActivate() {
         (index) => {
           if (index == 0) {
             nova.commands.invoke("apexskier.typescript.reload");
-          } else {
-            informationView.status = "Stopped";
           }
         }
       );
