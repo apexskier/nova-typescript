@@ -239,6 +239,7 @@ describe("Location search results tree", () => {
     expect(provider.getChildren("fileURI2")).toEqual(locations.slice(1));
     expect(provider.getTreeItem("fileURI1")).toMatchInlineSnapshot(`
       MockTreeItem {
+        "command": "apexskier.typescript.showSearchResult",
         "name": "fileURI1",
         "path": "fileURI1",
         "state": undefined,
@@ -246,13 +247,15 @@ describe("Location search results tree", () => {
     `);
     expect(provider.getTreeItem(locations[0])).toMatchInlineSnapshot(`
       MockTreeItem {
+        "command": "apexskier.typescript.showSearchResult",
+        "descriptiveText": ":2:3",
         "name": "name",
         "state": Symbol(TreeItemCollapsibleState.None),
       }
     `);
   });
 
-  it.only("cleans filepaths before rendering them", () => {
+  it("cleans filepaths before rendering them", () => {
     (nova.workspace as any).path = "/workspace";
     createLocationSearchResultsTree("name", locations);
     const provider: TreeDataProvider<string | lspTypes.SymbolInformation> =
