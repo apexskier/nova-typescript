@@ -263,8 +263,10 @@ describe("Location search results tree", () => {
     expect(provider.getTreeItem("file:///workspace/path").name).toBe("./path");
     expect(provider.getTreeItem("file:///home/path").name).toBe("~/path");
     expect(provider.getTreeItem("file:///path").name).toBe("/path");
+
+    (nova.workspace as any).path = null;
     expect(
-      provider.getTreeItem("file:///Volumes/Macintosh HD/home/path").name
+      provider.getTreeItem("file:///Volumes/Macintosh%20HD/home/path").name
     ).toBe("~/path");
   });
 });
