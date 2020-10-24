@@ -255,23 +255,23 @@ describe("test suite", () => {
 
         Please report this, along with any output in the Extension Console."
       `);
-      expect(actionPanelCall[1].buttons).toHaveLength(2)
-      
+      expect(actionPanelCall[1].buttons).toHaveLength(2);
+
       const informationView = (informationViewModule.InformationView as jest.Mock<
         informationViewModule.InformationView
       >).mock.instances[0];
       expect(informationView.status).toBe("Stopped");
 
-      const actionCallback = actionPanelCall[2];      
-      
+      const actionCallback = actionPanelCall[2];
+
       // reload
       expect(nova.commands.invoke).not.toBeCalled();
-      actionCallback(0)
+      actionCallback(0);
       expect(nova.commands.invoke).toBeCalledTimes(1);
       expect(nova.commands.invoke).toBeCalledWith(
         "apexskier.typescript.reload"
       );
-      
+
       // ignore
       actionCallback(1);
     });

@@ -149,7 +149,7 @@ async function asyncActivate() {
   compositeDisposable.add(
     client.onDidStop((err) => {
       informationView.status = "Stopped";
-      
+
       let message = "TypeScript Language Server stopped unexpectedly";
       if (err) {
         message += `:\n\n${err.toString()}`;
