@@ -2,6 +2,10 @@
 
 ## future
 
+### Fixed
+
+- Fix paths cleaning in search results sidebar
+
 ### Breaking
 
 - Remove functionality now supplied by Nova directly (Go to Definition, Code Action, Offer Suggestions)
