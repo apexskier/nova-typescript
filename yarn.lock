@@ -1574,10 +1574,10 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-plugin-nova@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.1.0.tgz#05d8d1f0e467deb4a57c7c7f7fb774934c88b3f2"
-  integrity sha512-4zHmR95pb0QD+hWXBmLOPNu44WGGg1F1+vjIzN4JHupchYQpfUiAojzRJjjB6GpmmsnhG8sekuJhW8npq+dpFg==
+eslint-plugin-nova@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.2.0.tgz#7c3569496c21ad37985a01ddd642a0db08794002"
+  integrity sha512-RFOEYiT+QbJIhQo7VAKv6xsQCQ9Grn+oNzim9vS8SiamoWl/7uO4afI8uAyrkB0XRxBs/hx7b8lkMjJztpjlRA==
 
 eslint-scope@^5.0.0, eslint-scope@^5.1.1:
   version "5.1.1"
