@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+## Fixed
+
+- Handle language server crashes more gracefully
+
 ## v2.0.0
 
 ### Fixed
@@ -9,7 +15,6 @@
 ### Breaking
 
 - Remove functionality now supplied by Nova directly (Go to Definition, Code Action, Offer Suggestions)
-- Handle language server crashes more gracefully (requires Nova 2)
 
 ## v1.8.2
 
