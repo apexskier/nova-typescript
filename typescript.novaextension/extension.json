@@ -3,7 +3,7 @@
   "name": "TypeScript",
   "organization": "Cameron Little",
   "description": "Advanced TypeScript and JavaScript language support for Nova",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "categories": ["completions", "languages", "issues", "sidebars"],
   "license": "MIT",
   "repository": "https://github.com/apexskier/nova-typescript",
