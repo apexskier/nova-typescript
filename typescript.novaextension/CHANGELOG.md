@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+## Fixed
+
+- Handle language server crashes more gracefully
+
 ## v2.0.0
 
 ### Fixed
