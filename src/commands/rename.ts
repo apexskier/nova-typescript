@@ -13,7 +13,7 @@ export function registerRename(client: LanguageClient) {
   );
 
   async function rename(editor: TextEditor) {
-    // Select full word. It will be showed in a palette so the user can review it
+    // Select full word. It will be shown in a palette so the user can review it
     editor.selectWordsContainingCursors();
 
     const selectedRange = editor.selectedRange;

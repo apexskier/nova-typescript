@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { openFile } from "./novaUtils";
 import { lspRangeToRange } from "./lspNovaConversions";
+import { openFile } from "./novaUtils";
 
 // @Deprecated I want to replace this with a call to Nova's client with workspace/applyEdit, but that's currently not possible.
 // I've requested this feature.
