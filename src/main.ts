@@ -1,13 +1,14 @@
 import { dependencyManagement } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
-import { registerRename } from "./commands/rename";
 import { registerOrganizeImports } from "./commands/organizeImports";
+import { registerRename } from "./commands/rename";
 import { registerSignatureHelp } from "./commands/signatureHelp";
-import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
-import { getTsLibPath } from "./tsLibPath";
 import { isEnabledForJavascript } from "./isEnabledForJavascript";
+import { wrapCommand } from "./novaUtils";
+import { shouldOrganizeImportsOnSave } from "./shouldOrganizeImportsOnSave";
+import { getTsLibPath } from "./tsLibPath";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
@@ -187,6 +188,24 @@ async function asyncActivate() {
   );
 
   client.start();
+
+  compositeDisposable.add(
+    nova.workspace.onDidAddTextEditor((editor) => {
+      const listener = editor.onWillSave(async (editor) => {
+        if (
+          editor.document.syntax &&
+          syntaxes.includes(editor.document.syntax) &&
+          shouldOrganizeImportsOnSave()
+        ) {
+          await nova.commands.invoke(
+            "apexskier.typescript.commands.organizeImports",
+            editor
+          );
+        }
+      });
+      compositeDisposable.add(editor.onDidDestroy(() => listener.dispose()));
+    })
+  );
 
   getTsVersion(tslibPath).then((version) => {
     informationView.tsVersion = version;

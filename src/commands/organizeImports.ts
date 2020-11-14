@@ -14,7 +14,17 @@ export function registerOrganizeImports(client: LanguageClient) {
     wrapCommand(organizeImports)
   );
 
-  async function organizeImports(editor: TextEditor) {
+  async function organizeImports(editor: TextEditor): Promise<void>;
+  async function organizeImports(
+    workspace: Workspace,
+    editor: TextEditor
+  ): Promise<void>;
+  async function organizeImports(
+    editorOrWorkspace: TextEditor | Workspace,
+    maybeEditor?: TextEditor
+  ) {
+    const editor: TextEditor = maybeEditor ?? (editorOrWorkspace as TextEditor);
+
     const originalSelections = editor.selectedRanges;
     const originalLength = editor.document.length;
 

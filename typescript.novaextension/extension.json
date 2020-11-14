@@ -34,6 +34,13 @@
       "type": "string"
     },
     {
+      "key": "apexskier.typescript.config.organizeImportsOnSave",
+      "title": "Organize imports on save",
+      "description": "Run Organize Imports command on file save.",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "key": "apexskier.typescript.config.isEnabledForJavascript",
       "title": "Enable on Javascript Files",
       "description": "Enable TypeScript editor functionality for javascript and jsx files.",
@@ -49,6 +56,18 @@
       "description": "(optional) Path to a custom installed TypeScript library directory. See \"Using the workspace version of TypeScript\" in the README for details.",
       "link": "nova://extension/?id=apexskier.typescript",
       "type": "string"
+    },
+    {
+      "key": "apexskier.typescript.config.organizeImportsOnSave",
+      "title": "Organize imports on save",
+      "description": "Run Organize Imports command on file save.",
+      "type": "enum",
+      "values": [
+        ["null", "Inherit from Global Settings"],
+        ["false", "Disable"],
+        ["true", "Enable"]
+      ],
+      "default": "null"
     },
     {
       "key": "apexskier.typescript.config.isEnabledForJavascript",
