@@ -2,14 +2,18 @@
 
 ## future
 
-## Added
+### Added
 
 - "Organize Imports" command
 - Global/workspace preference to automatically organize imports on save
 
+### Changed
+
+- Upgrade bundled TypeScript
+
 ## v2.0.1
 
-## Fixed
+### Fixed
 
 - Handle language server crashes more gracefully
 
