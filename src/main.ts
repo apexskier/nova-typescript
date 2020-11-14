@@ -1,4 +1,4 @@
-import { dependencyManagement } from "nova-extension-utils";
+import { dependencyManagement, preferences } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
 import { registerOrganizeImports } from "./commands/organizeImports";
@@ -7,8 +7,10 @@ import { registerSignatureHelp } from "./commands/signatureHelp";
 import { InformationView } from "./informationView";
 import { isEnabledForJavascript } from "./isEnabledForJavascript";
 import { wrapCommand } from "./novaUtils";
-import { shouldOrganizeImportsOnSave } from "./shouldOrganizeImportsOnSave";
 import { getTsLibPath } from "./tsLibPath";
+
+const organizeImportsOnSaveKey =
+  "apexskier.typescript.config.organizeImportsOnSave";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
@@ -189,21 +191,53 @@ async function asyncActivate() {
 
   client.start();
 
+  // auto-organize imports on save
   compositeDisposable.add(
     nova.workspace.onDidAddTextEditor((editor) => {
-      const listener = editor.onWillSave(async (editor) => {
+      const editorDisposable = new CompositeDisposable();
+      compositeDisposable.add(editorDisposable);
+      compositeDisposable.add(
+        editor.onDidDestroy(() => editorDisposable.dispose())
+      );
+
+      // watch things that might change if this needs to happen or not
+      editorDisposable.add(editor.document.onDidChangeSyntax(refreshListener));
+      editorDisposable.add(
+        nova.config.onDidChange(organizeImportsOnSaveKey, refreshListener)
+      );
+      editorDisposable.add(
+        nova.workspace.config.onDidChange(
+          organizeImportsOnSaveKey,
+          refreshListener
+        )
+      );
+      
+      let willSaveListener = setupListener();
+      compositeDisposable.add({
+        dispose() {
+          willSaveListener?.dispose();
+        },
+      });
+
+      function refreshListener() {
+        willSaveListener?.dispose();
+        willSaveListener = setupListener();
+      }
+
+      function setupListener() {
         if (
-          editor.document.syntax &&
-          syntaxes.includes(editor.document.syntax) &&
-          shouldOrganizeImportsOnSave()
+          (syntaxes as Array<string | null>).includes(editor.document.syntax) &&
+          preferences.getOverridableBoolean(organizeImportsOnSaveKey)
         ) {
-          await nova.commands.invoke(
-            "apexskier.typescript.commands.organizeImports",
-            editor
+          return editor.onWillSave(async (editor) =>
+            nova.commands.invoke(
+              "apexskier.typescript.commands.organizeImports",
+              editor
+            )
           );
         }
-      });
-      compositeDisposable.add(editor.onDidDestroy(() => listener.dispose()));
+        return null;
+      }
     })
   );
 

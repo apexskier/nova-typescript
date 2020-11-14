@@ -7,9 +7,6 @@ jest.mock("./tsLibPath", () => ({
 jest.mock("./isEnabledForJavascript", () => ({
   isEnabledForJavascript: () => true,
 }));
-jest.mock("./shouldOrganizeImportsOnSave", () => ({
-  shouldOrganizeImportsOnSave: jest.fn(() => true),
-}));
 jest.mock("nova-extension-utils");
 
 jest.useFakeTimers();
@@ -303,6 +300,9 @@ describe("test suite", () => {
 
       await activate();
 
+      (nova as any).config = { onDidChange: jest.fn() };
+      (nova as any).workspace.config = { onDidChange: jest.fn() };
+
       expect(nova.workspace.onDidAddTextEditor).toBeCalledTimes(1);
       const setupWatcher = (nova.workspace.onDidAddTextEditor as jest.Mock).mock
         .calls[0][0];
@@ -311,10 +311,18 @@ describe("test suite", () => {
         onDidDestroy: jest.fn(),
         document: {
           syntax: "typescript",
+          onDidChangeSyntax: jest.fn(),
         },
       };
       setupWatcher(mockEditor);
+      expect(mockEditor.onWillSave).toBeCalledTimes(0);
+
+      require("nova-extension-utils").preferences.getOverridableBoolean.mockReturnValue(
+        true
+      );
+      setupWatcher(mockEditor);
       expect(mockEditor.onWillSave).toBeCalledTimes(1);
+
       const saveHandler = (mockEditor.onWillSave as jest.Mock).mock.calls[0][0];
       await saveHandler(mockEditor);
       expect(nova.commands.invoke).toHaveBeenNthCalledWith(
@@ -322,19 +330,6 @@ describe("test suite", () => {
         "apexskier.typescript.commands.organizeImports",
         mockEditor
       );
-
-      (nova.commands.invoke as jest.Mock).mockReset();
-      mockEditor.document.syntax = "__something_else__";
-      await saveHandler(mockEditor);
-      expect(nova.commands.invoke).not.toBeCalled();
-
-      (nova.commands.invoke as jest.Mock).mockReset();
-      mockEditor.document.syntax = "typescript";
-      require("./shouldOrganizeImportsOnSave").shouldOrganizeImportsOnSave.mockReturnValue(
-        false
-      );
-      await saveHandler(mockEditor);
-      expect(nova.commands.invoke).not.toBeCalled();
     });
   });
 });
