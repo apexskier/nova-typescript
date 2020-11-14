@@ -42,7 +42,11 @@ export function registerOrganizeImports(client: LanguageClient) {
     const newLength = editor.document.length;
     const lengthChange = originalLength - newLength;
     editor.selectedRanges = originalSelections.map(
-      (r) => new Range(Math.max(0, r.start - lengthChange), Math.max(0, r.end - lengthChange))
+      (r) =>
+        new Range(
+          Math.max(0, r.start - lengthChange),
+          Math.max(0, r.end - lengthChange)
+        )
     );
     editor.scrollToCursorPosition();
   }
