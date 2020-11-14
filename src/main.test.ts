@@ -115,7 +115,7 @@ describe("test suite", () => {
   });
 
   function assertActivationBehavior() {
-    expect(nova.commands.register).toBeCalledTimes(3);
+    expect(nova.commands.register).toBeCalledTimes(4);
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.rename",
       expect.any(Function)
@@ -126,6 +126,10 @@ describe("test suite", () => {
     );
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.findReferences",
+      expect.any(Function)
+    );
+    expect(nova.commands.register).toBeCalledWith(
+      "apexskier.typescript.commands.organizeImports",
       expect.any(Function)
     );
 

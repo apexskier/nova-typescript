@@ -2,6 +2,7 @@ import { dependencyManagement } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
 import { registerRename } from "./commands/rename";
+import { registerOrganizeImports } from "./commands/organizeImports";
 import { registerSignatureHelp } from "./commands/signatureHelp";
 import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
@@ -154,6 +155,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerFindReferences(client));
   compositeDisposable.add(registerFindSymbol(client));
   compositeDisposable.add(registerRename(client));
+  compositeDisposable.add(registerOrganizeImports(client));
   if (nova.inDevMode()) {
     compositeDisposable.add(registerSignatureHelp(client));
   }

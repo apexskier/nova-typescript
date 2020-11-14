@@ -131,6 +131,13 @@
         }
       },
       {
+        "title": "Organize Imports",
+        "command": "apexskier.typescript.commands.organizeImports",
+        "filters": {
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+        }
+      },
+      {
         "title": "Show Documentation (experimental)",
         "command": "apexskier.typescript.signatureHelp",
         "filters": {
