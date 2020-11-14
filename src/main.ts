@@ -211,7 +211,7 @@ async function asyncActivate() {
           refreshListener
         )
       );
-      
+
       let willSaveListener = setupListener();
       compositeDisposable.add({
         dispose() {
