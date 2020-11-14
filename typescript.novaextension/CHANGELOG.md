@@ -1,6 +1,6 @@
 # Changelog
 
-## future
+## v2.1.0
 
 ### Added
 
