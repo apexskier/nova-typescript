@@ -1,12 +1,16 @@
-import { dependencyManagement } from "nova-extension-utils";
+import { dependencyManagement, preferences } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
+import { registerOrganizeImports } from "./commands/organizeImports";
 import { registerRename } from "./commands/rename";
 import { registerSignatureHelp } from "./commands/signatureHelp";
-import { wrapCommand } from "./novaUtils";
 import { InformationView } from "./informationView";
-import { getTsLibPath } from "./tsLibPath";
 import { isEnabledForJavascript } from "./isEnabledForJavascript";
+import { wrapCommand } from "./novaUtils";
+import { getTsLibPath } from "./tsLibPath";
+
+const organizeImportsOnSaveKey =
+  "apexskier.typescript.config.organizeImportsOnSave";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
@@ -154,6 +158,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerFindReferences(client));
   compositeDisposable.add(registerFindSymbol(client));
   compositeDisposable.add(registerRename(client));
+  compositeDisposable.add(registerOrganizeImports(client));
   if (nova.inDevMode()) {
     compositeDisposable.add(registerSignatureHelp(client));
   }
@@ -185,6 +190,56 @@ async function asyncActivate() {
   );
 
   client.start();
+
+  // auto-organize imports on save
+  compositeDisposable.add(
+    nova.workspace.onDidAddTextEditor((editor) => {
+      const editorDisposable = new CompositeDisposable();
+      compositeDisposable.add(editorDisposable);
+      compositeDisposable.add(
+        editor.onDidDestroy(() => editorDisposable.dispose())
+      );
+
+      // watch things that might change if this needs to happen or not
+      editorDisposable.add(editor.document.onDidChangeSyntax(refreshListener));
+      editorDisposable.add(
+        nova.config.onDidChange(organizeImportsOnSaveKey, refreshListener)
+      );
+      editorDisposable.add(
+        nova.workspace.config.onDidChange(
+          organizeImportsOnSaveKey,
+          refreshListener
+        )
+      );
+
+      let willSaveListener = setupListener();
+      compositeDisposable.add({
+        dispose() {
+          willSaveListener?.dispose();
+        },
+      });
+
+      function refreshListener() {
+        willSaveListener?.dispose();
+        willSaveListener = setupListener();
+      }
+
+      function setupListener() {
+        if (
+          (syntaxes as Array<string | null>).includes(editor.document.syntax) &&
+          preferences.getOverridableBoolean(organizeImportsOnSaveKey)
+        ) {
+          return editor.onWillSave(async (editor) =>
+            nova.commands.invoke(
+              "apexskier.typescript.commands.organizeImports",
+              editor
+            )
+          );
+        }
+        return null;
+      }
+    })
+  );
 
   getTsVersion(tslibPath).then((version) => {
     informationView.tsVersion = version;

@@ -18,6 +18,7 @@ jest.useFakeTimers();
   },
   workspace: {
     path: "/workspace",
+    onDidAddTextEditor: jest.fn(),
   },
   extension: {
     path: "/extension",
@@ -69,6 +70,7 @@ describe("test suite", () => {
       .mockImplementation(() => Promise.resolve());
     nova.fs.access = jest.fn().mockReturnValue(true);
     (nova.commands.register as jest.Mock).mockReset();
+    (nova.commands.invoke as jest.Mock).mockReset();
     LanguageClientMock.mockReset().mockImplementation(() => ({
       onRequest: jest.fn(),
       onNotification: jest.fn(),
@@ -86,6 +88,7 @@ describe("test suite", () => {
       start: jest.fn(),
     }));
     (informationViewModule.InformationView as jest.Mock).mockReset();
+    (nova.workspace.onDidAddTextEditor as jest.Mock).mockReset();
   }
 
   const reload = (nova.commands.register as jest.Mock).mock.calls.find(
@@ -115,7 +118,7 @@ describe("test suite", () => {
   });
 
   function assertActivationBehavior() {
-    expect(nova.commands.register).toBeCalledTimes(3);
+    expect(nova.commands.register).toBeCalledTimes(4);
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.rename",
       expect.any(Function)
@@ -126,6 +129,10 @@ describe("test suite", () => {
     );
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.findReferences",
+      expect.any(Function)
+    );
+    expect(nova.commands.register).toBeCalledWith(
+      "apexskier.typescript.commands.organizeImports",
       expect.any(Function)
     );
 
@@ -286,6 +293,43 @@ describe("test suite", () => {
       expect(compositeDisposable.dispose).toBeCalledTimes(2);
 
       assertActivationBehavior();
+    });
+
+    test("watches files for import organization", async () => {
+      resetMocks();
+
+      await activate();
+
+      (nova as any).config = { onDidChange: jest.fn() };
+      (nova as any).workspace.config = { onDidChange: jest.fn() };
+
+      expect(nova.workspace.onDidAddTextEditor).toBeCalledTimes(1);
+      const setupWatcher = (nova.workspace.onDidAddTextEditor as jest.Mock).mock
+        .calls[0][0];
+      const mockEditor = {
+        onWillSave: jest.fn(),
+        onDidDestroy: jest.fn(),
+        document: {
+          syntax: "typescript",
+          onDidChangeSyntax: jest.fn(),
+        },
+      };
+      setupWatcher(mockEditor);
+      expect(mockEditor.onWillSave).toBeCalledTimes(0);
+
+      require("nova-extension-utils").preferences.getOverridableBoolean.mockReturnValue(
+        true
+      );
+      setupWatcher(mockEditor);
+      expect(mockEditor.onWillSave).toBeCalledTimes(1);
+
+      const saveHandler = (mockEditor.onWillSave as jest.Mock).mock.calls[0][0];
+      await saveHandler(mockEditor);
+      expect(nova.commands.invoke).toHaveBeenNthCalledWith(
+        1,
+        "apexskier.typescript.commands.organizeImports",
+        mockEditor
+      );
     });
   });
 });
