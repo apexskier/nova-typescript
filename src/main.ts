@@ -229,11 +229,12 @@ async function asyncActivate() {
           (syntaxes as Array<string | null>).includes(editor.document.syntax) &&
           preferences.getOverridableBoolean(organizeImportsOnSaveKey)
         ) {
-          return editor.onWillSave(async (editor) =>
-            nova.commands.invoke(
-              "apexskier.typescript.commands.organizeImports",
-              editor
-            )
+          return editor.onWillSave(
+            async (editor) =>
+              nova.commands.invoke(
+                "apexskier.typescript.commands.organizeImports",
+                editor
+              ) as Promise<void>
           );
         }
         return null;
