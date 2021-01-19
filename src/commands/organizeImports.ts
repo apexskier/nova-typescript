@@ -14,9 +14,12 @@ export function registerOrganizeImports(client: LanguageClient) {
     wrapCommand(organizeImports)
   );
 
+  // eslint-disable-next-line no-unused-vars
   async function organizeImports(editor: TextEditor): Promise<void>;
   async function organizeImports(
+    // eslint-disable-next-line no-unused-vars
     workspace: Workspace,
+    // eslint-disable-next-line no-unused-vars
     editor: TextEditor
   ): Promise<void>;
   async function organizeImports(

@@ -30,7 +30,9 @@ describe("signatureHelp command", () => {
 
   function getCommand(
     languageClient: LanguageClient,
+    // eslint-disable-next-line no-unused-vars
     register: (client: LanguageClient) => Disposable
+    // eslint-disable-next-line no-unused-vars
   ): (...args: Array<any>) => Promise<void> {
     register(languageClient);
     expect(nova.commands.register).toHaveBeenCalledWith(

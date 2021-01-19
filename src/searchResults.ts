@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import type * as lspTypes from "vscode-languageserver-protocol";
 import { cleanPath } from "nova-extension-utils";
+import type * as lspTypes from "vscode-languageserver-protocol";
 import { wrapCommand } from "./novaUtils";
 import { showLocation } from "./showLocation";
 
 type MyTreeProvider<T> = TreeDataProvider<T> & {
+  // eslint-disable-next-line no-unused-vars
   onSelect(element: T): Promise<void>;
 };
 
@@ -148,6 +149,7 @@ function showTreeView<T>(dataProvider: MyTreeProvider<T>) {
   lastDisposable = compositeDisposable;
 }
 
+// eslint-disable-next-line no-unused-vars
 const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
   1: "File",
   2: "Module",
@@ -178,6 +180,7 @@ const symbolKindToText: { [key in lspTypes.SymbolKind]: string } = {
 };
 
 const symbolKindToNovaSymbol: {
+  // eslint-disable-next-line no-unused-vars
   [key in lspTypes.SymbolKind]: NovaSymbolType;
 } = {
   1: "file",
