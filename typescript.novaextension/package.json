@@ -3,6 +3,6 @@
   "private": true,
   "dependencies": {
     "typescript": "^4.1.3",
-    "typescript-language-server": "^0.4.0"
+    "typescript-language-server": "^0.5.1"
   }
 }
