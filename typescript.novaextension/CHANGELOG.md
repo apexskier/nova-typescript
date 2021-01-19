@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.1.1
+
+### Changed
+
+- Update bundled language server with crash fix
+
 ## v2.1.0
 
 ### Added
