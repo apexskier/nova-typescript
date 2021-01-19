@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { registerRename } from "./rename";
 import * as applyWorkspaceEditModule from "../applyWorkspaceEdit";
+import { registerRename } from "./rename";
 
 jest.mock("../applyWorkspaceEdit");
 
@@ -48,7 +48,9 @@ describe("rename command", () => {
 
   function getCommand(
     languageClient: LanguageClient,
+    // eslint-disable-next-line no-unused-vars
     register: (client: LanguageClient) => Disposable
+    // eslint-disable-next-line no-unused-vars
   ): (...args: Array<any>) => Promise<void> {
     register(languageClient);
     expect(nova.commands.register).toHaveBeenCalledWith(
@@ -66,6 +68,7 @@ describe("rename command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(response),
     };
     nova.workspace.showInputPalette = jest.fn(
+      // eslint-disable-next-line no-unused-vars
       (prompt, options, callback: (value: string) => void) => {
         expect(options?.placeholder).toBe("selectedText");
         callback("newName");
@@ -124,6 +127,7 @@ describe("rename command", () => {
 
     it("no new name is provided", async () => {
       nova.workspace.showInputPalette = jest.fn(
+        // eslint-disable-next-line no-unused-vars
         (prompt, options, callback: (value: string) => void) => {
           expect(options?.placeholder).toBe("selectedText");
           callback("");
@@ -138,6 +142,7 @@ describe("rename command", () => {
 
     it("the same name is provided", async () => {
       nova.workspace.showInputPalette = jest.fn(
+        // eslint-disable-next-line no-unused-vars
         (prompt, options, callback: (value: string) => void) => {
           expect(options?.placeholder).toBe("selectedText");
           callback("selectedText");
