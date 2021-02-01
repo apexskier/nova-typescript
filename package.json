@@ -31,7 +31,7 @@
     "@rollup/plugin-node-resolve": "^11.1.0",
     "@types/jest": "^26.0.20",
     "@types/nova-editor-node": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.0",
     "concurrently": "^5.3.0",
     "eslint": "^7.18.0",
