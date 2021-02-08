@@ -32,7 +32,7 @@
     "@types/jest": "^26.0.20",
     "@types/nova-editor-node": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
-    "@typescript-eslint/parser": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.2",
     "concurrently": "^5.3.0",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
