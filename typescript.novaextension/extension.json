@@ -3,7 +3,7 @@
   "name": "TypeScript",
   "organization": "Cameron Little",
   "description": "Advanced TypeScript and JavaScript language support for Nova",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "categories": [
     "completions",
     "formatters",

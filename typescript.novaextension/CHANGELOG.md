@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.3.0
+
+### Added
+
+- Pre-populate Rename Symbol palette with current value ([#133](https://github.com/apexskier/nova-typescript/issues/133))
+
 ## v2.2.0
 
 ### Added
