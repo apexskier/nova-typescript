@@ -2,7 +2,8 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as lsp from "vscode-languageserver-types";
 import {
-  createLocationSearchResultsTree, createSymbolSearchResultsTree
+  createLocationSearchResultsTree,
+  createSymbolSearchResultsTree,
 } from "./searchResults";
 
 (global as any).nova = Object.assign(nova, {

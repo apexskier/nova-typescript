@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { 
-      wrapCommand } from "../novaUtils";
+import { wrapCommand } from "../novaUtils";
 
 // NOTE: this is explicitly built for the typescript-language-server; it directly invokes the specific command it uses.
 // In order to decouple and become LSP generic, we'd need to first send a code action request for only
@@ -38,7 +37,7 @@ export function registerOrganizeImports(client: LanguageClient) {
       );
       return;
     }
-    
+
     // Ensure the language server is aware of the formatting settings for this editor
     // Normally this command is used to apply formatting, but we just skip applying
     // the response and rely on the server caching the formatting settings.
@@ -46,10 +45,10 @@ export function registerOrganizeImports(client: LanguageClient) {
       textDocument: { uri: editor.document.uri },
       options: {
         insertSpaces: editor.softTabs,
-        tabSize: editor.tabLength
-      }
-    }
-    await client.sendRequest("textDocument/formatting", documentFormatting)
+        tabSize: editor.tabLength,
+      },
+    };
+    await client.sendRequest("textDocument/formatting", documentFormatting);
 
     const organizeImportsCommand: lspTypes.ExecuteCommandParams = {
       command: "_typescript.organizeImports",
