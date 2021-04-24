@@ -45,3 +45,7 @@ All user-facing changes should be documented in [CHANGELOG.md](./CHANGELOG.md).
 Run `yarn build` first.
 
 Replace `future` in the changelog with a new version, following semver. Update the version in the [bug report template](./.github/ISSUE_TEMPLATE/bug_report.md) and [extension manifest](./typescript.novaextension/extension.json).
+
+Publish to the extension library (Extensions > Submit to the Extension Library…).
+
+**On the same commit** create and push a tag for the version `git tag $VERSION && git push --tags`. A github action will create a release and perform some automated housekeeping.
