@@ -47,5 +47,8 @@
     "typescript": "^4.2.4",
     "vscode-languageserver-protocol": "^3.16.0",
     "vscode-languageserver-types": "^3.16.0"
+  },
+  "resolutions": {
+    "tslib": "^2.1.0"
   }
 }
