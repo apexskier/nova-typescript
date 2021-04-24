@@ -369,7 +369,8 @@ describe("test suite", () => {
       getBoolMock
         .mockReset()
         .mockImplementation(
-          (test: string) => test == "apexskier.typescript.config.formatDocumentOnSave"
+          (test: string) =>
+            test == "apexskier.typescript.config.formatDocumentOnSave"
         );
       refreshListener();
       saveHandler = mockEditor.onWillSave.mock.calls[0][0];
