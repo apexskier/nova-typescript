@@ -327,6 +327,7 @@ describe("test suite", () => {
       getBoolMock.mockReturnValue(false);
       refreshListener();
 
+      // eslint-disable-next-line no-unused-vars
       let saveHandler: (editor: unknown) => Promise<unknown>;
 
       getBoolMock.mockReset().mockReturnValue(true);
