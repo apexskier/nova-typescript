@@ -49,7 +49,7 @@ export function registerOrganizeImports(client: LanguageClient) {
         tabSize: editor.tabLength
       }
     }
-    const resp = await client.sendRequest("textDocument/formatting", documentFormatting)
+    await client.sendRequest("textDocument/formatting", documentFormatting)
 
     const organizeImportsCommand: lspTypes.ExecuteCommandParams = {
       command: "_typescript.organizeImports",
