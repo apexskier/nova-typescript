@@ -38,6 +38,8 @@ describe("organizeImports command", () => {
       },
       eol: "\n",
     },
+    softTabs: true,
+    tabLength: 2,
     edit: jest.fn(),
     selectWordsContainingCursors: jest.fn(),
     scrollToCursorPosition: jest.fn(),
@@ -59,7 +61,7 @@ describe("organizeImports command", () => {
     return command;
   }
 
-  it("asks the server to organize imports, then resets your selection", async () => {
+  it("configures formatting with the server, asks the server to organize imports, then resets your selection", async () => {
     const mockLanguageClient = {
       sendRequest: jest.fn().mockImplementationOnce(() => {
         mockEditor.document.length = 14;
@@ -72,8 +74,20 @@ describe("organizeImports command", () => {
     expect(mockEditor.selectedRanges).toEqual([new Range(2, 3)]);
     await command(mockEditor);
 
-    expect(mockLanguageClient.sendRequest).toBeCalledTimes(1);
-    expect(mockLanguageClient.sendRequest).toHaveBeenCalledWith(
+    expect(mockLanguageClient.sendRequest).toBeCalledTimes(2);
+    expect(mockLanguageClient.sendRequest).toHaveBeenNthCalledWith(
+      1,
+      "textDocument/formatting",
+      {
+        textDocument: { uri: "currentDocURI" },
+        options: {
+          insertSpaces: true,
+          tabSize: 2,
+        },
+      }
+    );
+    expect(mockLanguageClient.sendRequest).toHaveBeenNthCalledWith(
+      2,
       "workspace/executeCommand",
       {
         arguments: ["/path"],
