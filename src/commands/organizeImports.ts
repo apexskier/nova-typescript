@@ -38,6 +38,18 @@ export function registerOrganizeImports(client: LanguageClient) {
       return;
     }
 
+    // Ensure the language server is aware of the formatting settings for this editor
+    // Normally this command is used to apply formatting, but we just skip applying
+    // the response and rely on the server caching the formatting settings.
+    const documentFormatting: lspTypes.DocumentFormattingParams = {
+      textDocument: { uri: editor.document.uri },
+      options: {
+        insertSpaces: editor.softTabs,
+        tabSize: editor.tabLength,
+      },
+    };
+    await client.sendRequest("textDocument/formatting", documentFormatting);
+
     const organizeImportsCommand: lspTypes.ExecuteCommandParams = {
       command: "_typescript.organizeImports",
       arguments: [editor.document.path],
