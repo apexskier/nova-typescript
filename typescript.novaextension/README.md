@@ -1,28 +1,12 @@
 # TypeScript Extension
 
-This extension provides rich TypeScript integration through a dedicated language server for both TypeScript and javascript code. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors with code actions.
-
-## Editor commands:
-
-Right click source code and choose the following from the TypeScript menu.
-
-- Go to Definition
-- Find References
-- Rename Symbol
-- Code Actions
-- Offer Suggestions (experimental)
-
-## Workspace commands:
-
-From the menu, select Extensions > TypeScript.
-
-- Find Symbol
+This extension provides rich TypeScript integration through a dedicated language server for both TypeScript and javascript code. Hover over symbols to see type information, receive better autocomplete suggestions, and see type warnings and errors inline. Quickly search for symbols across your project and type dependencies using the "Find Symbol" command. Apply common code refactors such with code actions. Clean your code with import organization and document formatting.
 
 ## Usage
 
 ### Editor functionality
 
-Main functionality is found inline in the editor.
+The main functionality is found inline in the editor.
 
 **Inline errors**
 
@@ -33,6 +17,30 @@ Inline errors can also be found in the Issues sidebar (View > Sidebars > Show Is
 **Type info on hover**
 
 <img src="https://raw.githubusercontent.com/apexskier/nova-typescript/14378cc1fccc752cff1bceef2706f98915966a3b/typescript.novaextension/Images/README/example-typeinfo.png" width="400" alt="Example type info">
+
+### Editor commands
+
+Right click source code and choose the following from the TypeScript menu.
+
+- Find References
+- Rename Symbol
+- Organize Imports
+- Format Document
+- Offer Suggestions (experimental)
+
+### Workspace commands
+
+From the menu, select Extensions > TypeScript.
+
+- Find Symbol
+
+### Code actions
+
+From the menu, select Editor > Show Code Actions, or click the "Lightbulb" icon in your editor.
+
+These code actions are specific to your version of typescript and to the code you've selected. [Here's an example to convert to optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#convert-to-optional-chaining).
+
+<img src="https://raw.githubusercontent.com/apexskier/nova-typescript/9352766eda9b46e7be8ddc7d2a80a059753b21cf/typescript.novaextension/Images/README/example-code-actions.png" width="400" alt="Example code actions">
 
 ### Sidebar
 

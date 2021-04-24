@@ -1,5 +1,15 @@
 # Changelog
 
+## future
+
+### Added
+
+- "Format Document" command
+
+### Fixed
+
+- Configure correct formatting before organizing imports
+
 ## v2.1.1
 
 ### Changed
