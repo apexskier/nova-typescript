@@ -16,6 +16,8 @@ Turn on extension development in Nova in Preferences > General > Extension Devel
 
 To debug the underlying language server, modify the `run.sh` file to use the [`--inspect` flag](https://nodejs.org/en/docs/guides/debugging-getting-started/) and use [your preferred inspector to debug](https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients).
 
+To debug the underlying `tsserver` modify the language server code to exec it through `node` with [`--inspect`](https://nodejs.org/en/docs/guides/debugging-getting-started/). The file to be modified is `~/Library/Application Support/Nova/Extensions/apexskier.typescript/dependencyManagement/node_modules/typescript-language-server/lib/tsp-client.js`. (Set `args = ['node', '--inspect-brk', tsserverPath]` and replace `tsserverPath` with `'/usr/bin/env'` in `cp.fork`/`cp.spawn`.) You can increase server shutdown timeouts in the file `~/Library/Application Support/Nova/Extensions/apexskier.typescript/dependencyManagement/node_modules/typescript-language-server/lib/utils.js`
+
 Use the Extension Console in Nova to debug the extension. I haven't found a way to get a debugger attached to the JavaScriptCore context.
 
 ### Extension dependencies
