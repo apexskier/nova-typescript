@@ -118,7 +118,7 @@ describe("test suite", () => {
   });
 
   function assertActivationBehavior() {
-    expect(nova.commands.register).toBeCalledTimes(4);
+    expect(nova.commands.register).toBeCalledTimes(5);
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.rename",
       expect.any(Function)
@@ -133,6 +133,10 @@ describe("test suite", () => {
     );
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.commands.organizeImports",
+      expect.any(Function)
+    );
+    expect(nova.commands.register).toBeCalledWith(
+      "apexskier.typescript.commands.formatDocument",
       expect.any(Function)
     );
 
@@ -292,7 +296,7 @@ describe("test suite", () => {
       assertActivationBehavior();
     });
 
-    test("watches files for import organization", async () => {
+    test("watches files to apply post-save actions", async () => {
       resetMocks();
 
       await activate();
@@ -312,19 +316,67 @@ describe("test suite", () => {
         },
       };
       setupWatcher(mockEditor);
+
       expect(mockEditor.onWillSave).toBeCalledTimes(0);
+      const refreshListener = (nova.config.onDidChange as jest.Mock).mock
+        .calls[0][1];
 
-      require("nova-extension-utils").preferences.getOverridableBoolean.mockReturnValue(
-        true
-      );
-      setupWatcher(mockEditor);
-      expect(mockEditor.onWillSave).toBeCalledTimes(1);
+      const getBoolMock: jest.Mock = require("nova-extension-utils").preferences
+        .getOverridableBoolean;
 
-      const saveHandler = (mockEditor.onWillSave as jest.Mock).mock.calls[0][0];
+      getBoolMock.mockReturnValue(false);
+      refreshListener();
+
+      let saveHandler: (editor: unknown) => Promise<unknown>;
+
+      getBoolMock.mockReset().mockReturnValue(true);
+      refreshListener();
+      saveHandler = mockEditor.onWillSave.mock.calls[0][0];
       await saveHandler(mockEditor);
+      expect(nova.commands.invoke).toBeCalledTimes(2);
       expect(nova.commands.invoke).toHaveBeenNthCalledWith(
         1,
         "apexskier.typescript.commands.organizeImports",
+        mockEditor
+      );
+      expect(nova.commands.invoke).toHaveBeenNthCalledWith(
+        2,
+        "apexskier.typescript.commands.formatDocument",
+        mockEditor
+      );
+
+      mockEditor.onWillSave.mockReset();
+      (nova.commands.invoke as jest.Mock).mockReset();
+      getBoolMock
+        .mockReset()
+        .mockImplementation(
+          (test: string) =>
+            test == "apexskier.typescript.config.organizeImportsOnSave"
+        );
+      refreshListener();
+      saveHandler = mockEditor.onWillSave.mock.calls[0][0];
+      await saveHandler(mockEditor);
+      expect(nova.commands.invoke).toBeCalledTimes(1);
+      expect(nova.commands.invoke).toHaveBeenNthCalledWith(
+        1,
+        "apexskier.typescript.commands.organizeImports",
+        mockEditor
+      );
+
+      mockEditor.onWillSave.mockReset();
+      (nova.commands.invoke as jest.Mock).mockReset();
+      getBoolMock
+        .mockReset()
+        .mockImplementation(
+          (test: string) => test == "apexskier.typescript.config.formatDocumentOnSave"
+        );
+      refreshListener();
+      saveHandler = mockEditor.onWillSave.mock.calls[0][0];
+      await saveHandler(mockEditor);
+      expect(nova.commands.invoke).toBeCalledTimes(1);
+      expect(nova.commands.invoke).toHaveBeenNthCalledWith(
+        1,
+        "apexskier.typescript.commands.formatDocument",
         mockEditor
       );
     });

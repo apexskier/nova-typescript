@@ -2,6 +2,7 @@ import { dependencyManagement, preferences } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
 import { registerOrganizeImports } from "./commands/organizeImports";
+import { registerFormatDocument } from "./commands/formatDocument";
 import { registerRename } from "./commands/rename";
 import { registerSignatureHelp } from "./commands/signatureHelp";
 import { InformationView } from "./informationView";
@@ -11,6 +12,7 @@ import { getTsLibPath } from "./tsLibPath";
 
 const organizeImportsOnSaveKey =
   "apexskier.typescript.config.organizeImportsOnSave";
+const formatOnSaveKey = "apexskier.typescript.config.formatDocumentOnSave";
 
 nova.commands.register(
   "apexskier.typescript.openWorkspaceConfig",
@@ -159,6 +161,7 @@ async function asyncActivate() {
   compositeDisposable.add(registerFindSymbol(client));
   compositeDisposable.add(registerRename(client));
   compositeDisposable.add(registerOrganizeImports(client));
+  compositeDisposable.add(registerFormatDocument(client));
   if (nova.inDevMode()) {
     compositeDisposable.add(registerSignatureHelp(client));
   }
@@ -211,6 +214,12 @@ async function asyncActivate() {
           refreshListener
         )
       );
+      editorDisposable.add(
+        nova.config.onDidChange(formatOnSaveKey, refreshListener)
+      );
+      editorDisposable.add(
+        nova.workspace.config.onDidChange(formatOnSaveKey, refreshListener)
+      );
 
       let willSaveListener = setupListener();
       compositeDisposable.add({
@@ -226,18 +235,31 @@ async function asyncActivate() {
 
       function setupListener() {
         if (
-          (syntaxes as Array<string | null>).includes(editor.document.syntax) &&
-          preferences.getOverridableBoolean(organizeImportsOnSaveKey)
+          !(syntaxes as Array<string | null>).includes(editor.document.syntax)
         ) {
-          return editor.onWillSave(
-            async (editor) =>
-              nova.commands.invoke(
-                "apexskier.typescript.commands.organizeImports",
-                editor
-              ) as Promise<void>
-          );
+          return;
         }
-        return null;
+        const organizeImportsOnSave = preferences.getOverridableBoolean(
+          organizeImportsOnSaveKey
+        );
+        const formatDocumentOnSave = preferences.getOverridableBoolean(formatOnSaveKey);
+        if (!organizeImportsOnSave && !formatDocumentOnSave) {
+          return;
+        }
+        return editor.onWillSave(async (editor) => {
+          if (organizeImportsOnSave) {
+            await nova.commands.invoke(
+              "apexskier.typescript.commands.organizeImports",
+              editor
+            );
+          }
+          if (formatDocumentOnSave) {
+            await nova.commands.invoke(
+              "apexskier.typescript.commands.formatDocument",
+              editor
+            );
+          }
+        });
       }
     })
   );
