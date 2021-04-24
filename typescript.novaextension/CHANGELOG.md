@@ -1,6 +1,6 @@
 # Changelog
 
-## future
+## 2.2.0
 
 ### Added
 
@@ -9,6 +9,10 @@
 ### Fixed
 
 - Configure correct formatting before organizing imports
+
+### Changed
+
+- Upgrade bundled TypeScript
 
 ## v2.1.1
 
