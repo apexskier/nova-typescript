@@ -29,7 +29,7 @@ export function registerRename(client: LanguageClient) {
     const newName = await new Promise<string | null>((resolve) => {
       nova.workspace.showInputPalette(
         "New name for symbol",
-        { placeholder: editor.selectedText },
+        { placeholder: editor.selectedText, value: editor.selectedText },
         resolve
       );
     });
