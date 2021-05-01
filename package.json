@@ -33,7 +33,7 @@
     "@types/nova-editor-node": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "concurrently": "^6.0.0",
+    "concurrently": "^6.0.2",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nova": "^1.5.0",
