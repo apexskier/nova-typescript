@@ -9,6 +9,24 @@ on:
       - main
 
 jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Auto merge (dependency updates)
+        uses: pascalgn/automerge-action@v0.13.1
+        if: |
+          contains(github.event.pull_request.labels.*.name, 'dependencies')
+          && github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GH_TOKEN }}
+          MERGE_METHOD: squash
+          MERGE_LABELS: ""
+          MERGE_FILTER_AUTHOR: dependabot[bot]
+          MERGE_FORKS: false
+          MERGE_DELETE_BRANCH: true
+
   build:
     runs-on: ubuntu-latest
 
@@ -17,6 +35,8 @@ jobs:
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
+        with:
+          node-version: "15"
 
       - name: Install dependencies
         run: yarn
@@ -29,3 +49,8 @@ jobs:
 
       - name: Test
         run: yarn test
+
+      - name: Ensure clean
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"
