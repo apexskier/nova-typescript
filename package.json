@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/apexskier/nova-typescript",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@types/jest": "^26.0.23",
     "@types/nova-editor-node": "^4.1.3",
