@@ -1,0 +1,30 @@
+name: Dependency management
+# see https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+# for more details on why and how
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: >
+      ${{
+        github.actor == 'dependabot[bot]' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.conclusion == 'success'
+      }}
+
+    steps:
+      - name: Auto merge (dependency updates)
+        uses: pascalgn/automerge-action@v0.14.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: squash
+          MERGE_LABELS: ""
+          MERGE_FILTER_AUTHOR: dependabot[bot]
+          MERGE_FORKS: false
+          MERGE_DELETE_BRANCH: true
