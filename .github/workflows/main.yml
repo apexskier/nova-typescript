@@ -9,26 +9,6 @@ on:
       - main
 
 jobs:
-  auto-merge:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      pull-requests: write
-
-    steps:
-      - name: Auto merge (dependency updates)
-        uses: pascalgn/automerge-action@v0.13.1
-        if: |
-          contains(github.event.pull_request.labels.*.name, 'dependencies')
-          && github.event_name == 'pull_request'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_METHOD: squash
-          MERGE_LABELS: ""
-          MERGE_FILTER_AUTHOR: dependabot[bot]
-          MERGE_FORKS: false
-          MERGE_DELETE_BRANCH: true
-
   build:
     runs-on: ubuntu-latest
 
