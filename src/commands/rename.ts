@@ -17,8 +17,10 @@ export function registerRename(client: LanguageClient) {
     editor.selectWordsContainingCursors();
 
     const selectedRange = editor.selectedRange;
-    const selectedPosition = rangeToLspRange(editor.document, selectedRange)
-      ?.start;
+    const selectedPosition = rangeToLspRange(
+      editor.document,
+      selectedRange
+    )?.start;
     if (!selectedPosition) {
       nova.workspace.showErrorMessage(
         "Couldn't figure out what you've selected."

@@ -25,7 +25,7 @@ describe("Apply lsp edits", () => {
       },
       newText: "newText2",
     };
-    await applyLSPEdits((mockEditor as unknown) as TextEditor, [edit1, edit2]);
+    await applyLSPEdits(mockEditor as unknown as TextEditor, [edit1, edit2]);
 
     // file edit callbacks should apply changes
     const editCB = mockEditor.edit.mock.calls[0][0];
