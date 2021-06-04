@@ -15,8 +15,10 @@ export function registerFindReferences(client: LanguageClient) {
   async function findReferences(editor: TextEditor) {
     const selectedRange = editor.selectedRange;
     const selectedText = editor.selectedText;
-    const selectedPosition = rangeToLspRange(editor.document, selectedRange)
-      ?.start;
+    const selectedPosition = rangeToLspRange(
+      editor.document,
+      selectedRange
+    )?.start;
     if (!selectedPosition) {
       nova.workspace.showWarningMessage(
         "Couldn't figure out what you've selected."

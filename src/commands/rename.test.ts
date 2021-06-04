@@ -75,7 +75,7 @@ describe("rename command", () => {
       }
     ) as typeof nova.workspace.showInputPalette;
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerRename
     );
     await command(mockEditor);
@@ -105,7 +105,7 @@ describe("rename command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerRename
     );
     await command(mockEditor);
@@ -134,7 +134,7 @@ describe("rename command", () => {
         }
       ) as typeof nova.workspace.showInputPalette;
       const command = getCommand(
-        (mockLanguageClient as any) as LanguageClient,
+        mockLanguageClient as any as LanguageClient,
         registerRename
       );
       await command(mockEditor);
@@ -149,7 +149,7 @@ describe("rename command", () => {
         }
       ) as typeof nova.workspace.showInputPalette;
       const command = getCommand(
-        (mockLanguageClient as any) as LanguageClient,
+        mockLanguageClient as any as LanguageClient,
         registerRename
       );
       await command(mockEditor);

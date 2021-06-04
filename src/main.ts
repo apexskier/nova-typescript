@@ -242,9 +242,8 @@ async function asyncActivate() {
         const organizeImportsOnSave = preferences.getOverridableBoolean(
           organizeImportsOnSaveKey
         );
-        const formatDocumentOnSave = preferences.getOverridableBoolean(
-          formatOnSaveKey
-        );
+        const formatDocumentOnSave =
+          preferences.getOverridableBoolean(formatOnSaveKey);
         if (!organizeImportsOnSave && !formatDocumentOnSave) {
           return;
         }

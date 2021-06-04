@@ -46,9 +46,7 @@ global.console.log = jest.fn((...args) => {
 });
 global.console.info = jest.fn();
 
-const CompositeDisposableMock: jest.Mock<
-  Partial<CompositeDisposable>
-> = jest
+const CompositeDisposableMock: jest.Mock<Partial<CompositeDisposable>> = jest
   .fn()
   .mockImplementation(() => ({ add: jest.fn(), dispose: jest.fn() }));
 (global as any).CompositeDisposable = CompositeDisposableMock;
@@ -108,9 +106,8 @@ describe("test suite", () => {
 
     expect(CompositeDisposable).toBeCalledTimes(1);
 
-    const {
-      registerDependencyUnlockCommand,
-    } = require("nova-extension-utils").dependencyManagement;
+    const { registerDependencyUnlockCommand } =
+      require("nova-extension-utils").dependencyManagement;
     expect(registerDependencyUnlockCommand).toBeCalledTimes(1);
     expect(registerDependencyUnlockCommand).toBeCalledWith(
       "apexskier.typescript.forceClearLock"
@@ -166,8 +163,9 @@ describe("test suite", () => {
     expect(languageClient.onRequest).not.toBeCalled();
 
     expect(informationViewModule.InformationView).toBeCalledTimes(1);
-    const informationView = (informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>)
-      .mock.instances[0];
+    const informationView = (
+      informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+    ).mock.instances[0];
     expect(informationView.status).toBe("Running");
     expect(informationView.reload).toBeCalledTimes(1);
   }
@@ -201,8 +199,9 @@ describe("test suite", () => {
       assertActivationBehavior();
 
       // typescript version is reported in the information view
-      const informationView = (informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>)
-        .mock.instances[0];
+      const informationView = (
+        informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+      ).mock.instances[0];
       expect(informationView.tsVersion).toBeUndefined();
       const tsVersionProcess: Process = ProcessMock.mock.results[1].value;
       const exitCB = (tsVersionProcess.onDidExit as jest.Mock).mock.calls[0][0];
@@ -266,8 +265,9 @@ describe("test suite", () => {
       `);
       expect(actionPanelCall[1].buttons).toHaveLength(2);
 
-      const informationView = (informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>)
-        .mock.instances[0];
+      const informationView = (
+        informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+      ).mock.instances[0];
       expect(informationView.status).toBe("Stopped");
 
       const actionCallback = actionPanelCall[2];

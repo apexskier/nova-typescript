@@ -68,7 +68,7 @@ describe("organizeImports command", () => {
       }),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerOrganizeImports
     );
     expect(mockEditor.selectedRanges).toEqual([new Range(2, 3)]);
@@ -105,7 +105,7 @@ describe("organizeImports command", () => {
       }),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerOrganizeImports
     );
     await command(mockEditor);
@@ -119,7 +119,7 @@ describe("organizeImports command", () => {
     };
     mockEditor.document.path = "";
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerOrganizeImports
     );
     await command(mockEditor);

@@ -66,7 +66,7 @@ describe("formatDocument command", () => {
       sendRequest: jest.fn().mockImplementationOnce(() => []),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFormatDocument
     );
     await command(mockEditor);

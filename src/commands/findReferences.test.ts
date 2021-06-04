@@ -52,7 +52,7 @@ describe("findReferences command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFindReferences
     );
     await command(mockEditor);
@@ -69,7 +69,7 @@ describe("findReferences command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(Promise.resolve([])),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFindReferences
     );
     await command(mockEditor);

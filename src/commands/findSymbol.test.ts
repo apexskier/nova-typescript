@@ -41,7 +41,7 @@ describe("findSymbol command", () => {
       showInputPalette: jest.fn((prompt, options, callback) => callback("")),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFindSymbol
     );
     await command(mockWorkspace);
@@ -60,7 +60,7 @@ describe("findSymbol command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFindSymbol
     );
     await command(mockWorkspace);
@@ -94,7 +94,7 @@ describe("findSymbol command", () => {
       sendRequest: jest.fn().mockReturnValueOnce(Promise.resolve(results)),
     };
     const command = getCommand(
-      (mockLanguageClient as any) as LanguageClient,
+      mockLanguageClient as any as LanguageClient,
       registerFindSymbol
     );
     await command(mockWorkspace);
