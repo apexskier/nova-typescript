@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
 import * as searchResultsModule from "../searchResults";
 import { registerFindSymbol } from "./findSymbol";

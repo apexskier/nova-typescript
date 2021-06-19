@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { cleanPath } from "nova-extension-utils";
 import type * as lspTypes from "vscode-languageserver-protocol";
 import { wrapCommand } from "./novaUtils";

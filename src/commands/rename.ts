@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import type * as lspTypes from "vscode-languageserver-protocol";
 import { applyWorkspaceEdit } from "../applyWorkspaceEdit";
 import { wrapCommand } from "../novaUtils";
