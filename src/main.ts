@@ -293,6 +293,7 @@ export function activate() {
 }
 
 export function deactivate() {
-  client?.stop();
+  console.log("deactivate");
   compositeDisposable.dispose();
+  client?.stop();
 }
