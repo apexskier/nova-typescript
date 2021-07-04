@@ -1,14 +1,15 @@
 import { dependencyManagement, preferences } from "nova-extension-utils";
 import { registerFindReferences } from "./commands/findReferences";
 import { registerFindSymbol } from "./commands/findSymbol";
-import { registerOrganizeImports } from "./commands/organizeImports";
 import { registerFormatDocument } from "./commands/formatDocument";
+import { registerOrganizeImports } from "./commands/organizeImports";
 import { registerRename } from "./commands/rename";
 import { registerSignatureHelp } from "./commands/signatureHelp";
 import { InformationView } from "./informationView";
 import { isEnabledForJavascript } from "./isEnabledForJavascript";
 import { wrapCommand } from "./novaUtils";
 import { getTsLibPath } from "./tsLibPath";
+import { getUserPreferences, setupUserPreferences } from "./tsUserPreferences";
 
 const organizeImportsOnSaveKey =
   "apexskier.typescript.config.organizeImportsOnSave";
@@ -28,7 +29,7 @@ dependencyManagement.registerDependencyUnlockCommand(
 );
 
 let client: LanguageClient | null = null;
-const compositeDisposable = new CompositeDisposable();
+let compositeDisposable = new CompositeDisposable();
 
 async function makeFileExecutable(file: string) {
   return new Promise<void>((resolve, reject) => {
@@ -76,26 +77,37 @@ async function reload() {
 async function asyncActivate() {
   const informationView = new InformationView();
   compositeDisposable.add(informationView);
+  compositeDisposable.add(setupUserPreferences());
 
   informationView.status = "Activating...";
 
-  try {
-    await dependencyManagement.installWrappedDependencies(compositeDisposable, {
-      console: {
-        log: (...args: Array<unknown>) => {
-          console.log("dependencyManagement:", ...args);
-        },
-        info: (...args: Array<unknown>) => {
-          console.info("dependencyManagement:", ...args);
-        },
-        warn: (...args: Array<unknown>) => {
-          console.warn("dependencyManagement:", ...args);
-        },
-      },
-    });
-  } catch (err) {
-    informationView.status = "Failed to install";
-    throw err;
+  if (
+    !nova.config.get(
+      "apexskier.typescript.config.debug.disableDependencyManagement",
+      "boolean"
+    )
+  ) {
+    try {
+      await dependencyManagement.installWrappedDependencies(
+        compositeDisposable,
+        {
+          console: {
+            log: (...args: Array<unknown>) => {
+              console.log("dependencyManagement:", ...args);
+            },
+            info: (...args: Array<unknown>) => {
+              console.info("dependencyManagement:", ...args);
+            },
+            warn: (...args: Array<unknown>) => {
+              console.warn("dependencyManagement:", ...args);
+            },
+          },
+        }
+      );
+    } catch (err) {
+      informationView.status = "Failed to install";
+      throw err;
+    }
   }
 
   const tslibPath = getTsLibPath();
@@ -139,20 +151,40 @@ async function asyncActivate() {
   if (isEnabledForJavascript()) {
     syntaxes.push("javascript", "jsx");
   }
+  const env = {
+    TSLIB_PATH: tslibPath,
+    WORKSPACE_DIR: nova.workspace.path ?? "",
+    INSTALL_DIR: dependencyManagement.getDependencyDirectory(),
+    DEBUG: nova.config.get(
+      "apexskier.typescript.config.debug.debugLanguageServer",
+      "boolean"
+    )
+      ? "TRUE"
+      : "FALSE",
+    DEBUG_BREAK: nova.config.get(
+      "apexskier.typescript.config.debug.debugLanguageServer.break",
+      "boolean"
+    )
+      ? "TRUE"
+      : "FALSE",
+    DEBUG_PORT: `${nova.config.get(
+      "apexskier.typescript.config.debug.debugLanguageServer.port",
+      "number"
+    )}`,
+  };
   client = new LanguageClient(
     "apexskier.typescript",
     "TypeScript Language Server",
     {
       type: "stdio",
       ...serviceArgs,
-      env: {
-        TSLIB_PATH: tslibPath,
-        WORKSPACE_DIR: nova.workspace.path ?? "",
-        INSTALL_DIR: dependencyManagement.getDependencyDirectory(),
-      },
+      env,
     },
     {
       syntaxes,
+      initializationOptions: {
+        preferences: getUserPreferences(),
+      },
     }
   );
 
@@ -166,8 +198,14 @@ async function asyncActivate() {
     compositeDisposable.add(registerSignatureHelp(client));
   }
 
+  // I think there's a in onDidStop's disposable, which is why this logic is necessary
+  let disposed = false;
+
   compositeDisposable.add(
-    client.onDidStop((err) => {
+    client?.onDidStop((err) => {
+      if (disposed && !err) {
+        return;
+      }
       informationView.status = "Stopped";
 
       let message = "TypeScript Language Server stopped unexpectedly";
@@ -191,6 +229,12 @@ async function asyncActivate() {
       );
     })
   );
+
+  compositeDisposable.add({
+    dispose() {
+      disposed = true;
+    },
+  });
 
   client.start();
 
@@ -295,5 +339,6 @@ export function activate() {
 export function deactivate() {
   console.log("deactivate");
   compositeDisposable.dispose();
+  compositeDisposable = new CompositeDisposable();
   client?.stop();
 }

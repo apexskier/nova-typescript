@@ -1,6 +1,6 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { wrapCommand } from "../novaUtils";
 import { rangeToLspRange } from "../lspNovaConversions";
+import { wrapCommand } from "../novaUtils";
 
 // @Panic: this is totally decoupled from typescript, so it could totally be native to Nova
 

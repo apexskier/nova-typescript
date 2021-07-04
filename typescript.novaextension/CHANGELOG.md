@@ -1,5 +1,18 @@
 # Changelog
 
+## future
+
+### Added
+
+- `tsserver` user preferences
+- Extension development debug preferences
+
+### Fixed
+
+- Fix failure to dispose handlers on subsequent extension reloads
+- Fix false-positive detection of server crashes
+- Language server timeout crashes (via https://github.com/theia-ide/typescript-language-server/pull/189)
+
 ## v2.3.0
 
 ### Added

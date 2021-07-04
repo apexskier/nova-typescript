@@ -12,7 +12,7 @@ This extension is written in TypeScript. To support this I've contributed Nova e
 
 ## Notes
 
-Nova's language server support conforms to the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/). Unfortunately, the [built in language server](https://github.com/Microsoft/TypeScript/wiki/Standalone-Server-%28tsserver%29) in the TypeScript project doesn't ([but might in the future - follow this ticket](https://github.com/microsoft/TypeScript/issues/39459)). I've used a language server from Theia IDE that uses `tsserver` internally, which I think is the best approach. (list of [alternatives](https://microsoft.github.io/language-server-protocol/implementors/servers/), [Sourcegraph](https://github.com/sourcegraph/javascript-typescript-langserver) doesn't support TypeScript syntax correctly).
+Nova's language server support conforms to the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/). Unfortunately, [TypeScript's server](https://github.com/Microsoft/TypeScript/wiki/Standalone-Server-%28tsserver%29) doesn't ([but might in the future - follow this ticket](https://github.com/microsoft/TypeScript/issues/39459)). This extension uses [`typescript-language-server`](https://github.com/theia-ide/typescript-language-server/) to translate between the Language Server Protocol and `tsserver`.
 
 ## Images
 
