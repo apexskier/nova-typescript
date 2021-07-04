@@ -59,6 +59,166 @@
       "description": "Enable TypeScript editor functionality for javascript and jsx files.",
       "type": "boolean",
       "default": true
+    },
+    {
+      "title": "TypeScript server User Preferences",
+      "description": "Advanced configuration passed to the underlying typescript server. These may not apply to older versions of TypeScript.",
+      "type": "section",
+      "children": [
+        {
+          "key": "apexskier.typescript.config.userPreferences.disableSuggestions",
+          "title": "Disable suggestions",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.quotePreference",
+          "title": "Quote preferences",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["double", "Double (\")"],
+            ["single", "Single (')"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsForModuleExports",
+          "title": "Include completions for module exports",
+          "description": "If enabled, TypeScript will search through all external modules' exports and add them to the completions list. This affects lone identifier completions but not completions on the right hand side of `obj.`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsForImportStatements",
+          "title": "Include completions for import statements",
+          "description": "Enables auto-import-style completions on partially-typed import statements. E.g., allows `import write|` to be completed to `import { writeFile } from \"fs\"`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsWithSnippetText",
+          "title": "Include completions with snippet text",
+          "description": "Allows completions to be formatted with snippet text, indicated by `CompletionItem[\"isSnippet\"]`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsWithInsertText",
+          "title": "Include completions with insert text",
+          "description": "If enabled, the completion list will include completions with invalid identifier names. For those entries, The `insertText` and `replacementSpan` properties will be set to change from `.x` property access to `[\"x\"]`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeAutomaticOptionalChainCompletions",
+          "title": "Include automatic optional chain completions",
+          "description": "Unless this option is `false`, or `includeCompletionsWithInsertText` is not enabled, member completion lists triggered with `.` will include entries on potentially-null and potentially-undefined values, with insertion text to replace preceding `.` tokens with `?.`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.importModuleSpecifierPreference",
+          "title": "Import module specifier",
+          "description": "Preferred path ending for auto imports.",
+          "type": "enum",
+          "values": [
+            ["shortest", "Shortest"],
+            ["project-relative", "Project-relative"],
+            ["relative", "Relative"],
+            ["non-relative", "Non-relative"]
+          ],
+          "default": "shortest"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.importModuleSpecifierEnding",
+          "title": "Import module specifier",
+          "description": "Determines whether we import `foo/index.ts` as \"foo\", \"foo/index\", or \"foo/index.js\"",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["minimal", "Minimal"],
+            ["index", "Index"],
+            ["js", ".js"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.allowTextChangesInNewFiles",
+          "title": "Allow text changes in new files",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.lazyConfiguredProjectsFromExternalProject",
+          "title": "Lazy configured projects from external projects",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.providePrefixAndSuffixTextForRename",
+          "title": "Provide prefix and suffix text for rename",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.provideRefactorNotApplicableReason",
+          "title": "Provide refactor not applicable reason",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.allowRenameOfImportPath",
+          "title": "Allow rename of import path",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includePackageJsonAutoImports",
+          "title": "Allow rename of import path",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["on", "On"],
+            ["off", "Off"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.displayPartsForJSDoc",
+          "title": "Display parts for JSDoc",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.generateReturnInDocTemplate",
+          "title": "Generate return in documentation templates",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "title": "Debug",
+      "description": "Settings intended for extension development",
+      "type": "section",
+      "children": [
+        {
+          "key": "apexskier.typescript.config.debug.disableDependencyManagement",
+          "title": "Disable dependency management",
+          "description": "Enable this to skip installing dependencies. Use this if you want to link a custom language server.",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "apexskier.typescript.config.debug.debugLanguageServer",
+          "title": "Debug Language Server",
+          "description": "Open a debug session for the language server.",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "apexskier.typescript.config.debug.debugLanguageServer.break",
+          "title": "Debug Language Server (break on start)",
+          "description": "If debugging, break when starting the language server.",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "key": "apexskier.typescript.config.debug.debugLanguageServer.port",
+          "title": "Debug Language Server (port)",
+          "description": "Language server debug port.",
+          "type": "number",
+          "default": 9229
+        }
+      ]
     }
   ],
 
@@ -101,6 +261,131 @@
       "type": "enum",
       "values": ["Inherit from Global Settings", "Disable", "Enable"],
       "default": "Inherit from Global Settings"
+    },
+    {
+      "title": "TypeScript server User Preferences",
+      "description": "Advanced configuration passed to the underlying typescript server. These may not apply to older versions of TypeScript.",
+      "type": "section",
+      "children": [
+        {
+          "key": "apexskier.typescript.config.userPreferences.disableSuggestions",
+          "title": "Disable suggestions",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.quotePreference",
+          "title": "Quote preferences",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["double", "Double (\")"],
+            ["single", "Single (')"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsForModuleExports",
+          "title": "Include completions for module exports",
+          "description": "If enabled, TypeScript will search through all external modules' exports and add them to the completions list. This affects lone identifier completions but not completions on the right hand side of `obj.`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsForImportStatements",
+          "title": "Include completions for import statements",
+          "description": "Enables auto-import-style completions on partially-typed import statements. E.g., allows `import write|` to be completed to `import { writeFile } from \"fs\"`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsWithSnippetText",
+          "title": "Include completions with snippet text",
+          "description": "Allows completions to be formatted with snippet text, indicated by `CompletionItem[\"isSnippet\"]`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeCompletionsWithInsertText",
+          "title": "Include completions with insert text",
+          "description": "If enabled, the completion list will include completions with invalid identifier names. For those entries, The `insertText` and `replacementSpan` properties will be set to change from `.x` property access to `[\"x\"]`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includeAutomaticOptionalChainCompletions",
+          "title": "Include automatic optional chain completions",
+          "description": "Unless this option is `false`, or `includeCompletionsWithInsertText` is not enabled, member completion lists triggered with `.` will include entries on potentially-null and potentially-undefined values, with insertion text to replace preceding `.` tokens with `?.`.",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.importModuleSpecifierPreference",
+          "title": "Import module specifier",
+          "description": "Preferred path ending for auto imports.",
+          "type": "enum",
+          "values": [
+            ["shortest", "Shortest"],
+            ["project-relative", "Project-relative"],
+            ["relative", "Relative"],
+            ["non-relative", "Non-relative"]
+          ],
+          "default": "shortest"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.importModuleSpecifierEnding",
+          "title": "Import module specifier",
+          "description": "Determines whether we import `foo/index.ts` as \"foo\", \"foo/index\", or \"foo/index.js\"",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["minimal", "Minimal"],
+            ["index", "Index"],
+            ["js", ".js"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.allowTextChangesInNewFiles",
+          "title": "Allow text changes in new files",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.lazyConfiguredProjectsFromExternalProject",
+          "title": "Lazy configured projects from external projects",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.providePrefixAndSuffixTextForRename",
+          "title": "Provide prefix and suffix text for rename",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.provideRefactorNotApplicableReason",
+          "title": "Provide refactor not applicable reason",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.allowRenameOfImportPath",
+          "title": "Allow rename of import path",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.includePackageJsonAutoImports",
+          "title": "Allow rename of import path",
+          "type": "enum",
+          "values": [
+            ["auto", "Automatic"],
+            ["on", "On"],
+            ["off", "Off"]
+          ],
+          "default": "auto"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.displayPartsForJSDoc",
+          "title": "Display parts for JSDoc",
+          "type": "boolean"
+        },
+        {
+          "key": "apexskier.typescript.config.userPreferences.generateReturnInDocTemplate",
+          "title": "Generate return in documentation templates",
+          "type": "boolean"
+        }
+      ]
     }
   ],
 

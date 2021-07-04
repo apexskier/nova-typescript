@@ -1,5 +1,5 @@
 {
-  "apexskier.typescript.config.organizeImportsOnSave": "true",
+  "apexskier.typescript.config.organizeImportsOnSave": "null",
   "editor.default_syntax": "typescript",
   "workspace.name": "TypeScript Extension"
 }

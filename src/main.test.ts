@@ -1,8 +1,10 @@
-import * as informationViewModule from "./informationView";
-
 jest.mock("./informationView");
 jest.mock("./tsLibPath", () => ({
   getTsLibPath: () => "/tsLibPath",
+}));
+jest.mock("./tsUserPreferences", () => ({
+  setupUserPreferences: jest.fn(),
+  getUserPreferences: () => "user preferences",
 }));
 jest.mock("./isEnabledForJavascript", () => ({
   isEnabledForJavascript: () => true,
@@ -15,6 +17,9 @@ jest.useFakeTimers();
   commands: {
     register: jest.fn(),
     invoke: jest.fn(),
+  },
+  config: {
+    ["get"]: jest.fn(),
   },
   workspace: {
     path: "/workspace",
@@ -38,7 +43,8 @@ global.console.log = jest.fn((...args) => {
   if (
     args[0] === "activating..." ||
     args[0] === "activated" ||
-    args[0] === "reloading..."
+    args[0] === "reloading..." || 
+    args[0] === "deactivate"
   ) {
     return;
   }
@@ -46,9 +52,8 @@ global.console.log = jest.fn((...args) => {
 });
 global.console.info = jest.fn();
 
-const CompositeDisposableMock: jest.Mock<Partial<CompositeDisposable>> = jest
-  .fn()
-  .mockImplementation(() => ({ add: jest.fn(), dispose: jest.fn() }));
+const CompositeDisposableMock: jest.Mock<Partial<CompositeDisposable>> =
+  jest.fn();
 (global as any).CompositeDisposable = CompositeDisposableMock;
 const ProcessMock: jest.Mock<Partial<Process>> = jest.fn();
 (global as any).Process = ProcessMock;
@@ -56,10 +61,9 @@ const LanguageClientMock: jest.Mock<Partial<LanguageClient>> = jest.fn();
 (global as any).LanguageClient = LanguageClientMock;
 
 describe("test suite", () => {
-  // dynamically require so global mocks are setup before top level code execution
-  const { activate, deactivate } = require("./main");
+  beforeEach(() => {
+    jest.resetModules();
 
-  function resetMocks() {
     const {
       dependencyManagement: { installWrappedDependencies },
     } = require("nova-extension-utils");
@@ -69,6 +73,7 @@ describe("test suite", () => {
     nova.fs.access = jest.fn().mockReturnValue(true);
     (nova.commands.register as jest.Mock).mockReset();
     (nova.commands.invoke as jest.Mock).mockReset();
+    (nova.config.get as jest.Mock).mockReset();
     LanguageClientMock.mockReset().mockImplementation(() => ({
       onRequest: jest.fn(),
       onNotification: jest.fn(),
@@ -85,15 +90,18 @@ describe("test suite", () => {
       }),
       start: jest.fn(),
     }));
-    (informationViewModule.InformationView as jest.Mock).mockReset();
+    const { InformationView } = require("./informationView");
+    (InformationView as jest.Mock).mockReset();
     (nova.workspace.onDidAddTextEditor as jest.Mock).mockReset();
-  }
-
-  const reload = (nova.commands.register as jest.Mock).mock.calls.find(
-    ([command]) => command == "apexskier.typescript.reload"
-  )[1];
+    CompositeDisposableMock.mockReset().mockImplementation(() => ({
+      add: jest.fn(),
+      dispose: jest.fn(),
+    }));
+  });
 
   test("global behavior", () => {
+    require("./main");
+
     expect(nova.commands.register).toBeCalledTimes(2);
     expect(nova.commands.register).toBeCalledWith(
       "apexskier.typescript.openWorkspaceConfig",
@@ -115,27 +123,45 @@ describe("test suite", () => {
   });
 
   function assertActivationBehavior() {
-    expect(nova.commands.register).toBeCalledTimes(5);
-    expect(nova.commands.register).toBeCalledWith(
-      "apexskier.typescript.rename",
+    expect(nova.commands.register).toBeCalledTimes(7);
+    expect(nova.commands.register).nthCalledWith(
+      1,
+      "apexskier.typescript.openWorkspaceConfig",
       expect.any(Function)
     );
-    expect(nova.commands.register).toBeCalledWith(
-      "apexskier.typescript.findSymbol",
+    expect(nova.commands.register).nthCalledWith(
+      2,
+      "apexskier.typescript.reload",
       expect.any(Function)
     );
-    expect(nova.commands.register).toBeCalledWith(
+    expect(nova.commands.register).nthCalledWith(
+      3,
       "apexskier.typescript.findReferences",
       expect.any(Function)
     );
-    expect(nova.commands.register).toBeCalledWith(
+    expect(nova.commands.register).nthCalledWith(
+      4,
+      "apexskier.typescript.findSymbol",
+      expect.any(Function)
+    );
+    expect(nova.commands.register).nthCalledWith(
+      5,
+      "apexskier.typescript.rename",
+      expect.any(Function)
+    );
+    expect(nova.commands.register).nthCalledWith(
+      6,
       "apexskier.typescript.commands.organizeImports",
       expect.any(Function)
     );
-    expect(nova.commands.register).toBeCalledWith(
+    expect(nova.commands.register).nthCalledWith(
+      7,
       "apexskier.typescript.commands.formatDocument",
       expect.any(Function)
     );
+
+    const tsUserPreferencesModule = require("./tsUserPreferences");
+    expect(tsUserPreferencesModule.setupUserPreferences).toBeCalled();
 
     // installs dependencies
 
@@ -156,15 +182,36 @@ describe("test suite", () => {
     });
 
     expect(LanguageClientMock).toBeCalledTimes(1);
+    expect(LanguageClientMock).toBeCalledWith(
+      "apexskier.typescript",
+      "TypeScript Language Server",
+      {
+        env: {
+          DEBUG: "FALSE",
+          DEBUG_BREAK: "FALSE",
+          DEBUG_PORT: "undefined",
+          INSTALL_DIR: undefined,
+          TSLIB_PATH: "/tsLibPath",
+          WORKSPACE_DIR: "/workspace",
+        },
+        path: "/extension/run.sh",
+        type: "stdio",
+      },
+      {
+        initializationOptions: { preferences: "user preferences" },
+        syntaxes: ["typescript", "tsx", "javascript", "jsx"],
+      }
+    );
     const languageClient: LanguageClient =
       LanguageClientMock.mock.results[0].value;
     expect(languageClient.start).toBeCalledTimes(1);
 
     expect(languageClient.onRequest).not.toBeCalled();
 
-    expect(informationViewModule.InformationView).toBeCalledTimes(1);
+    const { InformationView } = require("./informationView");
+    expect(InformationView).toBeCalledTimes(1);
     const informationView = (
-      informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+      InformationView as jest.Mock<typeof InformationView>
     ).mock.instances[0];
     expect(informationView.status).toBe("Running");
     expect(informationView.reload).toBeCalledTimes(1);
@@ -172,7 +219,8 @@ describe("test suite", () => {
 
   describe("activate and deactivate", () => {
     it("installs dependencies, runs the server, gets the ts version", async () => {
-      resetMocks();
+      // dynamically require so global mocks are setup before top level code execution
+      const { activate, deactivate } = require("./main");
 
       (ProcessMock as jest.Mock<Partial<Process>>)
         .mockImplementationOnce(() => ({
@@ -199,8 +247,9 @@ describe("test suite", () => {
       assertActivationBehavior();
 
       // typescript version is reported in the information view
+      const { InformationView } = require("./informationView");
       const informationView = (
-        informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+        InformationView as jest.Mock<typeof InformationView>
       ).mock.instances[0];
       expect(informationView.tsVersion).toBeUndefined();
       const tsVersionProcess: Process = ProcessMock.mock.results[1].value;
@@ -221,7 +270,9 @@ describe("test suite", () => {
     });
 
     it("shows an error if activation fails", async () => {
-      resetMocks();
+      // dynamically require so global mocks are setup before top level code execution
+      const { activate } = require("./main");
+
       global.console.error = jest.fn();
       global.console.warn = jest.fn();
       nova.workspace.showErrorMessage = jest.fn();
@@ -241,7 +292,9 @@ describe("test suite", () => {
     });
 
     it("handles unexpected crashes", async () => {
-      resetMocks();
+      // dynamically require so global mocks are setup before top level code execution
+      const { activate } = require("./main");
+
       nova.workspace.showActionPanel = jest.fn();
 
       await activate();
@@ -265,8 +318,9 @@ describe("test suite", () => {
       `);
       expect(actionPanelCall[1].buttons).toHaveLength(2);
 
+      const { InformationView } = require("./informationView");
       const informationView = (
-        informationViewModule.InformationView as jest.Mock<informationViewModule.InformationView>
+        InformationView as jest.Mock<typeof InformationView>
       ).mock.instances[0];
       expect(informationView.status).toBe("Stopped");
 
@@ -285,19 +339,32 @@ describe("test suite", () => {
     });
 
     test("reload", async () => {
-      resetMocks();
+      // dynamically require so global mocks are setup before top level code execution
+      require("./main");
+
+      const reload = (nova.commands.register as jest.Mock).mock.calls.find(
+        ([command]) => command == "apexskier.typescript.reload"
+      )[1];
+
+      expect(CompositeDisposableMock).toBeCalledTimes(1);
 
       await reload();
 
-      const compositeDisposable: CompositeDisposable =
+      expect(CompositeDisposableMock).toBeCalledTimes(2);
+
+      const compositeDisposable1: CompositeDisposable =
         CompositeDisposableMock.mock.results[0].value;
-      expect(compositeDisposable.dispose).toBeCalledTimes(2);
+      expect(compositeDisposable1.dispose).toBeCalledTimes(1);
+      const compositeDisposable2: CompositeDisposable =
+        CompositeDisposableMock.mock.results[1].value;
+      expect(compositeDisposable2.dispose).not.toBeCalled();
 
       assertActivationBehavior();
     });
 
     test("watches files to apply post-save actions", async () => {
-      resetMocks();
+      // dynamically require so global mocks are setup before top level code execution
+      const { activate } = require("./main");
 
       await activate();
 
