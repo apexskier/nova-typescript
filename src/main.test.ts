@@ -43,7 +43,7 @@ global.console.log = jest.fn((...args) => {
   if (
     args[0] === "activating..." ||
     args[0] === "activated" ||
-    args[0] === "reloading..." || 
+    args[0] === "reloading..." ||
     args[0] === "deactivate"
   ) {
     return;
