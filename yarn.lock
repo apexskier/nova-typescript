@@ -1602,10 +1602,10 @@ eslint-config-prettier@^8.3.0:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
   integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
 
-eslint-plugin-nova@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.6.0.tgz#14ff2a1fddc86843ef38ebd44505d550b5bf4e88"
-  integrity sha512-Fzl+LbGDyMbvDzhrROtYTBzIBh9rav5Nt/XD39OfJO2mSH5QDEaUbl2vpglP8WJB2RTK+j8flbXG/0ylT0JYoQ==
+eslint-plugin-nova@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-nova/-/eslint-plugin-nova-1.6.1.tgz#b13c2c11e6129aee630c03fe4c3053bd78f92a7c"
+  integrity sha512-9/XjTh1lWsbAbMQyK3CF8DmeaJ5izx2jfie2iYdYFbmHiCXDKaOuVoGQ8ly4y9d/BxylM24DFwt2iEYUon3xZA==
 
 eslint-scope@^5.1.1:
   version "5.1.1"
