@@ -147,7 +147,7 @@ async function asyncActivate() {
     };
   }
 
-  const syntaxes = ["typescript", "tsx"];
+  const syntaxes = ["typescript", "tsx", "cts", "mts"];
   if (isEnabledForJavascript()) {
     syntaxes.push("javascript", "jsx");
   }

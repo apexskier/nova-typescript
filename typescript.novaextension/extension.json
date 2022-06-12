@@ -449,35 +449,35 @@
         "title": "Find References",
         "command": "apexskier.typescript.findReferences",
         "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx", "cts", "mts"]
         }
       },
       {
         "title": "Rename Symbol",
         "command": "apexskier.typescript.rename",
         "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx", "cts", "mts"]
         }
       },
       {
         "title": "Organize Imports",
         "command": "apexskier.typescript.commands.organizeImports",
         "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx", "cts", "mts"]
         }
       },
       {
         "title": "Format Document",
         "command": "apexskier.typescript.commands.formatDocument",
         "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx", "cts", "mts"]
         }
       },
       {
         "title": "Show Documentation (experimental)",
         "command": "apexskier.typescript.signatureHelp",
         "filters": {
-          "syntaxes": ["typescript", "tsx", "javascript", "jsx"]
+          "syntaxes": ["typescript", "tsx", "javascript", "jsx", "cts", "mts"]
         }
       }
     ]

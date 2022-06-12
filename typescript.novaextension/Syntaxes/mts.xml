@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<syntax name="typescript-mts">
+	<meta>
+		<name>TypeScript (ES module)</name>
+		<type>script</type>
+		<preferred-file-extension>mts</preferred-file-extension>
+		<parent>typescript</parent>
+		<detectors>
+			<extension priority="1.0">mts,d.mts</extension>	
+		</detectors>
+	</meta>
+</syntax>
