@@ -199,7 +199,7 @@ describe("test suite", () => {
       },
       {
         initializationOptions: { preferences: "user preferences" },
-        syntaxes: ["typescript", "tsx", "javascript", "jsx"],
+        syntaxes: ["typescript", "tsx", "javascript", "jsx", "cts", "mts"],
       }
     );
     const languageClient: LanguageClient =
