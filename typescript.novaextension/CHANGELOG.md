@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.5.0
+
+- Upgrade to TypeScript 4.7
+   - Add additional configuration option support
+   - Add partial support for new file types: `.cts` and `.d.cts` (CommonJS modules) and `.mts` and `.d.mts` (ES modules)
+- Upgrade underlying `typescript-language-server` from v0.5.4 to v0.11.0 ([changelog](https://github.com/typescript-language-server/typescript-language-server/blob/v0.11.0/CHANGELOG.md))
+
 ## v2.4.0
 
 ### Added
