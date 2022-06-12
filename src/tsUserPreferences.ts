@@ -13,8 +13,7 @@ const keys: {
     : UserPreferences[key] extends string | undefined
     ? "string"
     : never;
-} &
-  Record<keyof UserPreferences, string> = {
+} & Record<keyof UserPreferences, string> = {
   allowIncompleteCompletions: "boolean",
   allowRenameOfImportPath: "boolean",
   allowTextChangesInNewFiles: "boolean",
