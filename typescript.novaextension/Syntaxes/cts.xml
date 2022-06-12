@@ -1,0 +1,11 @@
+<syntax>
+	<meta>
+		<name>TypeScript (CommonJS module)</name>
+		<type>script</type>
+		<preferred-file-extension>cts</preferred-file-extension>
+		<parent>typescript</parent>
+		<detectors>
+			<extension priority="1.0">cts,d.cts</extension>	
+		</detectors>
+	</meta>
+</syntax>
