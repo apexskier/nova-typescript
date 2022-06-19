@@ -1,5 +1,11 @@
 # Changelog
 
+## future
+
+### Changed
+
+- When search results are ready, display a notification instead of an alert.
+
 ## v2.5.0
 
 - Upgrade to TypeScript 4.7

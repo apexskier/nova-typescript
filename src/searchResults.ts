@@ -132,9 +132,13 @@ function showTreeView<T>(dataProvider: MyTreeProvider<T>) {
 
   // can't figure out how to force open the view, but if most usage is from the sidebar directly it's okay?
   if (!treeView.visible) {
-    nova.workspace.showInformativeMessage(
-      "Done! View the TS/JS sidebar to see results."
-    );
+    const notification = new NotificationRequest("search-results-done");
+    notification.title = "Find References";
+    notification.body = "View the TS/JS sidebar to see results.";
+    nova.notifications.add(notification);
+    setTimeout(() => {
+      nova.notifications.cancel(notification.identifier);
+    }, 4000);
   }
 
   const command = nova.commands.register(
