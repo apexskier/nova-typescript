@@ -7,7 +7,7 @@
       "name": "typescript.novaextension",
       "dependencies": {
         "typescript": "^4.8.4",
-        "typescript-language-server": "^1.1.2"
+        "typescript-language-server": "^2.0.0"
       }
     },
     "node_modules/commander": {
@@ -257,9 +257,9 @@
       }
     },
     "node_modules/typescript-language-server": {
-      "version": "1.1.2",
-      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-1.1.2.tgz",
-      "integrity": "sha512-gQf4p3FvKKpShCwZclIh7b3VtmmuMEtur1xPz6pTH+ilaw3jUCmrcvLU5zz59/9RHBHkdP6XrR6p9RdQ8K+8KQ==",
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.0.0.tgz",
+      "integrity": "sha512-wBV3iSt2498Wl6wMozCRDyPrL0KsFtthvYqVZ3JFRyreBGlxEe3bfK2bnLSwtRwYAZuO9n1roi/NNn94rT5Y+w==",
       "dependencies": {
         "commander": "^9.4.0",
         "deepmerge": "^4.2.2",
@@ -270,8 +270,8 @@
         "tempy": "^3.0.0",
         "vscode-languageserver": "^8.0.2",
         "vscode-languageserver-protocol": "^3.17.2",
-        "vscode-languageserver-textdocument": "1.0.5",
-        "vscode-uri": "^3.0.3",
+        "vscode-languageserver-textdocument": "1.0.7",
+        "vscode-uri": "^3.0.6",
         "which": "^2.0.2"
       },
       "bin": {
@@ -332,9 +332,9 @@
       }
     },
     "node_modules/vscode-languageserver-textdocument": {
-      "version": "1.0.5",
-      "resolved": "https://registry.npmjs.org/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.5.tgz",
-      "integrity": "sha512-1ah7zyQjKBudnMiHbZmxz5bYNM9KKZYz+5VQLj+yr8l+9w3g+WAhCkUkWbhMEdC5u0ub4Ndiye/fDyS8ghIKQg=="
+      "version": "1.0.7",
+      "resolved": "https://registry.npmjs.org/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.7.tgz",
+      "integrity": "sha512-bFJH7UQxlXT8kKeyiyu41r22jCZXG8kuuVVA33OEJn1diWOZK5n8zBSPZFHVBOu8kXZ6h0LIRhf5UnCo61J4Hg=="
     },
     "node_modules/vscode-languageserver-types": {
       "version": "3.17.2",
@@ -342,9 +342,9 @@
       "integrity": "sha512-zHhCWatviizPIq9B7Vh9uvrH6x3sK8itC84HkamnBWoDFJtzBf7SWlpLCZUit72b3os45h6RWQNC9xHRDF8dRA=="
     },
     "node_modules/vscode-uri": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/vscode-uri/-/vscode-uri-3.0.3.tgz",
-      "integrity": "sha512-EcswR2S8bpR7fD0YPeS7r2xXExrScVMxg4MedACaWHEtx9ftCF/qHG1xGkolzTPcEmjTavCQgbVzHUIdTMzFGA=="
+      "version": "3.0.6",
+      "resolved": "https://registry.npmjs.org/vscode-uri/-/vscode-uri-3.0.6.tgz",
+      "integrity": "sha512-fmL7V1eiDBFRRnu+gfRWTzyPpNIHJTc4mWnFkwBUmO9U3KPgJAmTx7oxi2bl/Rh6HLdU7+4C9wlj0k2E4AdKFQ=="
     },
     "node_modules/which": {
       "version": "2.0.2",
@@ -531,9 +531,9 @@
       "integrity": "sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ=="
     },
     "typescript-language-server": {
-      "version": "1.1.2",
-      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-1.1.2.tgz",
-      "integrity": "sha512-gQf4p3FvKKpShCwZclIh7b3VtmmuMEtur1xPz6pTH+ilaw3jUCmrcvLU5zz59/9RHBHkdP6XrR6p9RdQ8K+8KQ==",
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.0.0.tgz",
+      "integrity": "sha512-wBV3iSt2498Wl6wMozCRDyPrL0KsFtthvYqVZ3JFRyreBGlxEe3bfK2bnLSwtRwYAZuO9n1roi/NNn94rT5Y+w==",
       "requires": {
         "commander": "^9.4.0",
         "deepmerge": "^4.2.2",
@@ -544,8 +544,8 @@
         "tempy": "^3.0.0",
         "vscode-languageserver": "^8.0.2",
         "vscode-languageserver-protocol": "^3.17.2",
-        "vscode-languageserver-textdocument": "1.0.5",
-        "vscode-uri": "^3.0.3",
+        "vscode-languageserver-textdocument": "1.0.7",
+        "vscode-uri": "^3.0.6",
         "which": "^2.0.2"
       }
     },
@@ -585,9 +585,9 @@
       }
     },
     "vscode-languageserver-textdocument": {
-      "version": "1.0.5",
-      "resolved": "https://registry.npmjs.org/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.5.tgz",
-      "integrity": "sha512-1ah7zyQjKBudnMiHbZmxz5bYNM9KKZYz+5VQLj+yr8l+9w3g+WAhCkUkWbhMEdC5u0ub4Ndiye/fDyS8ghIKQg=="
+      "version": "1.0.7",
+      "resolved": "https://registry.npmjs.org/vscode-languageserver-textdocument/-/vscode-languageserver-textdocument-1.0.7.tgz",
+      "integrity": "sha512-bFJH7UQxlXT8kKeyiyu41r22jCZXG8kuuVVA33OEJn1diWOZK5n8zBSPZFHVBOu8kXZ6h0LIRhf5UnCo61J4Hg=="
     },
     "vscode-languageserver-types": {
       "version": "3.17.2",
@@ -595,9 +595,9 @@
       "integrity": "sha512-zHhCWatviizPIq9B7Vh9uvrH6x3sK8itC84HkamnBWoDFJtzBf7SWlpLCZUit72b3os45h6RWQNC9xHRDF8dRA=="
     },
     "vscode-uri": {
-      "version": "3.0.3",
-      "resolved": "https://registry.npmjs.org/vscode-uri/-/vscode-uri-3.0.3.tgz",
-      "integrity": "sha512-EcswR2S8bpR7fD0YPeS7r2xXExrScVMxg4MedACaWHEtx9ftCF/qHG1xGkolzTPcEmjTavCQgbVzHUIdTMzFGA=="
+      "version": "3.0.6",
+      "resolved": "https://registry.npmjs.org/vscode-uri/-/vscode-uri-3.0.6.tgz",
+      "integrity": "sha512-fmL7V1eiDBFRRnu+gfRWTzyPpNIHJTc4mWnFkwBUmO9U3KPgJAmTx7oxi2bl/Rh6HLdU7+4C9wlj0k2E4AdKFQ=="
     },
     "which": {
       "version": "2.0.2",
