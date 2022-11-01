@@ -7,13 +7,13 @@
       "name": "typescript.novaextension",
       "dependencies": {
         "typescript": "^4.8.4",
-        "typescript-language-server": "^2.0.0"
+        "typescript-language-server": "^2.1.0"
       }
     },
     "node_modules/commander": {
-      "version": "9.4.0",
-      "resolved": "https://registry.npmjs.org/commander/-/commander-9.4.0.tgz",
-      "integrity": "sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw==",
+      "version": "9.4.1",
+      "resolved": "https://registry.npmjs.org/commander/-/commander-9.4.1.tgz",
+      "integrity": "sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==",
       "engines": {
         "node": "^12.20.0 || >=14"
       }
@@ -195,9 +195,9 @@
       }
     },
     "node_modules/semver": {
-      "version": "7.3.7",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.7.tgz",
-      "integrity": "sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==",
+      "version": "7.3.8",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz",
+      "integrity": "sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==",
       "dependencies": {
         "lru-cache": "^6.0.0"
       },
@@ -257,16 +257,16 @@
       }
     },
     "node_modules/typescript-language-server": {
-      "version": "2.0.0",
-      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.0.0.tgz",
-      "integrity": "sha512-wBV3iSt2498Wl6wMozCRDyPrL0KsFtthvYqVZ3JFRyreBGlxEe3bfK2bnLSwtRwYAZuO9n1roi/NNn94rT5Y+w==",
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.1.0.tgz",
+      "integrity": "sha512-4l/pEcIauf48Mbojqhis+HLH42HpFtNbrYgXbvaDi4Szkk3iKKZa1ydoj2qk1y6+Bp1Rq18EdubitxGhwj/flA==",
       "dependencies": {
-        "commander": "^9.4.0",
+        "commander": "^9.4.1",
         "deepmerge": "^4.2.2",
         "fs-extra": "^10.1.0",
         "p-debounce": "^4.0.0",
         "pkg-up": "^4.0.0",
-        "semver": "^7.3.7",
+        "semver": "^7.3.8",
         "tempy": "^3.0.0",
         "vscode-languageserver": "^8.0.2",
         "vscode-languageserver-protocol": "^3.17.2",
@@ -379,9 +379,9 @@
   },
   "dependencies": {
     "commander": {
-      "version": "9.4.0",
-      "resolved": "https://registry.npmjs.org/commander/-/commander-9.4.0.tgz",
-      "integrity": "sha512-sRPT+umqkz90UA8M1yqYfnHlZA7fF6nSphDtxeywPZ49ysjxDQybzk13CL+mXekDRG92skbcqCLVovuCusNmFw=="
+      "version": "9.4.1",
+      "resolved": "https://registry.npmjs.org/commander/-/commander-9.4.1.tgz",
+      "integrity": "sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw=="
     },
     "crypto-random-string": {
       "version": "4.0.0",
@@ -497,9 +497,9 @@
       }
     },
     "semver": {
-      "version": "7.3.7",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.7.tgz",
-      "integrity": "sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==",
+      "version": "7.3.8",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.8.tgz",
+      "integrity": "sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==",
       "requires": {
         "lru-cache": "^6.0.0"
       }
@@ -531,16 +531,16 @@
       "integrity": "sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ=="
     },
     "typescript-language-server": {
-      "version": "2.0.0",
-      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.0.0.tgz",
-      "integrity": "sha512-wBV3iSt2498Wl6wMozCRDyPrL0KsFtthvYqVZ3JFRyreBGlxEe3bfK2bnLSwtRwYAZuO9n1roi/NNn94rT5Y+w==",
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/typescript-language-server/-/typescript-language-server-2.1.0.tgz",
+      "integrity": "sha512-4l/pEcIauf48Mbojqhis+HLH42HpFtNbrYgXbvaDi4Szkk3iKKZa1ydoj2qk1y6+Bp1Rq18EdubitxGhwj/flA==",
       "requires": {
-        "commander": "^9.4.0",
+        "commander": "^9.4.1",
         "deepmerge": "^4.2.2",
         "fs-extra": "^10.1.0",
         "p-debounce": "^4.0.0",
         "pkg-up": "^4.0.0",
-        "semver": "^7.3.7",
+        "semver": "^7.3.8",
         "tempy": "^3.0.0",
         "vscode-languageserver": "^8.0.2",
         "vscode-languageserver-protocol": "^3.17.2",
