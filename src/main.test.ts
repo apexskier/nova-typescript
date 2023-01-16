@@ -9,6 +9,9 @@ jest.mock("./tsUserPreferences", () => ({
 jest.mock("./isEnabledForJavascript", () => ({
   isEnabledForJavascript: () => true,
 }));
+jest.mock("./skipDestructiveOrganizeImports", () => ({
+  skipDestructiveOrganizeImports: () => false,
+}));
 jest.mock("nova-extension-utils");
 
 jest.useFakeTimers();

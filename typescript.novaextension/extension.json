@@ -61,6 +61,12 @@
       "default": true
     },
     {
+      "key": "apexskier.typescript.config.skipDestructiveOrganizeImports",
+      "title": "Skip destructive organize imports changes",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "title": "TypeScript server User Preferences",
       "description": "Advanced configuration passed to the underlying typescript server. These may not apply to older versions of TypeScript.",
       "type": "section",
@@ -350,6 +356,13 @@
       "description": "Enable TypeScript editor functionality for javascript and jsx files.",
       "type": "enum",
       "values": ["Inherit from Global Settings", "Disable", "Enable"],
+      "default": "Inherit from Global Settings"
+    },
+    {
+      "key": "apexskier.typescript.config.skipDestructiveOrganizeImports",
+      "title": "Skip destructive organize imports changes",
+      "type": "enum",
+      "values": ["Inherit from Global Settings", "False", "True"],
       "default": "Inherit from Global Settings"
     },
     {
