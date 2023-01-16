@@ -1,5 +1,6 @@
 import type * as lspTypes from "vscode-languageserver-protocol";
 import { wrapCommand } from "../novaUtils";
+import { skipDestructiveOrganizeImports } from "../skipDestructiveOrganizeImports";
 
 // NOTE: this is explicitly built for the typescript-language-server; it directly invokes the specific command it uses.
 // In order to decouple and become LSP generic, we'd need to first send a code action request for only
@@ -51,7 +52,10 @@ export function registerOrganizeImports(client: LanguageClient) {
 
     const organizeImportsCommand: lspTypes.ExecuteCommandParams = {
       command: "_typescript.organizeImports",
-      arguments: [editor.document.path],
+      arguments: [
+        editor.document.path,
+        { skipDestructiveCodeActions: skipDestructiveOrganizeImports() },
+      ],
     };
     await client.sendRequest(
       "workspace/executeCommand",

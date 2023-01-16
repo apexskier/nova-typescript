@@ -6,6 +6,10 @@ class MockRange {
 }
 (global as any).Range = MockRange;
 
+jest.mock("../skipDestructiveOrganizeImports", () => ({
+  skipDestructiveOrganizeImports: () => false,
+}));
+
 describe("organizeImports command", () => {
   beforeEach(() => {
     (global as any).nova = Object.assign(nova, {
@@ -89,7 +93,7 @@ describe("organizeImports command", () => {
       2,
       "workspace/executeCommand",
       {
-        arguments: ["/path"],
+        arguments: ["/path", { skipDestructiveCodeActions: false }],
         command: "_typescript.organizeImports",
       }
     );
