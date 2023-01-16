@@ -191,14 +191,18 @@ describe("test suite", () => {
           DEBUG_BREAK: "FALSE",
           DEBUG_PORT: "undefined",
           INSTALL_DIR: undefined,
-          TSLIB_PATH: "/tsLibPath",
           WORKSPACE_DIR: "/workspace",
         },
         path: "/extension/run.sh",
         type: "stdio",
       },
       {
-        initializationOptions: { preferences: "user preferences" },
+        initializationOptions: {
+          preferences: "user preferences",
+          tsserver: {
+            path: "/tsLibPath/tsserver.js",
+          },
+        },
         syntaxes: ["typescript", "tsx", "cts", "mts", "javascript", "jsx"],
       }
     );

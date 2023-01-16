@@ -10,9 +10,8 @@ cd "$WORKSPACE_DIR"
 if [ "$DEBUG" != "TRUE" ]
 then
 	node \
-		"$INSTALL_DIR/node_modules/typescript-language-server/lib/cli.js" \
-		--stdio \
-		--tsserver-path="$TSLIB_PATH/tsserver.js"
+		"$INSTALL_DIR/node_modules/.bin/typescript-language-server" \
+		--stdio
 else
 	if [ "$DEBUG_BREAK" ]
 	then
@@ -25,7 +24,6 @@ else
 	# tries to fork and bind two processes to the same port
 	node \
 		"$DEBUG_ARG" \
-		"$INSTALL_DIR/node_modules/typescript-language-server/lib/cli.js" \
-		--stdio \
-		--tsserver-path="$TSLIB_PATH/tsserver.js"
+		"$INSTALL_DIR/node_modules/.bin/typescript-language-server" \
+		--stdio
 fi
