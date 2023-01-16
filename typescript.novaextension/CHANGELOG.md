@@ -2,6 +2,10 @@
 
 ## future
 
+### Added
+
+- Configuration to prevent deleting unused imports when auto-organizing imports
+
 ### Changed
 
 - When search results are ready, display a notification instead of an alert.
