@@ -1,10 +1,13 @@
 # Changelog
 
-## future
+## v2.6.0
 
 ### Added
 
-- Configuration to prevent deleting unused imports when auto-organizing imports
+- Upgrade to TypeScript 4.9
+  - Add additional configuration option support
+- Upgrade underlying `typescript-language-server` from v0.11.0 to v3.0.2 ([changelog](https://github.com/typescript-language-server/typescript-language-server/blob/v3.0.2/CHANGELOG.md))
+- Config option to prevent deleting unused imports when auto-organizing imports
 
 ### Changed
 

@@ -30,7 +30,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment**
 
 - Nova version: <!-- [e.g. 6.1 (267836)] get this from Nova > About Nova -->
-- Extension version: <!-- [e.g. 2.5.0] get this from the Nova Extension Library -->
+- Extension version: <!-- [e.g. 2.6.0] get this from the Nova Extension Library -->
 - TypeScript version: <!-- [e.g. 4.2.4] get this from your project, e.g. run `yarn run tsc --version` in your terminal -->
 - Sidebar information: <!-- [e.g. Status Running, TypeScript Version 4.2.4] get this from the extension sidebar -->
 - macOS version: <!-- [e.g. 11.2.3 (20D91)] get this from  > About This Mac -->
