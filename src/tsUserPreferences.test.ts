@@ -28,8 +28,8 @@ describe("tsUserPreferences", () => {
 
       setupUserPreferences();
 
-      expect(nova.config.onDidChange).toBeCalledTimes(29);
-      expect(nova.workspace.config.onDidChange).toBeCalledTimes(29);
+      expect(nova.config.onDidChange).toBeCalledTimes(32);
+      expect(nova.workspace.config.onDidChange).toBeCalledTimes(32);
 
       const globalConfigKeys = (
         nova.config.onDidChange as jest.Mock
@@ -43,6 +43,8 @@ describe("tsUserPreferences", () => {
           "apexskier.typescript.config.userPreferences.allowIncompleteCompletions",
           "apexskier.typescript.config.userPreferences.allowRenameOfImportPath",
           "apexskier.typescript.config.userPreferences.allowTextChangesInNewFiles",
+          "apexskier.typescript.config.userPreferences.autoImportFileExcludePatterns",
+          "apexskier.typescript.config.userPreferences.disableLineTextInReferences",
           "apexskier.typescript.config.userPreferences.disableSuggestions",
           "apexskier.typescript.config.userPreferences.displayPartsForJSDoc",
           "apexskier.typescript.config.userPreferences.generateReturnInDocTemplate",
@@ -62,6 +64,7 @@ describe("tsUserPreferences", () => {
           "apexskier.typescript.config.userPreferences.includeInlayParameterNameHintsWhenArgumentMatchesName",
           "apexskier.typescript.config.userPreferences.includeInlayPropertyDeclarationTypeHints",
           "apexskier.typescript.config.userPreferences.includeInlayVariableTypeHints",
+          "apexskier.typescript.config.userPreferences.includeInlayVariableTypeHintsWhenTypeMatchesName",
           "apexskier.typescript.config.userPreferences.includePackageJsonAutoImports",
           "apexskier.typescript.config.userPreferences.jsxAttributeCompletionStyle",
           "apexskier.typescript.config.userPreferences.lazyConfiguredProjectsFromExternalProject",
@@ -107,6 +110,8 @@ describe("tsUserPreferences", () => {
           "allowIncompleteCompletions": "global apexskier.typescript.config.userPreferences.allowIncompleteCompletions boolean",
           "allowRenameOfImportPath": "global apexskier.typescript.config.userPreferences.allowRenameOfImportPath boolean",
           "allowTextChangesInNewFiles": "global apexskier.typescript.config.userPreferences.allowTextChangesInNewFiles boolean",
+          "autoImportFileExcludePatterns": "global apexskier.typescript.config.userPreferences.autoImportFileExcludePatterns stringArray",
+          "disableLineTextInReferences": "global apexskier.typescript.config.userPreferences.disableLineTextInReferences boolean",
           "disableSuggestions": "global apexskier.typescript.config.userPreferences.disableSuggestions boolean",
           "displayPartsForJSDoc": "global apexskier.typescript.config.userPreferences.displayPartsForJSDoc boolean",
           "generateReturnInDocTemplate": "global apexskier.typescript.config.userPreferences.generateReturnInDocTemplate boolean",
@@ -126,6 +131,7 @@ describe("tsUserPreferences", () => {
           "includeInlayParameterNameHintsWhenArgumentMatchesName": "global apexskier.typescript.config.userPreferences.includeInlayParameterNameHintsWhenArgumentMatchesName boolean",
           "includeInlayPropertyDeclarationTypeHints": "global apexskier.typescript.config.userPreferences.includeInlayPropertyDeclarationTypeHints boolean",
           "includeInlayVariableTypeHints": "global apexskier.typescript.config.userPreferences.includeInlayVariableTypeHints boolean",
+          "includeInlayVariableTypeHintsWhenTypeMatchesName": "global apexskier.typescript.config.userPreferences.includeInlayVariableTypeHintsWhenTypeMatchesName boolean",
           "includePackageJsonAutoImports": "global apexskier.typescript.config.userPreferences.includePackageJsonAutoImports string",
           "jsxAttributeCompletionStyle": "global apexskier.typescript.config.userPreferences.jsxAttributeCompletionStyle string",
           "lazyConfiguredProjectsFromExternalProject": "global apexskier.typescript.config.userPreferences.lazyConfiguredProjectsFromExternalProject boolean",
@@ -149,6 +155,8 @@ describe("tsUserPreferences", () => {
           "allowIncompleteCompletions": "workspace apexskier.typescript.config.userPreferences.allowIncompleteCompletions boolean",
           "allowRenameOfImportPath": "workspace apexskier.typescript.config.userPreferences.allowRenameOfImportPath boolean",
           "allowTextChangesInNewFiles": "workspace apexskier.typescript.config.userPreferences.allowTextChangesInNewFiles boolean",
+          "autoImportFileExcludePatterns": "workspace apexskier.typescript.config.userPreferences.autoImportFileExcludePatterns stringArray",
+          "disableLineTextInReferences": "workspace apexskier.typescript.config.userPreferences.disableLineTextInReferences boolean",
           "disableSuggestions": "workspace apexskier.typescript.config.userPreferences.disableSuggestions boolean",
           "displayPartsForJSDoc": "workspace apexskier.typescript.config.userPreferences.displayPartsForJSDoc boolean",
           "generateReturnInDocTemplate": "workspace apexskier.typescript.config.userPreferences.generateReturnInDocTemplate boolean",
@@ -168,6 +176,7 @@ describe("tsUserPreferences", () => {
           "includeInlayParameterNameHintsWhenArgumentMatchesName": "workspace apexskier.typescript.config.userPreferences.includeInlayParameterNameHintsWhenArgumentMatchesName boolean",
           "includeInlayPropertyDeclarationTypeHints": "workspace apexskier.typescript.config.userPreferences.includeInlayPropertyDeclarationTypeHints boolean",
           "includeInlayVariableTypeHints": "workspace apexskier.typescript.config.userPreferences.includeInlayVariableTypeHints boolean",
+          "includeInlayVariableTypeHintsWhenTypeMatchesName": "workspace apexskier.typescript.config.userPreferences.includeInlayVariableTypeHintsWhenTypeMatchesName boolean",
           "includePackageJsonAutoImports": "workspace apexskier.typescript.config.userPreferences.includePackageJsonAutoImports string",
           "jsxAttributeCompletionStyle": "workspace apexskier.typescript.config.userPreferences.jsxAttributeCompletionStyle string",
           "lazyConfiguredProjectsFromExternalProject": "workspace apexskier.typescript.config.userPreferences.lazyConfiguredProjectsFromExternalProject boolean",
