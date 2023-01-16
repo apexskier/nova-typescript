@@ -12,11 +12,15 @@ const keys: {
     ? "boolean"
     : UserPreferences[key] extends string | undefined
     ? "string"
+    : UserPreferences[key] extends string[] | undefined
+    ? "stringArray"
     : never;
 } & Record<keyof UserPreferences, string> = {
   allowIncompleteCompletions: "boolean",
   allowRenameOfImportPath: "boolean",
   allowTextChangesInNewFiles: "boolean",
+  autoImportFileExcludePatterns: "stringArray",
+  disableLineTextInReferences: "boolean",
   disableSuggestions: "boolean",
   displayPartsForJSDoc: "boolean",
   generateReturnInDocTemplate: "boolean",
@@ -36,6 +40,7 @@ const keys: {
   includeInlayParameterNameHintsWhenArgumentMatchesName: "boolean",
   includeInlayPropertyDeclarationTypeHints: "boolean",
   includeInlayVariableTypeHints: "boolean",
+  includeInlayVariableTypeHintsWhenTypeMatchesName: "boolean",
   includePackageJsonAutoImports: "string",
   jsxAttributeCompletionStyle: "string",
   lazyConfiguredProjectsFromExternalProject: "boolean",
