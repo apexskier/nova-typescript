@@ -152,7 +152,6 @@ async function asyncActivate() {
     syntaxes.push("javascript", "jsx");
   }
   const env = {
-    TSLIB_PATH: tslibPath,
     WORKSPACE_DIR: nova.workspace.path ?? "",
     INSTALL_DIR: dependencyManagement.getDependencyDirectory(),
     DEBUG: nova.config.get(
@@ -183,6 +182,9 @@ async function asyncActivate() {
     {
       syntaxes,
       initializationOptions: {
+        tsserver: {
+          path: nova.path.join(tslibPath, "tsserver.js"),
+        },
         preferences: getUserPreferences(),
       },
     }
