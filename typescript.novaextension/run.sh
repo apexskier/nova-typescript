@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # note: any output from this script will be used by nova's language server, so it'll break functionality
+# to get logging in the extension console, pipe to stderr by prefixing with `>&2 `
 
 cd "$WORKSPACE_DIR"
 
