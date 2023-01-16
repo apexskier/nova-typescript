@@ -10,13 +10,18 @@ import {
     register: jest.fn(),
   },
   workspace: {
-    showInformativeMessage: jest.fn(),
     showErrorMessage(err: unknown) {
       throw err;
     },
     openFile: jest.fn(),
   },
+  notifications: {
+    add: jest.fn(),
+  },
 });
+
+class NotificationRequestMock {}
+(global as any).NotificationRequest = NotificationRequestMock;
 
 class CompositeDisposableMock implements Disposable {
   private _disposables: Array<Disposable> = [];
@@ -57,7 +62,7 @@ beforeEach(() => {
   (nova.commands.register as jest.Mock)
     .mockReset()
     .mockReturnValue({ dispose: jest.fn() });
-  (nova.workspace.showInformativeMessage as jest.Mock).mockReset();
+  (nova.notifications.add as jest.Mock).mockReset();
   (nova.workspace.openFile as jest.Mock).mockReset();
 });
 
@@ -104,7 +109,7 @@ describe("Symbol search results tree", () => {
       visible: false,
     }));
     createSymbolSearchResultsTree(symbols);
-    expect(nova.workspace.showInformativeMessage).toHaveBeenCalledTimes(1);
+    expect(nova.notifications.add).toHaveBeenCalledTimes(1);
   });
 
   it("registers a double click command to open each search result", async () => {
@@ -279,7 +284,7 @@ it.each([
     visible: false,
   }));
   create();
-  expect(nova.workspace.showInformativeMessage).toHaveBeenCalledTimes(1);
+  expect(nova.notifications.add).toHaveBeenCalledTimes(1);
 });
 
 it.each([
@@ -306,7 +311,7 @@ it.each([
     "apexskier.typescript.sidebar.symbols",
     expect.anything()
   );
-  expect(nova.workspace.showInformativeMessage).not.toBeCalled();
+  expect(nova.notifications.add).not.toBeCalled();
   const treeMock1 = TreeViewTypedMock.mock.results[0].value;
   expect(treeMock1.dispose).not.toBeCalled();
   expect(nova.commands.register).toBeCalledWith(
