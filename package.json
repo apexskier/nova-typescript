@@ -46,6 +46,6 @@
     "ts-jest": "^26.5.6",
     "typescript": "^4.9.5",
     "vscode-languageserver-protocol": "^3.17.2",
-    "vscode-languageserver-types": "^3.17.1"
+    "vscode-languageserver-types": "^3.17.3"
   }
 }
