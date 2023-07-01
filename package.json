@@ -30,7 +30,7 @@
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@types/jest": "^27.4.1",
-    "@types/nova-editor-node": "^4.1.10",
+    "@types/nova-editor-node": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "concurrently": "^8.0.1",
