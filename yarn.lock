@@ -793,10 +793,10 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/nova-editor-node@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@types/nova-editor-node/-/nova-editor-node-5.1.2.tgz#12b1ac31f6d82bbf6f5091198b90088db60890e4"
-  integrity sha512-7VXRtlJBTryCUetMAyld1P39FZ4djMhUo/6E/bU8kmsqTG6hwp3VGubI15zd1Jqgf6yeNeTzR6azUv6oKa2CWg==
+"@types/nova-editor-node@^5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@types/nova-editor-node/-/nova-editor-node-5.1.4.tgz#a64c2c9aaef93a29ee2691483cf59e0a8cf4c065"
+  integrity sha512-S/GlHNya+zA+EyYxl/EnEPB7xJTGz5RDz/MU3ZytMK4Hl6rQSegl0Deq7t+2NnxwYFdRnJ9RVMsLDIQQHXxLGw==
 
 "@types/prettier@^2.0.0":
   version "2.0.2"
