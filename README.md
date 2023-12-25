@@ -1,3 +1,5 @@
+⚠️ **Archived**: Although it was fun to build my nova extensions, I haven't ended up using Nova regularly and can't devote the time to maintenance. Feel free to reach out if you want to fork and start maintaining an alternative.
+
 # TypeScript support for Nova
 
 This is a plugin providing TypeScript and advanced JavaScript language support for the new [Nova editor from Panic](https://panic.com/nova/).
